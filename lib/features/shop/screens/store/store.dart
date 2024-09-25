@@ -17,7 +17,8 @@ class StoreScreen extends StatelessWidget {
       length: 5,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: DynamicBg.sameBrightness(context),
+          // Changing for testing purpose 
+          backgroundColor: Colors.cyan,
           actions: [
             IconButton(onPressed: () => Get.to(()=> CartScreen()),
              icon: Icon(Iconsax.shopping_bag,color: ThemeUtils.dynamicTextColor(context),))
