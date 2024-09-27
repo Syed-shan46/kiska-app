@@ -7,7 +7,10 @@ class MyImages {
   static const promoBanner6 = 'assets/images/banners/b-3.jpg';
 
   /// products
-  static const shoeImg1 = 'assets/images/products/img-1.png';
-  static const productImg2 = 'assets/images/products/NikeBasketballShoeGreenBlack.png';
-  static const productImg3 = 'assets/images/products/iphone_12_blue.png';
+  static const productImg1 = 'assets/images/products/img-1.png';
+  static const productImg2 = 'assets/images/products/NikeAirMax.png';
+  static const productImg3 = 'assets/images/products/NikeAirJordonSingleBlue.png';
+
+  static const productImg4 = 'assets/images/products/NikeBasketballShoeGreenBlack.png';
+  static const productImg5 = 'assets/images/products/iphone_12_blue.png';
 }

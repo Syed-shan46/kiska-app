@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
     {'image': 'assets/images/products/t-shirt.png', 'name': 'T-shirt'},
     {'image': 'assets/images/products/slipper-product.png', 'name': 'Slipper'},
     {'image': 'assets/images/products/laptop.png', 'name': 'Laptop'},
-    {'image': 'assets/images/products/iphone_13_pro.png', 'name': 'Mobile'},
+    {'image': 'assets/images/products/pant.png', 'name': 'Pants'},
   ];
 
   final List<String> categories = [
@@ -72,8 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const MyBannerSlider(),
 
               // Heading
-              const MyHeading(
-                  headingLeft: "New Men's", headingRight: 'See all'),
+              const MyHeading(headingLeft: "Trending", headingRight: 'See all'),
               const SizedBox(height: 10),
 
               // Product Card
@@ -84,9 +83,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Expanded(
                       child: MyProductCard(
-                        category: "Shoe",
-                        imageUrl: 'assets/images/products/adidas-shoe.png',
-                        productName: 'Adidas Shoe',
+                        category: "Camera",
+                        imageUrl: 'assets/images/products/dash-camera.avif',
+                        productName: 'Dash Camera',
                         price: 2000,
                         onTap: () => Get.to(() => ProductDetailScreen()),
                       ),
@@ -117,16 +116,16 @@ class _HomeScreenState extends State<HomeScreen> {
                             'assets/images/products/NikeBasketballShoeGreenBlack.png',
                         productName: 'Adidas Shoe',
                         price: 2000,
-                         onTap: () => Get.to(()=> ProductDetailScreen()),
+                        onTap: () => Get.to(() => ProductDetailScreen()),
                       ),
                     ),
                     Expanded(
                       child: MyProductCard(
-                        category: "Mobiles",
-                        imageUrl: 'assets/images/products/iphone_13_pro.png',
-                        productName: 'Iphone 13 Pro',
+                        category: "Shoe",
+                        imageUrl: 'assets/images/products/adidas-shoe.png',
+                        productName: 'Adidas Shoe',
                         price: 2000,
-                         onTap: () => Get.to(()=> ProductDetailScreen()),
+                        onTap: () => Get.to(() => ProductDetailScreen()),
                       ),
                     ),
                   ],

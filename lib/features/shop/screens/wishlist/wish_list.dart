@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:kiska/common/appbar.dart';
 
 class WishListScreen extends StatelessWidget {
   const WishListScreen({super.key});
@@ -6,7 +8,7 @@ class WishListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: MyAppBar(actionIcon: Iconsax.shopping_bag,),
       
     );
   }

@@ -25,7 +25,6 @@ class MyProductCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
         child: Card(
           color: const Color.fromARGB(255, 255, 255, 255),
-          elevation: 3,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
