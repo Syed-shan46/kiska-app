@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:kiska/features/shop/controllers/home_controller.dart';
-import 'package:kiska/features/shop/screens/home/product_detail/product_review.dart';
+import 'package:kiska/features/shop/screens/product_review/product_review.dart';
 import 'package:kiska/features/shop/screens/home/widgets/my_dot_navigation.dart';
 import 'package:kiska/utils/constants/image_strings.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
