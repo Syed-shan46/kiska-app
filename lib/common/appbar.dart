@@ -9,10 +9,12 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     super.key,
     this.leadingIcon,
      this.actionIcon,
+     this.title,
   });
 
   final String? leadingIcon;
   final IconData? actionIcon;
+  final String? title;
 
   @override
   Widget build(BuildContext context) {

@@ -73,8 +73,7 @@ class MyUserReviewCard extends StatelessWidget {
                     ),
                     Text('02 Nov, 2024',
                         style: Theme.of(context).textTheme.bodyMedium),
-                  ],
-                ),
+                  ],                ),
                 ReadMoreText(
                   'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout',
                   trimLines: 2,
