@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:kiska/features/shop/screens/search/search.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
 
-class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const MyAppBar({
+class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const HomeAppBar({
     super.key,
     this.leadingIcon,
      this.actionIcon,

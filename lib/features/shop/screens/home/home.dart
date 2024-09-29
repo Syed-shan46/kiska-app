@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:kiska/common/appbar.dart';
+import 'package:kiska/features/shop/screens/home/widgets/home_appbar.dart';
 import 'package:kiska/common/drawer.dart';
 import 'package:kiska/common/heading.dart';
 import 'package:kiska/common/product_card.dart';
@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       // AppBar
-      appBar: const MyAppBar(
+      appBar: const HomeAppBar(
         actionIcon: Iconsax.search_normal_1,
         leadingIcon: 'assets/icons/hamburger.svg',
       ),

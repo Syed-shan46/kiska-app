@@ -13,4 +13,7 @@ class MyImages {
 
   static const productImg4 = 'assets/images/products/NikeBasketballShoeGreenBlack.png';
   static const productImg5 = 'assets/images/products/iphone_12_blue.png';
+
+  // User
+  static const String user = "assets/images/user/user.png";
 }
