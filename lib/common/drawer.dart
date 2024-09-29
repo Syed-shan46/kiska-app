@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:kiska/features/shop/screens/settings/settings.dart';
+import 'package:kiska/main.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({
@@ -12,7 +15,7 @@ class MyDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
            DrawerHeader(
-            decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary),
+            decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary.withOpacity(0.7)),
             child: const Column(
               children: [
                 Padding(
@@ -33,7 +36,7 @@ class MyDrawer extends StatelessWidget {
             leading: const Icon(Icons.settings),
             title: const Text('Settings'),
             onTap: () {
-              Navigator.pushNamed(context, '/settings');
+              Get.to(()=> SettingsScreen());
             },
           ),
           ListTile(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:kiska/features/shop/screens/cart/cart.dart';
 import 'package:kiska/features/shop/screens/home/widgets/home_appbar.dart';
 import 'package:kiska/common/product_card.dart';
 import 'package:kiska/features/shop/screens/home/product_detail/product_detail.dart';
@@ -14,10 +15,10 @@ class WishListScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Favourite',style: TextStyle(color: ThemeUtils.dynamicTextColor(context),fontWeight: FontWeight.w500),),
-        actions: const [ 
+        actions:  [ 
           Padding(
-            padding: EdgeInsets.all(16),
-            child: Icon(Iconsax.shopping_bag),
+            padding: EdgeInsets.all(8),
+            child: IconButton(onPressed: ()=> Get.to(()=> CartScreen()),icon: Icon(Iconsax.shopping_bag),),
           )
         ],
       ),

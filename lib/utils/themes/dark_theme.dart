@@ -48,4 +48,8 @@ final ThemeData darkTheme = ThemeData(
     selectedItemColor: AppColors.primaryColor, // Selected item color
     unselectedItemColor: Colors.grey, // Unselected item color
   ),
+
+  elevatedButtonTheme: ElevatedButtonThemeData( 
+    style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(AppColors.primaryColor))
+  )
 );
