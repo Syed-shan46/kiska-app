@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kiska/utils/themes/theme_utils.dart';
 
 import 'circular_container.dart';
 import 'curved_edges_widget.dart';
@@ -7,12 +8,13 @@ class MyPrimaryHeaderContainer extends StatelessWidget {
   const MyPrimaryHeaderContainer({
     super.key,
     required this.child,
-    this.height = 170, this.showContainer = true,
+    this.height = 170, this.showContainer = true, required this.color,
   });
 
   final Widget child;
   final double? height;
   final bool showContainer;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class MyPrimaryHeaderContainer extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         height: height,
         decoration:  BoxDecoration(
-            color: Colors.blue.withOpacity(0.7)),
+            color: color),
           padding: const EdgeInsets.all(0),
           child:   Stack(
             children: [

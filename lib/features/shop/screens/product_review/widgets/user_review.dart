@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kiska/features/shop/screens/product_review/widgets/rating_bar_indicator.dart';
 import 'package:kiska/utils/constants/image_strings.dart';
+import 'package:kiska/utils/themes/app_colors.dart';
 import 'package:readmore/readmore.dart';
 
 class MyUserReviewCard extends StatelessWidget {
@@ -51,9 +52,9 @@ class MyUserReviewCard extends StatelessWidget {
           trimCollapsedText: 'show more',
           trimMode: TrimMode.Line,
           moreStyle: TextStyle(
-              fontSize: 14, fontWeight: FontWeight.bold, color: Colors.blue),
+              fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.primaryColor),
           lessStyle: TextStyle(
-              fontSize: 14, fontWeight: FontWeight.bold, color: Colors.blue),
+              fontSize: 14, fontWeight: FontWeight.bold,color: AppColors.primaryColor),
         ),
         SizedBox(height: 16),
 
@@ -83,7 +84,7 @@ class MyUserReviewCard extends StatelessWidget {
                   moreStyle: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: Colors.blue,
+                    color: AppColors.primaryColor,
                   ),
                   lessStyle: TextStyle(fontSize: 14,fontWeight: FontWeight.bold,color: Colors.blue),
                 ),

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:kiska/common/custom_shapes/primary_header_container.dart';
+import 'package:kiska/common/widgets/cart/cart_icon.dart';
+import 'package:kiska/features/shop/screens/cart/cart.dart';
 import 'package:kiska/features/shop/screens/home/widgets/home_appbar.dart';
 import 'package:kiska/common/drawer.dart';
 import 'package:kiska/common/heading.dart';
@@ -8,6 +11,8 @@ import 'package:kiska/common/product_card.dart';
 import 'package:kiska/features/shop/screens/home/widgets/banner_slider.dart';
 import 'package:kiska/features/shop/screens/home/widgets/categories.dart';
 import 'package:kiska/features/shop/screens/home/product_detail/product_detail.dart';
+import 'package:kiska/utils/constants/sizes.dart';
+import 'package:kiska/utils/themes/theme_utils.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -49,10 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       // AppBar
-      appBar: const HomeAppBar(
-        actionIcon: Iconsax.search_normal_1,
-        leadingIcon: 'assets/icons/hamburger.svg',
-      ),
+      
 
       // Drawer
       drawer: const MyDrawer(),
@@ -62,8 +64,10 @@ class _HomeScreenState extends State<HomeScreen> {
         height: MediaQuery.sizeOf(context).height,
         child: SingleChildScrollView(
           child: Column(
+
             children: [
-              const SizedBox(height: 20),
+
+              MyHeader(),
 
               // Categories
               Categories(products: products),
@@ -133,6 +137,66 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class MyHeader extends StatelessWidget {
+  const MyHeader({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return MyPrimaryHeaderContainer(
+      color: DynamicBg.sameBrightness(context),
+      showContainer: false,
+      height: 130,
+      child: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding:
+                  const EdgeInsets.only(left: MySizes.defaultSpace),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Stack(
+                  children: [
+                    /// Left side welcome title
+                    Column(
+                      
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 10),
+                        Text('Good day for shopping',
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelMedium!
+                                ),
+                        Text('Syed-shan',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge!
+                                ),
+                      ],
+                    ),
+
+                    /// Cart icon
+                    Positioned(
+                      right: 30,
+                      top: 10,
+                      child: GestureDetector(
+                          onTap: () => Get.to(() => const CartScreen()),
+                          child:  MyCartIcon(color: ThemeUtils.dynamicTextColor(context))),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

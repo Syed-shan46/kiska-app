@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kiska/utils/device/device_utility.dart';
+import 'package:kiska/utils/themes/app_colors.dart';
 
 class MyRatingProgressIndicator extends StatelessWidget {
   const MyRatingProgressIndicator({
@@ -30,7 +31,7 @@ class MyRatingProgressIndicator extends StatelessWidget {
             minHeight: 10,
             backgroundColor: Colors.grey,
             borderRadius: BorderRadius.circular(7),
-            valueColor: AlwaysStoppedAnimation(Colors.blue.withOpacity(0.8)),
+            valueColor: AlwaysStoppedAnimation(AppColors.primaryColor.withOpacity(0.8)),
           ),
         ))
       ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kiska/features/shop/controllers/home_controller.dart';
+import 'package:kiska/utils/themes/app_colors.dart';
 
 class MyDotNavigation extends StatelessWidget {
   const MyDotNavigation({super.key, required this.controller});
@@ -23,7 +24,7 @@ class MyDotNavigation extends StatelessWidget {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: controller.carousalCurrentIndex.value == i
-                        ? const Color.fromARGB(255, 45, 197, 88)
+                        ?  AppColors.primaryColor
                         : Colors.grey,
                   ),
                   margin: const EdgeInsets.only(right: 10),

@@ -8,6 +8,7 @@ import 'package:kiska/common/widgets/layouts/user_profile_tile.dart';
 import 'package:kiska/common/custom_shapes/primary_header_container.dart';
 import 'package:kiska/features/shop/screens/settings/profile/profile.dart';
 import 'package:kiska/utils/constants/sizes.dart';
+import 'package:kiska/utils/themes/app_colors.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -19,6 +20,7 @@ class SettingsScreen extends StatelessWidget {
       child: Column(
         children: [
           MyPrimaryHeaderContainer(
+            color: AppColors.primaryColor,
             height: 220,
             child: Column(
               children: [
