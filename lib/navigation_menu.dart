@@ -39,7 +39,7 @@ class NavigationMenu extends StatelessWidget {
                 text: 'Home',
               ),
               GButton(
-                icon: Icons.store_mall_directory,
+                icon: Iconsax.shop,
                 text: 'Store',
               ),
               GButton(

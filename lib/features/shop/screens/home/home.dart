@@ -102,7 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         price: 2000,
                         onTap: () => Get.to(() => ProductDetailScreen()),
                       ),
-                    ),
+                    ),  
                   ],
                 ),
               ),

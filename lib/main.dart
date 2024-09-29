@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kiska/features/authentication/login/login.dart';
 import 'package:kiska/navigation_menu.dart';
 import 'package:kiska/utils/themes/dark_theme.dart';
 import 'package:kiska/utils/themes/light_theme.dart';
@@ -23,7 +24,7 @@ class _MyAppState extends State<MyApp> {
       themeMode: ThemeMode.system,
       theme: lightTheme,
       darkTheme: darkTheme,
-      home:  NavigationMenu(),
+      home:  LoginScreen(),
       
     );
   }
