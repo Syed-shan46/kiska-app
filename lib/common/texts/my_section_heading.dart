@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kiska/utils/themes/app_colors.dart';
 
 class MySectionHeading extends StatelessWidget {
   const MySectionHeading({
@@ -31,7 +32,7 @@ class MySectionHeading extends StatelessWidget {
             onPressed: () {},
             child: Text(
               buttonTitle,
-              style:  TextStyle(color: Colors.blue.withOpacity(0.8)),
+              style:  TextStyle(color: AppColors.primaryColor.withOpacity(0.8)),
             ),
           )
       ],

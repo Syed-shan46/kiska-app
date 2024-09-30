@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:kiska/utils/themes/theme_utils.dart';
 
 class MyTextField extends StatelessWidget {
   const MyTextField({
@@ -26,6 +27,8 @@ class MyTextField extends StatelessWidget {
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: Theme.of(context).colorScheme.primaryFixed,
+             
+              
             ),
             borderRadius: const BorderRadius.all(
               Radius.circular(15),
@@ -33,7 +36,7 @@ class MyTextField extends StatelessWidget {
           ),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Theme.of(context).colorScheme.secondary,
+               color: ThemeUtils.dynamicTextColor(context)
             ),
             borderRadius: const BorderRadius.all(
               Radius.circular(15),
@@ -41,7 +44,7 @@ class MyTextField extends StatelessWidget {
           ),
           labelText: labelText,
           labelStyle:
-              TextStyle(color: Theme.of(context).colorScheme.primaryFixed)),
+              TextStyle(color: ThemeUtils.dynamicTextColor(context))),
     );
   }
 }

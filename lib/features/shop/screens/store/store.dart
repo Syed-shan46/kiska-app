@@ -17,6 +17,7 @@ class StoreScreen extends StatelessWidget {
       length: 5,
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: DynamicBg.sameBrightness(context),
           actions: [
             IconButton(onPressed: () => Get.to(()=> CartScreen()),

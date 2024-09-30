@@ -46,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: MySizes.spaceBtwItems),
 
                   /// Social Icons
-                 
+                 MySocialIcons(),
                 ],
               ),
             )

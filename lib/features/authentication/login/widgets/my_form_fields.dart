@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:kiska/common/widgets/text_forms/my_text_form_widget.dart';
+import 'package:kiska/features/authentication/register/register.dart';
 import 'package:kiska/features/shop/screens/home/home.dart';
+import 'package:kiska/navigation_menu.dart';
 import 'package:kiska/utils/constants/sizes.dart';
+import 'package:kiska/utils/themes/app_colors.dart';
 
 
 class MyFormFields extends StatefulWidget {
@@ -53,12 +56,12 @@ class _MyFormFieldsState extends State<MyFormFields> {
             height: 56,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue.withOpacity(0.8),
+                backgroundColor:AppColors.primaryColor,
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
               ),
-              onPressed: () => Get.to(const HomeScreen()),
+              onPressed: () => Get.to( NavigationMenu()),
               child: const Text(
 
                 'Sign in',
@@ -91,18 +94,17 @@ class CreateAccount extends StatelessWidget {
       height: 56,
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
-          side: const BorderSide(color: Colors.blue),
+          
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
         ),
-        onPressed:(){},
+        onPressed:() => Get.to(()=> SignUpScreen()),
         child: Text(
           'Create Account',
           style: TextStyle(
-              color: Theme.of(context).colorScheme.primaryFixed,
-              fontSize: 18,
-              fontWeight: FontWeight.w700),
+              fontWeight: FontWeight.w500,
+              fontSize: 18,),
         ),
       ),
     );
@@ -125,7 +127,7 @@ class RememberMePassword extends StatelessWidget {
             Checkbox(
                 value: true,
                 onChanged: (value) {},
-                activeColor: Colors.blue,
+                activeColor: AppColors.primaryColor,
                 checkColor: Colors.white),
             const Text('Remember me?')
           ],
@@ -136,11 +138,8 @@ class RememberMePassword extends StatelessWidget {
             onPressed: () {},
             child: Text(
               'Forgot Password',
-              style: TextStyle(
-                  color: Theme.of(context)
-                      .colorScheme
-                      .primaryFixed
-                      .withOpacity(0.7)),
+              style: TextStyle(fontWeight: FontWeight.w400
+                  ),
             )),
       ],
     );
