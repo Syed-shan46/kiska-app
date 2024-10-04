@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kiska/utils/themes/theme_utils.dart';
 
 import 'circular_container.dart';
 import 'curved_edges_widget.dart';
