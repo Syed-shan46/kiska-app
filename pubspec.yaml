@@ -18,12 +18,22 @@ dependencies:
   readmore: ^3.0.0
   flutter_rating_bar: ^4.0.1
   badges: ^3.1.2
+  flutter_native_splash: ^2.4.1
   
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
+
+
+flutter_native_splash:  # Background color of the splash screen
+    image: assets/icons/kiska.png  # Path to your splash image
+    android: true  # Include Android splash screen
+    ios: true  # Include iOS splash screen
+    web: false  # If you want to include web support, set to true
+    fullscreen: true  # To make the splash screen take the entire screen
+
 
 flutter:
   uses-material-design: true
