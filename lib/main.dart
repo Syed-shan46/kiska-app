@@ -41,7 +41,7 @@ class SettingsPage extends StatelessWidget {
       body: const Center(
         child: Column(
           children: [
-            Text('Settings page'),
+            Text('Settings Screen'),
           ],
         ),
       ),
