@@ -1,11 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:kiska/common/widgets/text_forms/my_text_form_widget.dart';
-import 'package:kiska/features/authentication/login/widgets/divider.dart';
-import 'package:kiska/features/authentication/login/widgets/social_icons.dart';
+import 'package:kiska/features/authentication/controllers/auth_controller.dart';
+import 'package:kiska/features/authentication/screens/login/widgets/divider.dart';
+import 'package:kiska/features/authentication/screens/login/widgets/social_icons.dart';
 import 'package:kiska/utils/constants/sizes.dart';
-
 
 class SignUpScreen extends StatefulWidget {
   SignUpScreen({super.key});
@@ -15,12 +14,16 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final AuthController _authController = AuthController();
+  late String userName;
+  late String email;
+  late String password;
+
   /// Controllers
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passWordController = TextEditingController();
-
- 
 
   @override
   Widget build(BuildContext context) {
@@ -42,30 +45,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Form(
                 child: Column(
                   children: [
-                    const Row(
-                      children: [
-                        /// first name
-                        Expanded(
-                          child: MyTextField(
-                            labelText: 'First Name',
-                            icon: Iconsax.user,
-                          ),
-                        ),
-
-                        /// Last name
-                        SizedBox(width: MySizes.spaceBtwInputFields),
-                        Expanded(
-                          child: MyTextField(
-                            labelText: 'Last Name',
-                            icon: Iconsax.user,
-                          ),
-                        ),
-                      ],
-                    ),
                     const SizedBox(height: MySizes.spaceBtwInputFields),
 
                     /// Username
                     MyTextField(
+                      onChanged: (value) {
+                        userName = value;
+                      },
                       controller: usernameController,
                       labelText: 'Username',
                       icon: Iconsax.user,
@@ -75,21 +61,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                     /// Email
                     MyTextField(
+                      onChanged: (value) {
+                        email = value;
+                      },
                       controller: emailController,
                       labelText: 'Email',
                       icon: Iconsax.user_edit,
                     ),
                     const SizedBox(height: MySizes.spaceBtwInputFields),
 
-                    /// phone number
-                    const MyTextField(
-                      labelText: 'Username',
-                      icon: Iconsax.call,
-                    ),
-                    const SizedBox(height: MySizes.spaceBtwInputFields),
-
                     /// password
                     MyTextField(
+                      onChanged: (value) {
+                        password = value;
+                      },
                       controller: passWordController,
                       labelText: 'Password',
                       icon: Iconsax.password_check,
@@ -161,7 +146,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      await _authController.signUPUsers(
+                          context: context,
+                          userName: userName,
+                          email: email,
+                          password: password);
+                    }
                   },
                   child: Text('Create Account',
                       style: TextStyle(

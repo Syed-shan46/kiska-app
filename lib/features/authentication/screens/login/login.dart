@@ -1,9 +1,8 @@
 
 import 'package:flutter/material.dart';
-import 'package:kiska/features/authentication/login/widgets/divider.dart';
-import 'package:kiska/features/authentication/login/widgets/social_icons.dart';
+import 'package:kiska/features/authentication/screens/login/widgets/divider.dart';
+import 'package:kiska/features/authentication/screens/login/widgets/social_icons.dart';
 import 'package:kiska/utils/constants/sizes.dart';
-
 
 import 'widgets/my_auth_header.dart';
 import 'widgets/my_form_fields.dart';
