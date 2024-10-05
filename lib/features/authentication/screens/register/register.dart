@@ -16,14 +16,10 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final AuthController _authController = AuthController();
+  bool _agreeToTerms = false;
   late String userName;
   late String email;
   late String password;
-
-  /// Controllers
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passWordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +39,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
               /// form
               Form(
+                key: _formKey,
                 child: Column(
                   children: [
                     const SizedBox(height: MySizes.spaceBtwInputFields),
@@ -52,7 +49,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       onChanged: (value) {
                         userName = value;
                       },
-                      controller: usernameController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter a username';
+                        }
+                        return null;
+                      },
                       labelText: 'Username',
                       icon: Iconsax.user,
                     ),
@@ -64,7 +66,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       onChanged: (value) {
                         email = value;
                       },
-                      controller: emailController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter an email';
+                        }
+                        if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                          return 'Please enter a valid email';
+                        }
+                        return null;
+                      },
                       labelText: 'Email',
                       icon: Iconsax.user_edit,
                     ),
@@ -75,7 +85,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       onChanged: (value) {
                         password = value;
                       },
-                      controller: passWordController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter a password';
+                        }
+
+                        if (value.length < 6) {
+                          return 'Password must be at least 6 characters long';
+                        }
+
+                        // Custom password validation to ensure it contains at least one number, one uppercase, and one lowercase letter
+                        RegExp regex =
+                            RegExp(r'(?=.*\d)(?=.*[a-z])(?=.*[A-Z])');
+                        if (!regex.hasMatch(value)) {
+                          return 'Password must contain at least one number, one uppercase';
+                        }
+                        return null;
+                      },
                       labelText: 'Password',
                       icon: Iconsax.password_check,
                       showSuffixIcon: true,
@@ -89,10 +115,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           width: 24,
                           height: 24,
                           child: Checkbox(
-                              activeColor: Colors.blue,
-                              value: true,
-                              checkColor: Colors.white,
-                              onChanged: (value) {}),
+                            activeColor: Colors.blue,
+                            value: _agreeToTerms,
+                            checkColor: Colors.white,
+                            onChanged: (value) {
+                              setState(() {
+                                _agreeToTerms = value ?? false;
+                              });
+                            },
+                          ),
                         ),
                         const SizedBox(width: MySizes.spaceBtwItems),
                         Text.rich(
@@ -148,6 +179,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
+                      if (_agreeToTerms) {
+                        // Perform signup
+                        print('Email: $email');
+                        // Call your signup logic using _authController
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('You must agree to the terms.'),
+                          ),
+                        );
+                      }
                       await _authController.signUPUsers(
                           context: context,
                           userName: userName,

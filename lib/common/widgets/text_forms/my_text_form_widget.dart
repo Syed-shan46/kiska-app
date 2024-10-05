@@ -8,7 +8,7 @@ class MyTextField extends StatelessWidget {
     required this.labelText,
     this.icon,
     this.onChanged,
-    
+    this.validator,
     this.showSuffixIcon = false,
     this.controller,
   });
@@ -18,11 +18,13 @@ class MyTextField extends StatelessWidget {
   final bool showSuffixIcon;
   final TextEditingController? controller;
   final  Function(String)? onChanged;
+  final FormFieldValidator<String>? validator;
 
   @override
   build(BuildContext context) {
     return TextFormField(
       onChanged: onChanged,
+      validator: validator,
       controller: controller,
       decoration: InputDecoration(
           prefixIcon: Icon(icon),

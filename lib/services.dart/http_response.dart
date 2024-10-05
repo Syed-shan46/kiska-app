@@ -1,8 +1,6 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter/widgets.dart';
 
 void manageHttpResponse({
   required http.Response response,
@@ -25,5 +23,9 @@ void manageHttpResponse({
 }
 
 void showSnackBar(BuildContext context, String title) {
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(title)));
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(title),
+    ),
+  );
 }

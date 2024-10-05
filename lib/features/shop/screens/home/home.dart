@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:kiska/common/custom_shapes/primary_header_container.dart';
 import 'package:kiska/common/widgets/cart/cart_icon.dart';
 import 'package:kiska/features/shop/screens/cart/cart.dart';
-import 'package:kiska/features/shop/screens/home/widgets/home_appbar.dart';
 import 'package:kiska/common/drawer.dart';
 import 'package:kiska/common/heading.dart';
 import 'package:kiska/common/product_card.dart';
