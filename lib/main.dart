@@ -4,7 +4,9 @@ import 'package:kiska/features/authentication/screens/login/login.dart';
 import 'package:kiska/utils/themes/dark_theme.dart';
 import 'package:kiska/utils/themes/light_theme.dart';
 
-void main() {
+void main() async {
+  
+  MyApp();
   runApp(const MyApp());
 }
 
@@ -23,8 +25,7 @@ class _MyAppState extends State<MyApp> {
       themeMode: ThemeMode.system,
       theme: lightTheme,
       darkTheme: darkTheme,
-      home:  LoginScreen(),
-      
+      home: LoginScreen(),
     );
   }
 }

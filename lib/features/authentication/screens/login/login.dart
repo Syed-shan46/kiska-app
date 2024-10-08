@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:kiska/features/authentication/screens/login/widgets/divider.dart';
 import 'package:kiska/features/authentication/screens/login/widgets/social_icons.dart';
@@ -16,36 +15,34 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
-
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return  Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
-            /// top Container
+            // top Container
             MyAuthHeader(title: 'Sign In'),
 
-            /// Welcome Text, TextFields, Buttons & Social Icons
+            // Welcome Text, TextFields, Buttons & Social Icons
             Padding(
               padding: EdgeInsets.all(MySizes.defaultSpace),
               child: Column(
                 children: [
-                  /// Welcome Text
+                  // Welcome Text
                   MyWelcomeText(),
                   SizedBox(height: MySizes.spaceBtwSections),
 
-                  /// FormFields
+                  // FormFields
                   MyFormFields(),
                   SizedBox(height: MySizes.spaceBtwSections),
 
-                  /// Divider
+                  // Divider
                   MyDivider(dividerText: 'OR CONTINUE WITH'),
                   SizedBox(height: MySizes.spaceBtwItems),
 
-                  /// Social Icons
-                 MySocialIcons(),
+                  // Social Icons
+                  MySocialIcons(),
                 ],
               ),
             )
@@ -54,4 +51,6 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+
+ 
 }

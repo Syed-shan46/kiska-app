@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kiska/features/shop/screens/settings/settings.dart';
-import 'package:kiska/main.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({

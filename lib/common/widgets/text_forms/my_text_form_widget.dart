@@ -17,7 +17,7 @@ class MyTextField extends StatelessWidget {
   final IconData? icon;
   final bool showSuffixIcon;
   final TextEditingController? controller;
-  final  Function(String)? onChanged;
+  final Function(String)? onChanged;
   final FormFieldValidator<String>? validator;
 
   @override
@@ -29,28 +29,32 @@ class MyTextField extends StatelessWidget {
       decoration: InputDecoration(
           prefixIcon: Icon(icon),
           suffixIcon: showSuffixIcon ? const Icon(Iconsax.eye_slash) : null,
-
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: Theme.of(context).colorScheme.primaryFixed,
-             
-              
             ),
             borderRadius: const BorderRadius.all(
               Radius.circular(15),
             ),
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-               color: ThemeUtils.dynamicTextColor(context)
-            ),
+            borderSide: BorderSide(color: ThemeUtils.dynamicTextColor(context)),
             borderRadius: const BorderRadius.all(
               Radius.circular(15),
             ),
           ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.red),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(15),
+            ),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.red),
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+          ),
           labelText: labelText,
-          labelStyle:
-              TextStyle(color: ThemeUtils.dynamicTextColor(context))),
+          labelStyle: TextStyle(color: ThemeUtils.dynamicTextColor(context))),
     );
   }
 }

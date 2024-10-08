@@ -7,6 +7,7 @@ class User {
   final String userName;
   final String email;
   final String password;
+  final String token;
 
   // Constructor to create a User object. All fields are required.
   User({
@@ -14,6 +15,7 @@ class User {
     required this.userName,
     required this.email,
     required this.password,
+    required this.token,
   });
 
   // Converts the User object to a Map (key-value pairs), which can easily be transformed into JSON.
@@ -24,6 +26,7 @@ class User {
       "userName": userName, // 'userName' key will hold the username.
       "email": email, // 'email' key will hold the user's email.
       "password": password, // 'password' key will hold the user's password.
+      "token": token,
     };
   }
 
@@ -36,10 +39,14 @@ class User {
     // Safely extract data from the map using  Gkeys.
     // If the key is not found or the value is null, it defaults to an empty string.
     return User(
-        id: map['_id'] as String? ?? "", // '_id' is typically used in databases like MongoDB.
-        userName: map['userName'] as String? ?? "", // Extract 'userName' from the map.
-        email: map['email'] as String? ?? "", // Extract 'email' from the map.
-        password: map['password'] as String? ?? ""); // Extract 'password' from the map.
+      id: map['_id'] as String? ??
+          "", // '_id' is typically used in databases like MongoDB.
+      userName:
+          map['userName'] as String? ?? "", // Extract 'userName' from the map.
+      email: map['email'] as String? ?? "", // Extract 'email' from the map.
+      password: map['password'] as String? ?? "",
+      token: map['token'] as String? ?? "",
+    );
   }
 
   // This method converts a JSON string (received from an API or other sources) into a User object.

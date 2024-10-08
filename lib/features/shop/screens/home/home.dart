@@ -53,30 +53,30 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       // AppBar
       
-
+    
       // Drawer
       drawer: const MyDrawer(),
-
+    
       // Body
       body: SizedBox(
         height: MediaQuery.sizeOf(context).height,
         child: SingleChildScrollView(
           child: Column(
-
+    
             children: [
-
+    
               MyHeader(),
-
+    
               // Categories
               Categories(products: products),
-
+    
               // Banner
               const MyBannerSlider(),
-
+    
               // Heading
               const MyHeading(headingLeft: "Trending", headingRight: 'See all'),
               const SizedBox(height: 10),
-
+    
               // Product Card
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 6),
@@ -104,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-
+    
               // Product card
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 6),
@@ -151,19 +151,19 @@ class MyHeader extends StatelessWidget {
     return MyPrimaryHeaderContainer(
       color: DynamicBg.sameBrightness(context),
       showContainer: false,
-      height: 130,
+      height: 120,
       child: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Padding(
               padding:
-                  const EdgeInsets.only(left: MySizes.defaultSpace),
+                  const EdgeInsets.only(left: MySizes.defaultSpace / 1.5),
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: Stack(
                   children: [
-                    /// Left side welcome title
+                    // Left side welcome title
                     Column(
                       
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -181,10 +181,10 @@ class MyHeader extends StatelessWidget {
                                 ),
                       ],
                     ),
-
-                    /// Cart icon
+    
+                    // Cart icon
                     Positioned(
-                      right: 30,
+                      right: 20,
                       top: 10,
                       child: GestureDetector(
                           onTap: () => Get.to(() => const CartScreen()),
