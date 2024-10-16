@@ -1,12 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:kiska/features/shop/controllers/home_controller.dart';
 import 'package:kiska/features/shop/models/product_model.dart';
 import 'package:kiska/features/shop/screens/product_review/product_review.dart';
 import 'package:kiska/features/shop/screens/home/widgets/my_dot_navigation.dart';
+import 'package:kiska/providers/cart_provider.dart';
 import 'package:kiska/utils/constants/image_strings.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
 import 'package:readmore/readmore.dart';
@@ -67,11 +69,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Product Image Slider
-                ProductDetailImages(images: widget.product.images, controller: controller),
+                ProductDetailImages(
+                    images: widget.product.images, controller: controller),
                 SizedBox(height: 24),
 
                 // Product Details
-                ProductDetail(),  
+                ProductDetail(),
                 SizedBox(height: 12),
 
                 // Price & Sale price
@@ -304,20 +307,31 @@ class ProductDetailImages extends StatelessWidget {
             onPageChanged: (index, _) => controller.updatePageIndicator(index),
           ),
         ),
-        Positioned(bottom: 2, child: MyDotNavigation(controller: controller,dotCount: images.length,))
+        Positioned(
+            bottom: 2,
+            child: MyDotNavigation(
+              controller: controller,
+              dotCount: images.length,
+            ))
       ],
     );
   }
 }
 
 // BottomNavigation buttons
-class BottomNavigationBtn extends StatelessWidget {
+class BottomNavigationBtn extends ConsumerStatefulWidget {
   const BottomNavigationBtn({
     super.key,
   });
 
   @override
+  _BottomNavigationBtnState createState() => _BottomNavigationBtnState();
+}
+
+class _BottomNavigationBtnState extends ConsumerState<BottomNavigationBtn> {
+  @override
   Widget build(BuildContext context) {
+    final _cartProvider = ref.read(cartProvider.notifier);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
       decoration: BoxDecoration(

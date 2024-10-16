@@ -25,7 +25,6 @@ class MyProductCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
         child: Card(
-          
           elevation: 4,
           color: const Color.fromARGB(255, 255, 255, 255),
           child: Column(
@@ -33,19 +32,23 @@ class MyProductCard extends StatelessWidget {
             children: [
               Image.network(
                 loadingBuilder: (BuildContext context, Widget child,
-                ImageChunkEvent? loadingProgress) {
-              if (loadingProgress == null) {
-                return child; // Image loaded successfully
-              } else {
-                // Show a progress indicator while the image is loading
-                return Center(
-                  child: LoadingAnimationWidget.stretchedDots(
-                    color: AppColors.primaryColor,
-                    size: 40,
-                  ),
-                );
-              }
-            },
+                    ImageChunkEvent? loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child; // Image loaded successfully
+                  } else {
+                    // Show a progress indicator while the image is loading
+                    return SizedBox(
+                      width: double.infinity,
+                      height: 120,
+                      child: Center(
+                        child: LoadingAnimationWidget.waveDots(
+                          color: AppColors.primaryColor,
+                          size: 40,
+                        ),
+                      ),
+                    );
+                  }
+                },
                 imageUrl,
                 fit: BoxFit.contain,
                 height: 120,
@@ -84,25 +87,29 @@ class MyProductCard extends StatelessWidget {
                 children: [
                   Padding(
                       padding: const EdgeInsets.only(left: 10, top: 5),
-                      child: Text(
-                        '₹$price',
-                        style:
-                            const TextStyle(fontSize: 18, color: Colors.black),
+                      child: Row(
+                        children: [
+                          Text('₹9999',style: TextStyle( decoration: TextDecoration.lineThrough,decorationColor: Colors.red,),),
+                          SizedBox(width: 5),
+                          Text(
+                            '₹$price',
+                            style: const TextStyle(
+                                fontSize: 18, color: Colors.black),
+                          ),
+                        ],
                       )),
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xFF2F3645),
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        bottomRight: Radius.circular(12),
-                      ),
-                    ),
-                    child: const SizedBox(
-                      height: 38,
-                      width: 38,
-                      child: Icon(
-                        Iconsax.add,
-                        color: Colors.white,
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: Container(
+                      decoration: const BoxDecoration(
+                          color: Color(0xFF2F3645), shape: BoxShape.circle),
+                      child: const SizedBox(
+                        height: 38,
+                        width: 38,
+                        child: Icon(
+                          Iconsax.add,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   )

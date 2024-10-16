@@ -4,7 +4,7 @@ import 'package:kiska/common/custom_shapes/primary_header_container.dart';
 import 'package:kiska/common/product/product_grid.dart';
 import 'package:kiska/common/widgets/cart/cart_icon.dart';
 import 'package:kiska/features/shop/screens/cart/cart.dart';
-import 'package:kiska/common/drawer.dart';
+import 'package:kiska/common/widgets/appbar/drawer.dart';
 import 'package:kiska/common/heading.dart';
 import 'package:kiska/features/shop/screens/home/widgets/banner_slider.dart';
 import 'package:kiska/features/shop/screens/home/widgets/categories.dart';
@@ -20,32 +20,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   var currentIndex = 0;
-  final List<Widget> pages = [
-    const Center(child: Text('Home page', style: TextStyle(fontSize: 24))),
-    const Center(child: Text('Profile page', style: TextStyle(fontSize: 24))),
-    const Center(child: Text('Settings page', style: TextStyle(fontSize: 24))),
-  ];
-
-  final List<Map<String, String>> products = [
-    {'image': 'assets/images/products/pant.png', 'name': 'Pants'},
-    {
-      'image': 'assets/images/products/NikeBasketballShoeGreenBlack.png',
-      'name': 'Shoes'
-    },
-    {'image': 'assets/images/products/t-shirt.png', 'name': 'T-shirt'},
-    {'image': 'assets/images/products/slipper-product.png', 'name': 'Slipper'},
-    {'image': 'assets/images/products/laptop.png', 'name': 'Laptop'},
-    {'image': 'assets/images/products/pant.png', 'name': 'Pants'},
-  ];
-
-  final List<String> categories = [
-    "Electronics",
-    "Fashion",
-    "Home",
-    "Beauty",
-    "Sports",
-    "Books",
-  ];
+  
 
   @override
   Widget build(BuildContext context) {

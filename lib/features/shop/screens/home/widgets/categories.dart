@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:kiska/features/shop/controllers/category_controller.dart';
 import 'package:kiska/features/shop/models/category_model.dart';
 import 'package:kiska/features/shop/screens/sub_category/sub_categories.dart';
+import 'package:kiska/utils/themes/app_colors.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class Categories extends StatefulWidget {
   const Categories({super.key});
@@ -27,8 +29,11 @@ class _CategoriesState extends State<Categories> {
       future: futureCategories,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-              child: CircularProgressIndicator()); // Show loading spinner
+          return SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: 50,
+            child: const Center(child: CircularProgressIndicator()),
+          ); // Show loading spinner
         } else if (snapshot.hasError) {
           return Center(
               child: Text('Error: ${snapshot.error}')); // Show error message
@@ -61,6 +66,26 @@ class _CategoriesState extends State<Categories> {
                             padding: const EdgeInsets.all(8.0),
                             // Load image from network instead of assets
                             child: Image.network(
+                              loadingBuilder: (BuildContext context,
+                                  Widget child,
+                                  ImageChunkEvent? loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child; // Image loaded successfully
+                                } else {
+                                  // Show a progress indicator while the image is loading
+                                  return SizedBox(
+                                    width: 50,
+                                    height: 50,
+                                    child: Center(
+                                      child:
+                                          LoadingAnimationWidget.stretchedDots(
+                                        color: AppColors.primaryColor,
+                                        size: 40,
+                                      ),
+                                    ),
+                                  );
+                                }
+                              },
                               category
                                   .image, // Assuming Category model has imageUrl field
                               width: 45,

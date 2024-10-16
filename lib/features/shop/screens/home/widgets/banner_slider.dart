@@ -33,9 +33,12 @@ class _MyBannerSliderState extends State<MyBannerSlider> {
       future: futureBanners,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
-            child: LoadingAnimationWidget.stretchedDots(
-                color: AppColors.primaryColor, size: 50),
+          return SizedBox(
+            height: 200,
+            child: Center(
+              child: LoadingAnimationWidget.stretchedDots(
+                  color: AppColors.primaryColor, size: 50),
+            ),
           );
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));

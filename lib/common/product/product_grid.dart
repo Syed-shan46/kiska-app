@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kiska/common/product_card.dart';
+import 'package:kiska/common/product/product_card.dart';
 import 'package:kiska/features/shop/controllers/product_controller.dart';
 import 'package:kiska/features/shop/models/product_model.dart';
 import 'package:kiska/features/shop/screens/home/product_detail/product_detail.dart';
@@ -61,6 +61,7 @@ class _MyProductGridState extends State<MyProductGrid> {
                 final product = products[index];
                   
                 return MyProductCard(
+                  
                     imageUrl: product.images[0],
                     productName: product.productName,
                     price: product.productPrice,
