@@ -1,9 +1,17 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:kiska/features/authentication/models/user.dart';
 import 'package:http/http.dart' as http;
+import 'package:kiska/features/authentication/screens/login/login.dart';
 import 'package:kiska/navigation_menu.dart';
+import 'package:kiska/providers/user_provider.dart';
 import 'package:kiska/services/http_response.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:kiska/providers/user_provider.dart';
+
+final providerContainer = ProviderContainer();
 
 class AuthController {
   Future<void> signUPUsers({
@@ -40,8 +48,10 @@ class AuthController {
       manageHttpResponse(
         response: response,
         context: context,
-        onSuccess: () {
+        onSuccess: () async {
           showSnackBar(context, 'Account Created Successfully');
+          await Future.delayed(Duration(seconds: 3));
+          Get.to(() => LoginScreen());
         },
       );
     } catch (e) {
@@ -74,11 +84,36 @@ class AuthController {
       manageHttpResponse(
           response: response,
           context: context,
-          onSuccess: () {
+          onSuccess: () async {
+            SharedPreferences preferences =
+                await SharedPreferences.getInstance();
+
+            String token = jsonDecode(response.body)['token'];
+            await preferences.setString('auth_token', token);
+
+            final userJson = jsonEncode(jsonDecode(response.body)['user']);
+
+            providerContainer.read(userProvider.notifier).setUser(userJson);
+
+            await preferences.setString('user', userJson);
+
+            showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                });
+            // Wait for 1 second
+            await Future.delayed(Duration(seconds: 1));
+            // Close the CircularProgressIndicator dialog
+            Navigator.pop(context);
+            await Future.delayed(Duration(seconds: 1));
+            showSnackBar(context, 'You are Logged In');
+            await Future.delayed(Duration(seconds: 2));
             Get.to(() => NavigationMenu());
           });
     } catch (e) {}
   }
 }
-
-

@@ -4,7 +4,6 @@ import 'package:iconsax/iconsax.dart';
 import 'package:kiska/common/product_card.dart';
 import 'package:kiska/features/shop/screens/cart/cart.dart';
 import 'package:kiska/features/shop/screens/home/widgets/search_field.dart';
-import 'package:kiska/features/shop/screens/home/product_detail/product_detail.dart';
 import 'package:kiska/features/shop/screens/store/widgets/tab_bar.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
 
@@ -20,8 +19,12 @@ class StoreScreen extends StatelessWidget {
           automaticallyImplyLeading: false,
           backgroundColor: DynamicBg.sameBrightness(context),
           actions: [
-            IconButton(onPressed: () => Get.to(()=> CartScreen()),
-             icon: Icon(Iconsax.shopping_bag,color: ThemeUtils.dynamicTextColor(context),))
+            IconButton(
+                onPressed: () => Get.to(() => CartScreen()),
+                icon: Icon(
+                  Iconsax.shopping_bag,
+                  color: ThemeUtils.dynamicTextColor(context),
+                ))
           ],
         ),
         body: NestedScrollView(
@@ -93,7 +96,7 @@ class ProductColumn extends StatelessWidget {
                         'assets/images/products/NikeBasketballShoeGreenBlack.png',
                     productName: 'Adidas Shoe',
                     price: 2000,
-                    onTap: () => Get.to(() => ProductDetailScreen()),
+                    onTap: () => Get.to(()),
                   ),
                 ),
                 Expanded(
@@ -102,7 +105,7 @@ class ProductColumn extends StatelessWidget {
                     imageUrl: 'assets/images/products/iphone_13_pro.png',
                     productName: 'Iphone 13 Pro',
                     price: 2000,
-                    onTap: () => Get.to(() => ProductDetailScreen()),
+                    onTap: () => Get.to(()),
                   ),
                 ),
               ],
@@ -115,12 +118,11 @@ class ProductColumn extends StatelessWidget {
               children: [
                 Expanded(
                   child: MyProductCard(
-                    category: "Mobiles",
-                    imageUrl: 'assets/images/products/iphone_13_pro.png',
-                    productName: 'Iphone 13 Pro',
-                    price: 2000,
-                    onTap: () => Get.to(() => ProductDetailScreen()),
-                  ),
+                      category: "Mobiles",
+                      imageUrl: 'assets/images/products/iphone_13_pro.png',
+                      productName: 'Iphone 13 Pro',
+                      price: 2000,
+                      onTap: () => Get.to(())),
                 ),
                 Expanded(
                   child: MyProductCard(
@@ -129,7 +131,7 @@ class ProductColumn extends StatelessWidget {
                         'assets/images/products/NikeBasketballShoeGreenBlack.png',
                     productName: 'Adidas Shoe',
                     price: 2000,
-                    onTap: () => Get.to(() => ProductDetailScreen()),
+                    onTap: () => Get.to(()),
                   ),
                 ),
               ],

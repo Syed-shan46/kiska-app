@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:kiska/utils/themes/app_colors.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class MyProductCard extends StatelessWidget {
   const MyProductCard(
@@ -13,7 +15,7 @@ class MyProductCard extends StatelessWidget {
   final String imageUrl;
   final String productName;
   final String category;
-  final double price;
+  final int price;
   final VoidCallback onTap;
 
   @override
@@ -23,15 +25,35 @@ class MyProductCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
         child: Card(
+          
+          elevation: 4,
           color: const Color.fromARGB(255, 255, 255, 255),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset(
+              Image.network(
+                loadingBuilder: (BuildContext context, Widget child,
+                ImageChunkEvent? loadingProgress) {
+              if (loadingProgress == null) {
+                return child; // Image loaded successfully
+              } else {
+                // Show a progress indicator while the image is loading
+                return Center(
+                  child: LoadingAnimationWidget.stretchedDots(
+                    color: AppColors.primaryColor,
+                    size: 40,
+                  ),
+                );
+              }
+            },
                 imageUrl,
                 fit: BoxFit.contain,
                 height: 120,
                 width: double.infinity,
+                errorBuilder: (context, error, stackTrace) {
+                  return Icon(Icons
+                      .error); // Optionally, show an error icon if the image fails to load
+                },
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 10),
@@ -68,8 +90,7 @@ class MyProductCard extends StatelessWidget {
                             const TextStyle(fontSize: 18, color: Colors.black),
                       )),
                   Container(
-                    decoration:const  BoxDecoration(
-                      
+                    decoration: const BoxDecoration(
                       color: Color(0xFF2F3645),
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(10),

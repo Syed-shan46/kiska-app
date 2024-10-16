@@ -19,6 +19,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
   late String userName;
   late String email;
   late String password;
+  bool _isLoading = false;
+
+  registerUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    await _authController
+        .signUPUsers(
+            context: context,
+            userName: userName,
+            email: email,
+            password: password)
+        .whenComplete(() {
+      setState(() {
+        _isLoading = false;
+      });
+    });
+  }
 
   /// Controllers
   final TextEditingController usernameController = TextEditingController();
@@ -170,19 +188,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      
-                      await _authController.signUPUsers(
-                          context: context,
-                          userName: userName,
-                          email: email,
-                          password: password);
+                      registerUser();
                     }
                   },
-                  child: Text('Create Account',
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.primaryFixed,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700)),
+                  child: _isLoading
+                      ? CircularProgressIndicator(
+                          strokeWidth: 3,
+                        )
+                      : Text('Create Account',
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.primaryFixed,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700)),
                 ),
               ),
               const SizedBox(height: MySizes.spaceBtwSections),
@@ -192,7 +209,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               const SizedBox(height: MySizes.spaceBtwItems),
 
               /// social buttons
-               MySocialIcons(),
+              MySocialIcons(),
             ],
           ),
         ),

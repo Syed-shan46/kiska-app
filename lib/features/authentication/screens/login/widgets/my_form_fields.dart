@@ -23,6 +23,12 @@ class _MyFormFieldsState extends State<MyFormFields> {
   late String email;
   late String password;
 
+  loginUser() async {
+    await _authController
+        .signInUsers(context: context, email: email, password: password)
+        .whenComplete(() {});
+  }
+
   /// Login method
 
   @override
@@ -83,8 +89,7 @@ class _MyFormFieldsState extends State<MyFormFields> {
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
                   print('Form is valid');
-                  await _authController.signInUsers(
-                      context: context, email: email, password: password);
+                  loginUser();
                 }
               },
               child: Text(

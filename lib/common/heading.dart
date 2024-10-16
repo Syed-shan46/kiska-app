@@ -21,11 +21,12 @@ class MyHeading extends StatelessWidget {
             headingLeft,
             style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
           ),
-          Text(headingRight,
-              style:  TextStyle(
+          Text(
+            headingRight,
+            style: TextStyle(
                 fontWeight: FontWeight.w500,
-                color: Theme.of(context).colorScheme.primary
-              )),
+                color: Theme.of(context).colorScheme.primary),
+          ),
         ],
       ),
     );

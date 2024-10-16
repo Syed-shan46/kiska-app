@@ -45,7 +45,7 @@ class SettingsScreen extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(MySizes.spaceBtwItems),
             child: Column(
-              children: const [
+              children: [
                 // Account settings
                 MySectionHeading(
                   title: 'Account Settings',
@@ -80,9 +80,26 @@ class SettingsScreen extends StatelessWidget {
                     title: 'Notifications',
                     subTitle: 'Set any kind of notification message'),
                 MySettingsMenuTile(
-                    icon: Iconsax.security_card,
-                    title: 'Account Privacy',
-                    subTitle: 'Manage data usage and connected accounts'),
+                  icon: Iconsax.security_card,
+                  title: 'Account Privacy',
+                  subTitle: 'Manage data usage and connected accounts',
+                ),
+
+                SizedBox(height: MySizes.spaceBtwItems),
+                SizedBox(
+                  height: 45,
+                  width: double.infinity,
+                  child: OutlinedButton(
+                    style: ButtonStyle(
+                        side: WidgetStateProperty.all(
+                            BorderSide(color: Colors.red))),
+                    onPressed: () {},
+                    child: Text(
+                      'Logout',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                ),
               ],
             ),
           )

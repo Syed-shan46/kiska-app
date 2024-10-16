@@ -1,30 +1,26 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-class Category {
+class BannerModel {
   final String id;
-  final String name;
   final String image;
 
-  Category({required this.id, required this.name, required this.image});
+  BannerModel({required this.id, required this.image});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
-      'name': name,
       'image': image,
     };
   }
 
-  factory Category.fromJson(Map<String, dynamic> map) {
-    return Category(
+  factory BannerModel.fromJson(Map<String, dynamic> map) {
+    return BannerModel(
       id: map['_id'] as String,
-      name: map['name'] as String,
       image: map['image'] as String,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  
 }

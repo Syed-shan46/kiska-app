@@ -4,7 +4,8 @@ import 'package:kiska/features/shop/controllers/home_controller.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
 
 class MyDotNavigation extends StatelessWidget {
-  const MyDotNavigation({super.key, required this.controller});
+  final int dotCount;
+  const MyDotNavigation({super.key, required this.controller, required this.dotCount});
 
   final HomeController controller;
 
@@ -17,7 +18,7 @@ class MyDotNavigation extends StatelessWidget {
           () => Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              for (int i = 0; i < 3; i++)
+              for (int i = 0; i < dotCount; i++)
                 Container(
                   height: 7,
                   width: 7,

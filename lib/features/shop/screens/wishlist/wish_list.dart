@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:kiska/features/shop/screens/cart/cart.dart';
 import 'package:kiska/common/product_card.dart';
-import 'package:kiska/features/shop/screens/home/product_detail/product_detail.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
 
 class WishListScreen extends StatelessWidget {
@@ -14,11 +13,19 @@ class WishListScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text('Favourite',style: TextStyle(color: ThemeUtils.dynamicTextColor(context),fontWeight: FontWeight.w500),),
-        actions:  [ 
+        title: Text(
+          'Favourite',
+          style: TextStyle(
+              color: ThemeUtils.dynamicTextColor(context),
+              fontWeight: FontWeight.w500),
+        ),
+        actions: [
           Padding(
             padding: EdgeInsets.all(8),
-            child: IconButton(onPressed: ()=> Get.to(()=> CartScreen()),icon: Icon(Iconsax.shopping_bag),),
+            child: IconButton(
+              onPressed: () => Get.to(() => CartScreen()),
+              icon: Icon(Iconsax.shopping_bag),
+            ),
           )
         ],
       ),
@@ -36,7 +43,7 @@ class WishListScreen extends StatelessWidget {
                       imageUrl: 'assets/images/products/dash-camera.avif',
                       productName: 'Dash Camera',
                       price: 2000,
-                      onTap: () => Get.to(() => ProductDetailScreen()),
+                      onTap: () => Get.to(()),
                     ),
                   ),
                   Expanded(
@@ -45,7 +52,7 @@ class WishListScreen extends StatelessWidget {
                       imageUrl: 'assets/images/products/t-shirt.png',
                       productName: 'Adidas Shoe',
                       price: 2000,
-                      onTap: () => Get.to(() => ProductDetailScreen()),
+                      onTap: () => Get.to(()),
                     ),
                   ),
                 ],

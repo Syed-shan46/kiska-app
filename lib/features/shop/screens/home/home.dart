@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kiska/common/custom_shapes/primary_header_container.dart';
+import 'package:kiska/common/product/product_grid.dart';
 import 'package:kiska/common/widgets/cart/cart_icon.dart';
 import 'package:kiska/features/shop/screens/cart/cart.dart';
 import 'package:kiska/common/drawer.dart';
 import 'package:kiska/common/heading.dart';
-import 'package:kiska/common/product_card.dart';
 import 'package:kiska/features/shop/screens/home/widgets/banner_slider.dart';
 import 'package:kiska/features/shop/screens/home/widgets/categories.dart';
-import 'package:kiska/features/shop/screens/home/product_detail/product_detail.dart';
 import 'package:kiska/utils/constants/sizes.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
 
@@ -52,89 +51,27 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       // AppBar
-      
-    
+
       // Drawer
       drawer: const MyDrawer(),
-    
+
       // Body
-      body: SizedBox(
-        height: MediaQuery.sizeOf(context).height,
-        child: SingleChildScrollView(
-          child: Column(
-    
-            children: [
-    
-              MyHeader(),
-    
-              // Categories
-              Categories(products: products),
-    
-              // Banner
-              const MyBannerSlider(),
-    
-              // Heading
-              const MyHeading(headingLeft: "Trending", headingRight: 'See all'),
-              const SizedBox(height: 10),
-    
-              // Product Card
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 6),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: MyProductCard(
-                        category: "Camera",
-                        imageUrl: 'assets/images/products/dash-camera.avif',
-                        productName: 'Dash Camera',
-                        price: 2000,
-                        onTap: () => Get.to(() => ProductDetailScreen()),
-                      ),
-                    ),
-                    Expanded(
-                      child: MyProductCard(
-                        category: "Clothes",
-                        imageUrl: 'assets/images/products/t-shirt.png',
-                        productName: 'Adidas Shoe',
-                        price: 2000,
-                        onTap: () => Get.to(() => ProductDetailScreen()),
-                      ),
-                    ),  
-                  ],
-                ),
-              ),
-    
-              // Product card
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 6),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: MyProductCard(
-                        category: "Shoes",
-                        imageUrl:
-                            'assets/images/products/NikeBasketballShoeGreenBlack.png',
-                        productName: 'Adidas Shoe',
-                        price: 2000,
-                        onTap: () => Get.to(() => ProductDetailScreen()),
-                      ),
-                    ),
-                    Expanded(
-                      child: MyProductCard(
-                        category: "Shoe",
-                        imageUrl: 'assets/images/products/adidas-shoe.png',
-                        productName: 'Adidas Shoe',
-                        price: 2000,
-                        onTap: () => Get.to(() => ProductDetailScreen()),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: const [
+            MyHeader(),
+
+            // Categories
+            Categories(),
+
+            // Banner
+            MyBannerSlider(),
+
+            // Heading
+            MyHeading(headingLeft: "Trending", headingRight: 'See all'),
+
+            MyProductGrid(),
+          ],
         ),
       ),
     );
@@ -157,38 +94,31 @@ class MyHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Padding(
-              padding:
-                  const EdgeInsets.only(left: MySizes.defaultSpace / 1.5),
+              padding: const EdgeInsets.only(left: MySizes.defaultSpace / 1.5),
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: Stack(
                   children: [
                     // Left side welcome title
                     Column(
-                      
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Text('Good day for shopping',
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelMedium!
-                                ),
+                            style: Theme.of(context).textTheme.labelMedium!),
                         Text('Syed-shan',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge!
-                                ),
+                            style: Theme.of(context).textTheme.bodyLarge!),
                       ],
                     ),
-    
+
                     // Cart icon
                     Positioned(
                       right: 20,
                       top: 10,
                       child: GestureDetector(
                           onTap: () => Get.to(() => const CartScreen()),
-                          child:  MyCartIcon(color: ThemeUtils.dynamicTextColor(context))),
+                          child: MyCartIcon(
+                              color: ThemeUtils.dynamicTextColor(context))),
                     )
                   ],
                 ),

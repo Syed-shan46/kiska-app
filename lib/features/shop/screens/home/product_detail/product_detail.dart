@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:kiska/features/shop/controllers/home_controller.dart';
+import 'package:kiska/features/shop/models/product_model.dart';
 import 'package:kiska/features/shop/screens/product_review/product_review.dart';
 import 'package:kiska/features/shop/screens/home/widgets/my_dot_navigation.dart';
 import 'package:kiska/utils/constants/image_strings.dart';
@@ -11,7 +12,11 @@ import 'package:kiska/utils/themes/app_colors.dart';
 import 'package:readmore/readmore.dart';
 
 class ProductDetailScreen extends StatefulWidget {
-  const ProductDetailScreen({super.key});
+  final Product product;
+  const ProductDetailScreen({
+    super.key,
+    required this.product,
+  });
 
   @override
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
@@ -34,10 +39,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
-              onPressed: () => Get.back(),
-              icon: Icon(
-                Icons.arrow_back_ios,
-              )),
+            onPressed: () => Get.back(),
+            icon: Icon(
+              Icons.arrow_back_ios,
+            ),
+          ),
+          title: Text(
+            widget.product.productName,
+          ),
           actions: const [
             Padding(
               padding: EdgeInsets.only(right: 15),
@@ -58,19 +67,21 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Product Image Slider
-                ProductDetailImages(images: images, controller: controller),
+                ProductDetailImages(images: widget.product.images, controller: controller),
                 SizedBox(height: 24),
 
                 // Product Details
-                ProductDetail(),
+                ProductDetail(),  
                 SizedBox(height: 12),
 
                 // Price & Sale price
-                ProductPrice(),
+                ProductPrice(
+                  price: widget.product.productPrice,
+                ),
                 SizedBox(height: 12),
 
                 // Title,
-                Text('Nike Green Running Shoe'),
+                Text(widget.product.productName),
                 SizedBox(height: 6),
 
                 // Stock status
@@ -195,8 +206,10 @@ class StockStatus extends StatelessWidget {
 
 // ProductPrice
 class ProductPrice extends StatelessWidget {
+  final int price;
   const ProductPrice({
     super.key,
+    required this.price,
   });
 
   @override
@@ -219,13 +232,13 @@ class ProductPrice extends StatelessWidget {
 
         // MRP
         Text(
-          '\$250',
+          '9999',
           style: TextStyle(decoration: TextDecoration.lineThrough),
         ),
         SizedBox(width: 20),
 
         // Sale Price
-        Text('\$190', style: TextStyle(fontSize: 22)),
+        Text('\$$price', style: TextStyle(fontSize: 22)),
       ],
     );
   }
@@ -280,7 +293,7 @@ class ProductDetailImages extends StatelessWidget {
       children: [
         CarouselSlider(
           items: images.map((imagePath) {
-            return Image.asset(imagePath);
+            return Image.network(imagePath);
           }).toList(),
           options: CarouselOptions(
             height: 350,
@@ -291,7 +304,7 @@ class ProductDetailImages extends StatelessWidget {
             onPageChanged: (index, _) => controller.updatePageIndicator(index),
           ),
         ),
-        Positioned(bottom: 2, child: MyDotNavigation(controller: controller))
+        Positioned(bottom: 2, child: MyDotNavigation(controller: controller,dotCount: images.length,))
       ],
     );
   }

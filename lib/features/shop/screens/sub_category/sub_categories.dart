@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kiska/common/product_card/product_card_horizontal.dart';
+import 'package:kiska/common/product/product_card_horizontal.dart';
 import 'package:kiska/common/texts/my_section_heading.dart';
 import 'package:kiska/utils/constants/sizes.dart';
 
