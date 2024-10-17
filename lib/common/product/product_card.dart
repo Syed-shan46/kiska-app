@@ -25,6 +25,7 @@ class MyProductCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
         child: Card(
+          
           elevation: 4,
           color: const Color.fromARGB(255, 255, 255, 255),
           child: Column(
@@ -58,6 +59,7 @@ class MyProductCard extends StatelessWidget {
                       .error); // Optionally, show an error icon if the image fails to load
                 },
               ),
+              // Category
               Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: Text(
@@ -69,6 +71,8 @@ class MyProductCard extends StatelessWidget {
                   ),
                 ),
               ),
+        
+              // Product name
               Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: Text(
@@ -80,7 +84,7 @@ class MyProductCard extends StatelessWidget {
                   ),
                 ),
               ),
-
+        
               // Cart Button
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -99,7 +103,7 @@ class MyProductCard extends StatelessWidget {
                         ],
                       )),
                   Padding(
-                    padding: const EdgeInsets.only(right: 10),
+                    padding: const EdgeInsets.only(right: 10,),
                     child: Container(
                       decoration: const BoxDecoration(
                           color: Color(0xFF2F3645), shape: BoxShape.circle),
@@ -114,7 +118,7 @@ class MyProductCard extends StatelessWidget {
                     ),
                   )
                 ],
-              )
+              ),
             ],
           ),
         ),

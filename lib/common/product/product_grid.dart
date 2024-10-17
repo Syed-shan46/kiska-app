@@ -52,10 +52,10 @@ class _MyProductGridState extends State<MyProductGrid> {
               shrinkWrap: true,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  
+                  mainAxisExtent: 230,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
-                  childAspectRatio: 0.9),
+                  childAspectRatio: 0.8),
               itemCount: products.length,
               itemBuilder: (context, index) {
                 final product = products[index];
