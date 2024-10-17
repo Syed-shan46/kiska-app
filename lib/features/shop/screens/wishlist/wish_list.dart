@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:kiska/features/shop/screens/cart/cart.dart';
-import 'package:kiska/common/product/product_card.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
 
 class WishListScreen extends StatelessWidget {
@@ -31,30 +30,14 @@ class WishListScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: [
+          children: const [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 6),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Expanded(
-                    child: MyProductCard(
-                      category: "Camera",
-                      imageUrl: 'assets/images/products/dash-camera.avif',
-                      productName: 'Dash Camera',
-                      price: 2000,
-                      onTap: () => Get.to(()),
-                    ),
-                  ),
-                  Expanded(
-                    child: MyProductCard(
-                      category: "Clothes",
-                      imageUrl: 'assets/images/products/t-shirt.png',
-                      productName: 'Adidas Shoe',
-                      price: 2000,
-                      onTap: () => Get.to(()),
-                    ),
-                  ),
+                  Expanded(child: Text(''),),
+                  Expanded(child: Text(''),),
                 ],
               ),
             ),

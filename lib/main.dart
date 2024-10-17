@@ -49,24 +49,3 @@ class MyApp extends ConsumerWidget {
   }
 }
 
-// added comment for settings page testing git
-
-class SettingsPage extends StatelessWidget {
-  const SettingsPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Settings')),
-      body: const Center(
-        child: Column(
-          children: [
-            Text('Testing page'),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-// HomeScreen

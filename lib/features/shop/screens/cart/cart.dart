@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kiska/providers/cart_provider.dart';
 import 'package:kiska/utils/constants/sizes.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
 
 
 import 'widgets/cart_items.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends ConsumerStatefulWidget {
   const CartScreen({super.key});
 
   @override
+  _CartScreenState createState() => _CartScreenState();
+}
+
+class _CartScreenState extends ConsumerState<CartScreen> {
+  @override
   Widget build(BuildContext context) {
+    final cartData = ref.watch(cartProvider);
     return Scaffold(
       /// Appbar
       appBar: AppBar(
@@ -29,7 +37,10 @@ class CartScreen extends StatelessWidget {
       bottomNavigationBar: const MyCartBottomNav(),
 
       /// Heading and cart items
-      body: SingleChildScrollView(
+      body: cartData.isEmpty? Center(child: const Column( 
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [Text('Shopping Cart is Empty')],
+      ),): SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

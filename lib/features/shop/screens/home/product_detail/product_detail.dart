@@ -9,11 +9,11 @@ import 'package:kiska/features/shop/models/product_model.dart';
 import 'package:kiska/features/shop/screens/product_review/product_review.dart';
 import 'package:kiska/features/shop/screens/home/widgets/my_dot_navigation.dart';
 import 'package:kiska/providers/cart_provider.dart';
-import 'package:kiska/utils/constants/image_strings.dart';
+import 'package:kiska/services/http_response.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
 import 'package:readmore/readmore.dart';
 
-class ProductDetailScreen extends StatefulWidget {
+class ProductDetailScreen extends ConsumerStatefulWidget {
   final Product product;
   const ProductDetailScreen({
     super.key,
@@ -21,22 +21,17 @@ class ProductDetailScreen extends StatefulWidget {
   });
 
   @override
-  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
+  // ignore: library_private_types_in_public_api
+  _ProductDetailScreenState createState() => _ProductDetailScreenState();
 }
 
-class _ProductDetailScreenState extends State<ProductDetailScreen> {
+class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   final PageController pageController = PageController();
   int currentPage = 0;
 
-  // Sample images
-  final List<String> images = [
-    MyImages.productImg2,
-    MyImages.productImg3,
-    MyImages.productImg4,
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final _cartProvider = ref.read(cartProvider.notifier);
     final controller = Get.put(HomeController());
     return Scaffold(
         appBar: AppBar(
@@ -61,7 +56,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         ),
 
         // Bottom Navigation Bar
-        bottomNavigationBar: BottomNavigationBtn(),
+        bottomNavigationBar: BottomNavigationBtn(cartProvider: _cartProvider, widget: widget),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(left: 16, right: 16),
@@ -136,6 +131,59 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             ),
           ),
         ));
+  }
+}
+
+class BottomNavigationBtn extends StatelessWidget {
+  const BottomNavigationBtn({
+    super.key,
+    required CartNotifier cartProvider,
+    required this.widget,
+  }) : _cartProvider = cartProvider;
+
+  final CartNotifier _cartProvider;
+  final ProductDetailScreen widget;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
+        ),
+      ),
+    
+      // Add to Cart and Buy Now Button
+      child: Row(
+        children: [
+          OutlinedButton(
+            onPressed: () {
+              _cartProvider.addProductToCart(
+                  productName: widget.product.productName,
+                  productPrice: widget.product.productPrice,
+                  category: widget.product.category,
+                  image: widget.product.images,
+                  quantity: widget.product.quantity,
+                  productId: widget.product.id);
+    
+              showSnackBar(context, 'Working');
+            },
+            child: Text('Add to Cart'),
+          ),
+          SizedBox(width: 20),
+          ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30))),
+              child: Text('Buy Now'))
+        ],
+      ),
+    );
   }
 }
 
@@ -314,51 +362,6 @@ class ProductDetailImages extends StatelessWidget {
               dotCount: images.length,
             ))
       ],
-    );
-  }
-}
-
-// BottomNavigation buttons
-class BottomNavigationBtn extends ConsumerStatefulWidget {
-  const BottomNavigationBtn({
-    super.key,
-  });
-
-  @override
-  _BottomNavigationBtnState createState() => _BottomNavigationBtnState();
-}
-
-class _BottomNavigationBtnState extends ConsumerState<BottomNavigationBtn> {
-  @override
-  Widget build(BuildContext context) {
-    final _cartProvider = ref.read(cartProvider.notifier);
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(16),
-          topRight: Radius.circular(16),
-        ),
-      ),
-
-      // Add to Cart and Buy Now Button
-      child: Row(
-        children: [
-          OutlinedButton(
-            onPressed: () {},
-            child: Text('Add to Cart'),
-          ),
-          SizedBox(width: 20),
-          ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30))),
-              child: Text('Buy Now'))
-        ],
-      ),
     );
   }
 }

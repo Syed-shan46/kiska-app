@@ -16,3 +16,11 @@ class DynamicBg {
         : Colors.white;
   }
 }
+
+class Navbg {
+  static Color navbarBg(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.dark
+        ? AppColors.darkBackground
+        : Colors.white;
+  }
+}

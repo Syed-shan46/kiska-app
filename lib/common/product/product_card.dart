@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:kiska/features/shop/models/product_model.dart';
+import 'package:kiska/providers/cart_provider.dart';
+import 'package:kiska/services/http_response.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
+import 'package:kiska/utils/themes/theme_utils.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
-class MyProductCard extends StatelessWidget {
-  const MyProductCard(
+class MyProductCard extends ConsumerStatefulWidget {
+  const MyProductCard(this.product,
       {super.key,
       required this.imageUrl,
       required this.productName,
@@ -17,53 +22,87 @@ class MyProductCard extends StatelessWidget {
   final String category;
   final int price;
   final VoidCallback onTap;
+  final Product? product;
 
   @override
+  _MyProductCardState createState() => _MyProductCardState();
+}
+
+class _MyProductCardState extends ConsumerState<MyProductCard> {
+  bool isAdded = false;
+  bool isFavorited = false;
+  @override
   Widget build(BuildContext context) {
+    final _cartProvider = ref.read(cartProvider.notifier);
     return GestureDetector(
-      onTap: onTap,
+      onTap: widget.onTap,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
         child: Card(
-          
           elevation: 4,
           color: const Color.fromARGB(255, 255, 255, 255),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.network(
-                loadingBuilder: (BuildContext context, Widget child,
-                    ImageChunkEvent? loadingProgress) {
-                  if (loadingProgress == null) {
-                    return child; // Image loaded successfully
-                  } else {
-                    // Show a progress indicator while the image is loading
-                    return SizedBox(
-                      width: double.infinity,
-                      height: 120,
-                      child: Center(
-                        child: LoadingAnimationWidget.waveDots(
-                          color: AppColors.primaryColor,
-                          size: 40,
-                        ),
-                      ),
-                    );
-                  }
-                },
-                imageUrl,
-                fit: BoxFit.contain,
-                height: 120,
-                width: double.infinity,
-                errorBuilder: (context, error, stackTrace) {
-                  return Icon(Icons
-                      .error); // Optionally, show an error icon if the image fails to load
-                },
+              Stack(
+                children: [
+                  Image.network(
+                    loadingBuilder: (BuildContext context, Widget child,
+                        ImageChunkEvent? loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child; // Image loaded successfully
+                      } else {
+                        // Show a progress indicator while the image is loading
+                        return SizedBox(
+                          width: double.infinity,
+                          height: 120,
+                          child: Center(
+                            child: LoadingAnimationWidget.waveDots(
+                              color: AppColors.primaryColor,
+                              size: 40,
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                    widget.imageUrl,
+                    fit: BoxFit.contain,
+                    height: 120,
+                    width: double.infinity,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Icon(Icons
+                          .error); // Optionally, show an error icon if the image fails to load
+                    },
+                  ),
+                  Positioned(
+                    child: AnimatedSwitcher(
+                      duration: const Duration(
+                          milliseconds: 1000), // Slow down the transition
+                      transitionBuilder:
+                          (Widget child, Animation<double> animation) {
+                        return ScaleTransition(scale: animation, child: child);
+                      },
+                      child: IconButton(
+                          key: ValueKey<bool>(isFavorited),
+                          highlightColor: Colors.transparent,
+                          onPressed: () {
+                            setState(() {
+                              isFavorited = !isFavorited;
+                            });
+                          },
+                          icon: Icon(
+                            isFavorited ? Iconsax.heart5 : Iconsax.heart,
+                            color: isFavorited ? Colors.red : ThemeUtils.dynamicTextColor(context),
+                          )),
+                    ),
+                  ),
+                ],
               ),
               // Category
               Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: Text(
-                  category,
+                  widget.category,
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
@@ -71,12 +110,12 @@ class MyProductCard extends StatelessWidget {
                   ),
                 ),
               ),
-        
+
               // Product name
               Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: Text(
-                  productName,
+                  widget.productName,
                   style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
@@ -84,35 +123,112 @@ class MyProductCard extends StatelessWidget {
                   ),
                 ),
               ),
-        
+
               // Cart Button
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
-                      padding: const EdgeInsets.only(left: 10, top: 5),
-                      child: Row(
-                        children: [
-                          Text('₹9999',style: TextStyle( decoration: TextDecoration.lineThrough,decorationColor: Colors.red,),),
-                          SizedBox(width: 5),
-                          Text(
-                            '₹$price',
-                            style: const TextStyle(
-                                fontSize: 18, color: Colors.black),
+                    padding: const EdgeInsets.only(left: 10, top: 5),
+                    child: Row(
+                      children: [
+                        Text(
+                          '₹9999',
+                          style: TextStyle(
+                            color: Colors.red,
+                            decoration: TextDecoration.lineThrough,
+                            decorationColor: Colors.black,
                           ),
-                        ],
-                      )),
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          '₹${widget.price}',
+                          style: const TextStyle(
+                              fontSize: 18, color: Colors.black),
+                        ),
+                      ],
+                    ),
+                  ),
+                  // Cart Button
                   Padding(
-                    padding: const EdgeInsets.only(right: 10,),
-                    child: Container(
-                      decoration: const BoxDecoration(
-                          color: Color(0xFF2F3645), shape: BoxShape.circle),
-                      child: const SizedBox(
-                        height: 38,
-                        width: 38,
-                        child: Icon(
-                          Iconsax.add,
-                          color: Colors.white,
+                    padding: EdgeInsets.only(right: 10),
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isAdded = !isAdded; // Toggle the button state on tap
+                          if (isAdded) {
+                            // Add to cart
+                            _cartProvider.addProductToCart(
+                              productName: widget.product!.productName,
+                              productPrice: widget.product!.productPrice,
+                              quantity: widget.product!.quantity,
+                              category: widget.product!.category,
+                              image: widget.product!.images,
+                              productId: widget.product!.id,
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Row(
+                                  children: const [
+                                    Text('Added to Cart'),
+                                    SizedBox(width: 5),
+                                    Icon(
+                                      Icons.check_circle_outline_sharp,
+                                      color: Colors.green,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          } else {
+                            // Remove from cart
+                            _cartProvider.removeCartItem(widget.product!.id);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Row(
+                                  children: const [
+                                    Text('Removed from Cart'),
+                                    SizedBox(width: 5),
+                                    Icon(
+                                      Icons.remove_circle_outline,
+                                      color: Colors.red,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          }
+                        });
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(
+                            milliseconds: 500), // Smooth color transition
+                        decoration: BoxDecoration(
+                          color: isAdded
+                              ? Colors.green
+                              : const Color(0xFF2F3645), // Animate color change
+                          shape: BoxShape.circle,
+                        ),
+                        child: SizedBox(
+                          height: 38,
+                          width: 38,
+                          child: AnimatedSwitcher(
+                            duration: Duration(
+                                milliseconds: 300), // Smooth icon transition
+                            transitionBuilder: (child, animation) {
+                              return ScaleTransition(
+                                  scale: animation, child: child);
+                            },
+                            child: Icon(
+                              isAdded
+                                  ? Icons.check
+                                  : Iconsax
+                                      .add, // Change to tick/check icon if clicked
+                              key: ValueKey<bool>(
+                                  isAdded), // Ensures unique keys for icon changes
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                       ),
                     ),

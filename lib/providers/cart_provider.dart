@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kiska/features/shop/models/cart_model.dart';
 
@@ -18,27 +19,35 @@ class CartNotifier extends StateNotifier<Map<String, Cart>> {
     required final int quantity,
     required final String productId,
   }) {
-    if (state.containsKey(productId)) {
-      state = {
-        ...state,
-        productId: Cart(
-            productName: state[productId]!.productName,
-            productPrice: state[productId]!.productPrice,
-            category: state[productId]!.category,
-            image: state[productId]!.image,
-            quantity: state[productId]!.quantity + 1,
-            productId: productId),
-      };
-    } else {
-      state = {
-        productId: Cart(
-            productName: productName,
-            productPrice: productPrice,
-            category: category,
-            image: image,
-            quantity: quantity,
-            productId: productId),
-      };
+    try {
+      if (state.containsKey(productId)) {
+        // Product already exists in the cart, increment the quantity
+        state = {
+          ...state,
+          productId: Cart(
+              productName: state[productId]!.productName,
+              productPrice: state[productId]!.productPrice,
+              category: state[productId]!.category,
+              image: state[productId]!.image,
+              quantity: state[productId]!.quantity + 1, // Increment quantity
+              productId: productId),
+        };
+      } else {
+        // Product does not exist in the cart, add as new
+        state = {
+          ...state,
+          productId: Cart(
+              productName: productName,
+              productPrice: productPrice,
+              category: category,
+              image: image,
+              quantity: 1, // Set default quantity to 1
+              productId: productId),
+        };
+      }
+    } catch (e) {
+      // Handle any errors
+      print('Error while updating cart item for product $productId: $e');
     }
   }
 

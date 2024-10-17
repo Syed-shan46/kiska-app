@@ -44,34 +44,27 @@ class _MyProductGridState extends State<MyProductGrid> {
 
         final List<Product> products = snapshot.data!;
 
-        return Padding(
-          padding: const EdgeInsets.all(8),
-          child: GridView.builder(
-              padding: EdgeInsets.zero,
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisExtent: 230,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  childAspectRatio: 0.8),
-              itemCount: products.length,
-              itemBuilder: (context, index) {
-                final product = products[index];
-                  
-                return MyProductCard(
-                  
-                    imageUrl: product.images[0],
-                    productName: product.productName,
-                    price: product.productPrice,
-                    onTap: () {
-                      Get.to(()=> ProductDetailScreen(product: product));
-                    },
-                    category: product.category)
-                    ;
-              }),
-        );
+        return GridView.builder(
+            padding: EdgeInsets.zero,
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisExtent: 225,
+                crossAxisSpacing: 5,
+                mainAxisSpacing: 5,
+                childAspectRatio: 0.8),
+            itemCount: products.length,
+            itemBuilder: (context, index) {
+              final product = products[index];
+
+              return MyProductCard(product,
+                  imageUrl: product.images[0],
+                  productName: product.productName,
+                  price: product.productPrice, onTap: () {
+                Get.to(() => ProductDetailScreen(product: product));
+              }, category: product.category);
+            });
       },
     );
   }

@@ -18,24 +18,27 @@ class MySectionHeading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(title,
-            style: Theme.of(context)
-                .textTheme
-                .bodyLarge!.copyWith(fontWeight: FontWeight.w600),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis),
-        if (showActionbutton)
-          TextButton(
-            onPressed: () {},
-            child: Text(
-              buttonTitle,
-              style:  TextStyle(color: AppColors.primaryColor.withOpacity(0.8)),
-            ),
-          )
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(title,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyLarge!.copyWith(fontWeight: FontWeight.w600),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis),
+          if (showActionbutton)
+            TextButton(
+              onPressed: () {},
+              child: Text(
+                buttonTitle,
+                style:  TextStyle(color: AppColors.primaryColor.withOpacity(0.8)),
+              ),
+            )
+        ],
+      ),
     );
   }
 }

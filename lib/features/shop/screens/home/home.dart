@@ -44,8 +44,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
             // Heading
             MyHeading(headingLeft: "Trending", headingRight: 'See all'),
+            SizedBox(height: 10),
 
-            MyProductGrid(),
+            Padding(
+              padding: EdgeInsets.all(6.0),
+              child: MyProductGrid(),
+            ),
           ],
         ),
       ),

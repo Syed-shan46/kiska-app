@@ -1,3 +1,4 @@
+import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -6,54 +7,53 @@ import 'package:kiska/features/shop/screens/settings/settings.dart';
 import 'package:kiska/features/shop/screens/store/store.dart';
 import 'package:kiska/features/shop/screens/wishlist/wish_list.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:kiska/utils/themes/app_colors.dart';
+import 'package:kiska/utils/themes/theme_utils.dart';
 
 class NavigationMenu extends StatelessWidget {
   // Create an instance of the NavigationController
-  final NavigationController navigationController = Get.put(NavigationController());
+  final NavigationController navigationController =
+      Get.put(NavigationController());
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
       return Scaffold(
-        body: IndexedStack(
-          index: navigationController.selectedIndex.value, // Use index from GetX controller
-          children: navigationController.screens, // List of screens to switch between
-        ),
-        bottomNavigationBar: Container(
-          color: const Color.fromARGB(15, 0, 187, 212),
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15), // Optional padding for a more spaced-out design
-          child: GNav(
-             // Can be transparent or any color
-            color: Colors.grey, // Default icon color
-            activeColor: Theme.of(context).colorScheme.primary, // Color when item is active
-            tabBackgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.1), // Background for active tab
-            gap: 8, // Gap between icon and text
-            padding: const EdgeInsets.all(7), // Padding for each item
-            selectedIndex: navigationController.selectedIndex.value, // GetX index
-            onTabChange: (index) {
-              navigationController.changeTabIndex(index); // Call method to change tab
-            },
-            tabs: const [
-              GButton(
-                icon: Iconsax.home5,
-                text: 'Home',
-              ),
-              GButton(
-                icon: Iconsax.shop,
-                text: 'Store',
-              ),
-              GButton(
-                icon: Iconsax.heart,
-                text: 'Wishlist',
-              ),
-              GButton(
-                icon: Iconsax.user,
-                text: 'Settings',
-              ),
-            ],
+          body: IndexedStack(
+            index: navigationController
+                .selectedIndex.value, // Use index from GetX controller
+            children: navigationController
+                .screens, // List of screens to switch between
           ),
-        ),
-      );
+          bottomNavigationBar: CustomNavigationBar(
+            borderRadius: Radius.circular(25),
+            isFloating: true,
+            bubbleCurve: Curves.decelerate,
+            selectedColor: AppColors.primaryColor,
+            strokeColor: AppColors.primaryColor,
+            scaleFactor: 0.2,
+            backgroundColor: Navbg.navbarBg(context),
+            iconSize: 23,
+            onTap: (index){
+              navigationController.changeTabIndex(index);
+            },
+            currentIndex: navigationController.selectedIndex.value,
+            items: [
+              CustomNavigationBarItem(
+                icon: Icon(Iconsax.home5),
+              ),
+              CustomNavigationBarItem(
+                icon: Icon(Iconsax.shop),
+              ),
+              CustomNavigationBarItem(
+                icon: Icon(Iconsax.heart),
+              ),
+              CustomNavigationBarItem(
+                icon: Icon(Iconsax.user),
+              ),
+              
+            ],
+          ));
     });
   }
 }

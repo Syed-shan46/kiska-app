@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:kiska/common/product/product_card.dart';
-import 'package:kiska/features/shop/screens/cart/cart.dart';
+import 'package:kiska/common/widgets/cart/cart_icon.dart';
 import 'package:kiska/features/shop/screens/home/widgets/search_field.dart';
 import 'package:kiska/features/shop/screens/store/widgets/tab_bar.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
 
 class StoreScreen extends StatelessWidget {
+  
   const StoreScreen({super.key});
 
   @override
@@ -18,13 +16,11 @@ class StoreScreen extends StatelessWidget {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: DynamicBg.sameBrightness(context),
-          actions: [
-            IconButton(
-                onPressed: () => Get.to(() => CartScreen()),
-                icon: Icon(
-                  Iconsax.shopping_bag,
-                  color: ThemeUtils.dynamicTextColor(context),
-                ))
+          actions: const [
+            Padding(
+              padding: EdgeInsets.only(right: 20),
+              child: MyCartIcon(),
+            )
           ],
         ),
         body: NestedScrollView(
@@ -82,32 +78,15 @@ class ProductColumn extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
-        children: [
+        children:const [
           SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 6),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  child: MyProductCard(
-                    category: "Shoes",
-                    imageUrl:
-                        'assets/images/products/NikeBasketballShoeGreenBlack.png',
-                    productName: 'Adidas Shoe',
-                    price: 2000,
-                    onTap: () => Get.to(()),
-                  ),
-                ),
-                Expanded(
-                  child: MyProductCard(
-                    category: "Mobiles",
-                    imageUrl: 'assets/images/products/iphone_13_pro.png',
-                    productName: 'Iphone 13 Pro',
-                    price: 2000,
-                    onTap: () => Get.to(()),
-                  ),
-                ),
+                Expanded(child: Text(''),),
+                Expanded(child: Text(''),),
               ],
             ),
           ),
@@ -116,24 +95,8 @@ class ProductColumn extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  child: MyProductCard(
-                      category: "Mobiles",
-                      imageUrl: 'assets/images/products/iphone_13_pro.png',
-                      productName: 'Iphone 13 Pro',
-                      price: 2000,
-                      onTap: () => Get.to(())),
-                ),
-                Expanded(
-                  child: MyProductCard(
-                    category: "Shoes",
-                    imageUrl:
-                        'assets/images/products/NikeBasketballShoeGreenBlack.png',
-                    productName: 'Adidas Shoe',
-                    price: 2000,
-                    onTap: () => Get.to(()),
-                  ),
-                ),
+                Expanded(child: Text(''),),
+                Expanded(child: Text(''),),
               ],
             ),
           ),

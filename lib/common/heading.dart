@@ -19,7 +19,12 @@ class MyHeading extends StatelessWidget {
         children: [
           Text(
             headingLeft,
-            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+            maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge!
+                .copyWith(fontWeight: FontWeight.w600),
           ),
           Text(
             headingRight,
