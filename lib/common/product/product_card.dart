@@ -166,37 +166,11 @@ class _MyProductCardState extends ConsumerState<MyProductCard> {
                               image: widget.product!.images,
                               productId: widget.product!.id,
                             );
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Row(
-                                  children: const [
-                                    Text('Added to Cart'),
-                                    SizedBox(width: 5),
-                                    Icon(
-                                      Icons.check_circle_outline_sharp,
-                                      color: Colors.green,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            );
+                           
                           } else {
                             // Remove from cart
                             _cartProvider.removeCartItem(widget.product!.id);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Row(
-                                  children: const [
-                                    Text('Removed from Cart'),
-                                    SizedBox(width: 5),
-                                    Icon(
-                                      Icons.remove_circle_outline,
-                                      color: Colors.red,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            );
+                           
                           }
                         });
                       },

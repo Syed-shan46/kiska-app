@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:kiska/utils/themes/app_colors.dart';
 
 class MyHeading extends StatelessWidget {
   const MyHeading({
@@ -20,18 +22,19 @@ class MyHeading extends StatelessWidget {
           Text(
             headingLeft,
             maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+            overflow: TextOverflow.ellipsis,
             style: Theme.of(context)
                 .textTheme
                 .bodyLarge!
                 .copyWith(fontWeight: FontWeight.w600),
           ),
-          Text(
-            headingRight,
-            style: TextStyle(
-                fontWeight: FontWeight.w500,
-                color: Theme.of(context).colorScheme.primary),
-          ),
+          IconButton(
+              onPressed: () {},
+              icon: SvgPicture.asset(
+                'assets/icons/more-7.svg',
+                height: 23,
+                color: AppColors.primaryColor,
+              )),
         ],
       ),
     );
