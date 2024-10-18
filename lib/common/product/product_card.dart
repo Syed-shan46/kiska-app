@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:kiska/features/shop/models/cart_model.dart';
 import 'package:kiska/features/shop/models/product_model.dart';
 import 'package:kiska/providers/cart_provider.dart';
 import 'package:kiska/services/http_response.dart';
@@ -31,9 +32,36 @@ class MyProductCard extends ConsumerStatefulWidget {
 class _MyProductCardState extends ConsumerState<MyProductCard> {
   bool isAdded = false;
   bool isFavorited = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Check if the product is already in the cart and set isAdded accordingly
+    final _cartProvider = ref.read(cartProvider.notifier);
+    final cartState = ref.read(cartProvider);
+
+    // Check if the product is in the cart
+    if (cartState.containsKey(widget.product?.id)) {
+      setState(() {
+        isAdded = true;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final _cartProvider = ref.read(cartProvider.notifier);
+    final cartState = ref.watch(cartProvider); // Watch for cart state changes
+    // Ensure the cart state reflects properly when the cart is updated
+    if (cartState.containsKey(widget.product?.id)) {
+      setState(() {
+        isAdded = true;
+      });
+    } else {
+      setState(() {
+        isAdded = false;
+      });
+    }
     return GestureDetector(
       onTap: widget.onTap,
       child: Padding(
@@ -77,7 +105,7 @@ class _MyProductCardState extends ConsumerState<MyProductCard> {
                   Positioned(
                     child: AnimatedSwitcher(
                       duration: const Duration(
-                          milliseconds: 1000), // Slow down the transition
+                          milliseconds: 500), // Slow down the transition
                       transitionBuilder:
                           (Widget child, Animation<double> animation) {
                         return ScaleTransition(scale: animation, child: child);
@@ -92,7 +120,9 @@ class _MyProductCardState extends ConsumerState<MyProductCard> {
                           },
                           icon: Icon(
                             isFavorited ? Iconsax.heart5 : Iconsax.heart,
-                            color: isFavorited ? Colors.red : ThemeUtils.dynamicTextColor(context),
+                            color: isFavorited
+                                ? Colors.red
+                                : ThemeUtils.dynamicTextColor(context),
                           )),
                     ),
                   ),
@@ -166,11 +196,9 @@ class _MyProductCardState extends ConsumerState<MyProductCard> {
                               image: widget.product!.images,
                               productId: widget.product!.id,
                             );
-                           
                           } else {
                             // Remove from cart
                             _cartProvider.removeCartItem(widget.product!.id);
-                           
                           }
                         });
                       },
@@ -179,7 +207,7 @@ class _MyProductCardState extends ConsumerState<MyProductCard> {
                             milliseconds: 500), // Smooth color transition
                         decoration: BoxDecoration(
                           color: isAdded
-                              ? Colors.green
+                              ? AppColors.primaryColor
                               : const Color(0xFF2F3645), // Animate color change
                           shape: BoxShape.circle,
                         ),

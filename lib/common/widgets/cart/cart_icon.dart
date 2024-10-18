@@ -19,6 +19,14 @@ class _MyCartIconState extends ConsumerState<MyCartIcon> {
   Widget build(BuildContext context) {
     final cartData = ref.watch(cartProvider);
     return badges.Badge(
+      badgeAnimation: badges.BadgeAnimation.rotation(
+        animationDuration: Duration(seconds: 1),
+        colorChangeAnimationDuration: Duration(seconds: 1),
+        loopAnimation: false,
+        toAnimate: true,
+        curve: Curves.fastOutSlowIn,
+        colorChangeAnimationCurve: Curves.easeInCubic,
+      ),
       badgeStyle:
       const badges.BadgeStyle(padding: EdgeInsets.all(4)),
       position:

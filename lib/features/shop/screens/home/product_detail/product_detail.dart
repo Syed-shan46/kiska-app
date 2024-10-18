@@ -168,7 +168,7 @@ class BottomNavigationBtn extends StatelessWidget {
                   quantity: widget.product.quantity,
                   productId: widget.product.id);
     
-              showSnackBar(context, 'Working');
+              showSnackBar(context, widget.product.productName);
             },
             child: Text('Add to Cart'),
           ),

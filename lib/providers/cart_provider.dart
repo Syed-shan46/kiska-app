@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kiska/features/shop/models/cart_model.dart';
+import 'package:kiska/features/shop/screens/home/product_detail/product_detail.dart';
 
 final cartProvider =
     StateNotifierProvider<CartNotifier, Map<String, Cart>>((ref) {
@@ -53,17 +54,30 @@ class CartNotifier extends StateNotifier<Map<String, Cart>> {
 
   void IncrementCartItem(String productId) {
     if (state.containsKey(productId)) {
-      state[productId]!.quantity++;
+      final cartItem = state[productId]!;
+      final newQuantity = cartItem.quantity + 1;
+      final newPrice = cartItem.productPrice; // The price remains the same
 
-      state = {...state};
+      state = {
+        ...state,
+        productId: cartItem.copyWith(quantity: newQuantity),
+      };
     }
   }
 
   void DecrementCartItem(String productId) {
     if (state.containsKey(productId)) {
-      state[productId]!.quantity--;
+      final cartItem = state[productId]!;
+      if (cartItem.quantity > 1) {
+        // Prevent quantity from going below 1
+        final newQuantity = cartItem.quantity - 1;
+        final newPrice = cartItem.productPrice; // The price remains the same
 
-      state = {...state};
+        state = {
+          ...state,
+          productId: cartItem.copyWith(quantity: newQuantity),
+        };
+      }
     }
   }
 
@@ -79,5 +93,10 @@ class CartNotifier extends StateNotifier<Map<String, Cart>> {
       totalAmount += cartItem.quantity * cartItem.productPrice;
     });
     return totalAmount;
+  }
+
+  // Method to calculate the total quantity
+  int get totalQuantity {
+    return state.values.fold(0, (sum, cartItem) => sum + cartItem.quantity);
   }
 }
