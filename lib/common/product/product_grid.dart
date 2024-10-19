@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kiska/common/product/product_card.dart';
 import 'package:kiska/features/shop/controllers/product_controller.dart';
 import 'package:kiska/features/shop/models/product_model.dart';
+import 'package:kiska/features/shop/screens/home/home.dart';
 import 'package:kiska/features/shop/screens/home/product_detail/product_detail.dart';
 
 class MyProductGrid extends StatefulWidget {
@@ -50,7 +52,6 @@ class _MyProductGridState extends State<MyProductGrid> {
             shrinkWrap: true,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                mainAxisExtent: 225,
                 crossAxisSpacing: 5,
                 mainAxisSpacing: 5,
                 childAspectRatio: 0.8),

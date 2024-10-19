@@ -26,8 +26,7 @@ class NavigationMenu extends StatelessWidget {
                 .screens, // List of screens to switch between
           ),
           bottomNavigationBar: CustomNavigationBar(
-            borderRadius: Radius.circular(25),
-            isFloating: true,
+           
             bubbleCurve: Curves.decelerate,
             selectedColor: AppColors.primaryColor,
             strokeColor: AppColors.primaryColor,

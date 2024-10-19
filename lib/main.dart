@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kiska/features/authentication/screens/login/login.dart';
 import 'package:kiska/navigation_menu.dart';
@@ -11,10 +12,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() async {
   MyApp();
   runApp(ProviderScope(child: const MyApp()));
+  
 }
 
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
+
+  
 
   Future<void> _checkTokenAndSetUser(WidgetRef ref) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -29,22 +33,25 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      themeMode: ThemeMode.system,
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      home: FutureBuilder(
-          future: _checkTokenAndSetUser(ref),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            final user = ref.watch(userProvider);
-            return user != null ? NavigationMenu() : LoginScreen();
-          }),
+    return ScreenUtilInit(
+      designSize: Size(360,690),
+      child: GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        themeMode: ThemeMode.system,
+        theme: lightTheme,
+        darkTheme: darkTheme,
+        home: FutureBuilder(
+            future: _checkTokenAndSetUser(ref),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              final user = ref.watch(userProvider);
+              return user != null ? NavigationMenu() : LoginScreen();
+            }),
+      ),
     );
   }
 }
