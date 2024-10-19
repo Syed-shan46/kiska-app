@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
+import 'package:kiska/common/widgets/cart/cart_icon.dart';
 import 'package:kiska/features/shop/models/cart_model.dart';
+import 'package:kiska/features/shop/screens/address/address.dart';
+import 'package:kiska/navigation_menu.dart';
 import 'package:kiska/providers/cart_provider.dart';
 import 'package:kiska/utils/constants/sizes.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
+import 'package:kiska/utils/themes/theme_utils.dart';
 import 'package:lottie/lottie.dart';
 
 class CartScreen extends ConsumerStatefulWidget {
@@ -55,30 +60,15 @@ class _CartScreenState extends ConsumerState<CartScreen> {
             size: 22,
           ),
         ),
+        actions: const [Padding(
+          padding: EdgeInsets.only(right: 15),
+          child: MyCartIcon(),
+        )],
       ),
 
       /// Checkout button
       bottomNavigationBar: cartData.isEmpty
-          ? Padding(
-              padding: EdgeInsets.all(MySizes.defaultSpace),
-              child: SizedBox(
-                height: 55,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(15))),
-                  ),
-                  child: Text(
-                    'Purchase now',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge!
-                        .copyWith(color: Colors.white.withOpacity(0.9)),
-                  ),
-                ),
-              ),
-            )
+          ? PurchaseBtn()
           : BottomCheckoutBtn(totalAmount: totalAmount),
 
       /// Heading and cart items
@@ -123,7 +113,8 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                         final cartItem = cartData.values.toList()[index];
                         return Container(
                           decoration: BoxDecoration(
-                              color: AppColors.primaryColor.withOpacity(0.1),
+                              color: Colors.transparent,
+                              border: Border.all(color: ThemeUtils.dynamicTextColor(context)),
                               borderRadius: BorderRadius.circular(15)),
                           width: MediaQuery.of(context).size.width,
                           child: Padding(
@@ -386,6 +377,38 @@ class _CartScreenState extends ConsumerState<CartScreen> {
   }
 }
 
+class PurchaseBtn extends StatelessWidget {
+  const PurchaseBtn({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+        padding: EdgeInsets.all(MySizes.defaultSpace),
+        child: SizedBox(
+          height: 55,
+          child: ElevatedButton(
+            onPressed: () { 
+              Get.to(()=> NavigationMenu());
+            },
+            style: ElevatedButton.styleFrom(
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(15))),
+            ),
+            child: Text(
+              'Purchase now',
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyLarge!
+                  .copyWith(color: DynamicBg.sameBrightness(context)),
+            ),
+          ),
+        ),
+      );
+  }
+}
+
 class BottomCheckoutBtn extends StatelessWidget {
   const BottomCheckoutBtn({
     super.key,
@@ -401,7 +424,9 @@ class BottomCheckoutBtn extends StatelessWidget {
       child: SizedBox(
         height: 55,
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () { 
+          Get.to(()=> AddressScreen());
+          },
           style: ElevatedButton.styleFrom(
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(15))),
@@ -411,7 +436,7 @@ class BottomCheckoutBtn extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .bodyLarge!
-                .copyWith(color: Colors.white.withOpacity(0.9)),
+                .copyWith(color: DynamicBg.sameBrightness(context)),
           ),
         ),
       ),

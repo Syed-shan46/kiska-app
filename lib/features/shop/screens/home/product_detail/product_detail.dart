@@ -10,7 +10,7 @@ import 'package:kiska/features/shop/screens/product_review/product_review.dart';
 import 'package:kiska/features/shop/screens/home/widgets/my_dot_navigation.dart';
 import 'package:kiska/providers/cart_provider.dart';
 import 'package:kiska/services/http_response.dart';
-import 'package:kiska/utils/themes/app_colors.dart';
+import 'package:kiska/utils/themes/theme_utils.dart';
 import 'package:readmore/readmore.dart';
 
 class ProductDetailScreen extends ConsumerStatefulWidget {
@@ -56,7 +56,8 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
         ),
 
         // Bottom Navigation Bar
-        bottomNavigationBar: BottomNavigationBtn(cartProvider: _cartProvider, widget: widget),
+        bottomNavigationBar:
+            BottomNavigationBtn(cartProvider: _cartProvider, widget: widget),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(left: 16, right: 16),
@@ -154,7 +155,7 @@ class BottomNavigationBtn extends StatelessWidget {
           topRight: Radius.circular(16),
         ),
       ),
-    
+
       // Add to Cart and Buy Now Button
       child: Row(
         children: [
@@ -167,7 +168,7 @@ class BottomNavigationBtn extends StatelessWidget {
                   image: widget.product.images,
                   quantity: widget.product.quantity,
                   productId: widget.product.id);
-    
+
               showSnackBar(context, widget.product.productName);
             },
             child: Text('Add to Cart'),
@@ -176,11 +177,10 @@ class BottomNavigationBtn extends StatelessWidget {
           ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.primary,
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30))),
-              child: Text('Buy Now'))
+              child: Text('Buy Now',style: TextStyle(color: DynamicBg.sameBrightness(context)),))
         ],
       ),
     );
@@ -199,18 +199,14 @@ class CheckoutButton extends StatelessWidget {
         height: 50,
         width: double.infinity,
         child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primaryColor,
-                shape: RoundedRectangleBorder(
-                    side: BorderSide(color: AppColors.primaryColor),
-                    borderRadius: BorderRadius.circular(10))),
+            
             onPressed: () {},
             child: Text(
               'Checkout',
               style: Theme.of(context)
                   .textTheme
                   .titleMedium!
-                  .copyWith(color: Colors.white),
+                  .copyWith(color: DynamicBg.sameBrightness(context)),
             )));
   }
 }

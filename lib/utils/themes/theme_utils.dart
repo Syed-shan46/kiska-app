@@ -5,7 +5,7 @@ class ThemeUtils {
   static Color dynamicTextColor(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark
         ? Colors.white
-        : Colors.black;
+        : AppColors.darkBackground;
   }
 }
 

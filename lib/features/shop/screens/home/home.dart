@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kiska/common/custom_shapes/primary_header_container.dart';
 import 'package:kiska/common/product/product_grid.dart';
@@ -9,9 +8,8 @@ import 'package:kiska/common/widgets/appbar/drawer.dart';
 import 'package:kiska/common/heading.dart';
 import 'package:kiska/features/shop/screens/home/widgets/banner_slider.dart';
 import 'package:kiska/features/shop/screens/home/widgets/categories.dart';
-import 'package:kiska/main.dart';
 import 'package:kiska/utils/constants/sizes.dart';
-import 'package:kiska/utils/themes/app_colors.dart';
+import 'package:kiska/utils/device/device_utility.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -23,22 +21,21 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   var currentIndex = 0;
-  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       // AppBar
-
+      
       // Drawer
       drawer: const MyDrawer(),
 
       // Body
       body: SingleChildScrollView(
         child: Column(
-          children: const [
-            MyHeader(),
+          children:  const [
 
+            MyHeader(),
             // Categories
             Categories(),
 
@@ -47,7 +44,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
             // Heading
             MyHeading(headingLeft: "Trending", headingRight: 'See all'),
-            
 
             Padding(
               padding: EdgeInsets.all(6.0),
@@ -67,11 +63,12 @@ class MyHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MyPrimaryHeaderContainer(
-      height: 90.h,
-      color: DynamicBg.sameBrightness(context),
-      showContainer: true,
-      child: SafeArea(
+    return SafeArea(
+      child: MyPrimaryHeaderContainer(
+      
+        height: MyDeviceUtils.getAppBarHeight(),
+        color: DynamicBg.sameBrightness(context),
+        showContainer: false,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -84,12 +81,9 @@ class MyHeader extends StatelessWidget {
                     // Left side welcome title
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      
                       children: [
                         const SizedBox(height: 10),
-                        Text('Good day for shopping',
-                            style: Theme.of(context).textTheme.labelMedium!),
-                        Text('Syed-shan',
+                        Text('Syed-shan\n ',
                             style: Theme.of(context).textTheme.bodyLarge!),
                       ],
                     ),

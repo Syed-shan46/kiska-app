@@ -20,7 +20,7 @@ final ThemeData lightTheme = ThemeData(
     color: Colors.white,
     iconTheme: IconThemeData(color: AppColors.darkBackground),
     titleTextStyle: TextStyle(
-      color: Colors.white,
+      color: AppColors.lightTextColor,
       fontSize: 20,
       fontWeight: FontWeight.bold,
     ),
@@ -50,7 +50,7 @@ final ThemeData lightTheme = ThemeData(
   ),
 
   elevatedButtonTheme: ElevatedButtonThemeData( 
-    style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(AppColors.primaryColor))
+    style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(AppColors.darkBackground))
   )
   
 );
