@@ -1,16 +1,21 @@
+// ignore_for_file: unused_import, unnecessary_import
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:kiska/common/widgets/cart/cart_icon.dart';
 import 'package:kiska/features/shop/controllers/home_controller.dart';
 import 'package:kiska/features/shop/models/product_model.dart';
+import 'package:kiska/features/shop/screens/cart/cart.dart';
 import 'package:kiska/features/shop/screens/product_review/product_review.dart';
 import 'package:kiska/features/shop/screens/home/widgets/my_dot_navigation.dart';
 import 'package:kiska/providers/cart_provider.dart';
 import 'package:kiska/services/http_response.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
+import 'package:lottie/lottie.dart';
 import 'package:readmore/readmore.dart';
 
 class ProductDetailScreen extends ConsumerStatefulWidget {
@@ -44,14 +49,12 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
           title: Text(
             widget.product.productName,
           ),
-          actions: const [
+          actions: [
             Padding(
-              padding: EdgeInsets.only(right: 15),
-              child: Icon(
-                Iconsax.heart,
-                color: Colors.red,
-              ),
-            )
+                padding: EdgeInsets.only(right: 15),
+                child: IconButton(
+                    onPressed: () => Get.to(() => CartScreen()),
+                    icon: MyCartIcon()))
           ],
         ),
 
@@ -135,7 +138,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   }
 }
 
-class BottomNavigationBtn extends StatelessWidget {
+class BottomNavigationBtn extends StatefulWidget {
   const BottomNavigationBtn({
     super.key,
     required CartNotifier cartProvider,
@@ -144,6 +147,13 @@ class BottomNavigationBtn extends StatelessWidget {
 
   final CartNotifier _cartProvider;
   final ProductDetailScreen widget;
+
+  @override
+  State<BottomNavigationBtn> createState() => _BottomNavigationBtnState();
+}
+
+class _BottomNavigationBtnState extends State<BottomNavigationBtn> {
+  bool isAdded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -159,19 +169,39 @@ class BottomNavigationBtn extends StatelessWidget {
       // Add to Cart and Buy Now Button
       child: Row(
         children: [
-          OutlinedButton(
-            onPressed: () {
-              _cartProvider.addProductToCart(
-                  productName: widget.product.productName,
-                  productPrice: widget.product.productPrice,
-                  category: widget.product.category,
-                  image: widget.product.images,
-                  quantity: widget.product.quantity,
-                  productId: widget.product.id);
-
-              showSnackBar(context, widget.product.productName);
-            },
-            child: Text('Add to Cart'),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.4,
+            child: OutlinedButton(
+              onPressed: () async {
+                setState(() {
+                  isAdded = true;
+                });
+            
+                await Future.delayed(Duration(seconds: 2));
+            
+                try {
+                  widget._cartProvider.addProductToCart(
+                    productName: widget.widget.product.productName,
+                    productPrice: widget.widget.product.productPrice,
+                    category: widget.widget.product.category,
+                    image: widget.widget.product.images,
+                    quantity: widget.widget.product.quantity,
+                    productId: widget.widget.product.id,
+                  );
+                } finally {
+                  setState(() {
+                    isAdded = false;
+                  });
+                }
+              },
+              child: isAdded
+                  ? Lottie.network(
+                      'https://lottie.host/7468eb62-5726-4522-acad-799587cb5a84/CAPyRQ8Ux2.json',
+                      width: 35,
+                      height: 35,
+                      repeat: false)
+                  : Text('Add to Cart'),
+            ),
           ),
           SizedBox(width: 20),
           ElevatedButton(
@@ -180,7 +210,10 @@ class BottomNavigationBtn extends StatelessWidget {
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30))),
-              child: Text('Buy Now',style: TextStyle(color: DynamicBg.sameBrightness(context)),))
+              child: Text(
+                'Buy Now',
+                style: TextStyle(color: DynamicBg.sameBrightness(context)),
+              ))
         ],
       ),
     );
@@ -199,7 +232,6 @@ class CheckoutButton extends StatelessWidget {
         height: 50,
         width: double.infinity,
         child: ElevatedButton(
-            
             onPressed: () {},
             child: Text(
               'Checkout',

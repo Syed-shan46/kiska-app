@@ -6,7 +6,6 @@ import 'package:kiska/features/shop/screens/home/home.dart';
 import 'package:kiska/features/shop/screens/settings/settings.dart';
 import 'package:kiska/features/shop/screens/store/store.dart';
 import 'package:kiska/features/shop/screens/wishlist/wish_list.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
 

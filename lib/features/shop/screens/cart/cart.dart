@@ -1,15 +1,22 @@
+import 'dart:convert';
+
+import 'package:bounce/bounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:kiska/common/widgets/cart/cart_icon.dart';
+import 'package:kiska/features/authentication/global_varaibles.dart';
 import 'package:kiska/features/shop/models/cart_model.dart';
 import 'package:kiska/features/shop/screens/address/address.dart';
+import 'package:kiska/features/shop/screens/checkout/checkout.dart';
 import 'package:kiska/navigation_menu.dart';
 import 'package:kiska/providers/cart_provider.dart';
 import 'package:kiska/utils/constants/sizes.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class CartScreen extends ConsumerStatefulWidget {
   const CartScreen({super.key});
@@ -33,6 +40,48 @@ class _CartScreenState extends ConsumerState<CartScreen> {
       total += cartItem.productPrice * cartItem.quantity; // Calculate total
     });
     return total;
+  }
+
+  //Checking if already address is on Db
+  bool addressExists = false;
+
+  // Check if the user has an address saved in the database
+  Future<void> checkUserAddress(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userJson = prefs.getString('user');
+    if (userJson != null) {
+      final user = jsonDecode(userJson);
+      String userId = user['_id'];
+
+      try {
+        // Call your backend API to check if the user has an address saved
+        http.Response response = await http.get(
+          Uri.parse(
+              '$uri/api/check-address/$userId'), // Your address-checking API
+        );
+
+        if (response.statusCode == 200) {
+          setState(() {
+            addressExists = jsonDecode(response.body)[
+                'addressExists']; // This depends on your API response structure
+          });
+
+          if (addressExists) {
+            // If address exists, navigate to checkout screen
+            Get.to(() => CheckoutScreen());
+          } else {
+            // If no address exists, navigate to address screen
+            Get.to(() => AddressScreen());
+          }
+        } else {
+          // Handle error case (API response is not OK)
+          print('Error: Failed to check address');
+          setState(() {});
+        }
+      } catch (e) {
+        print('Error checking address: $e');
+      }
+    }
   }
 
   @override
@@ -60,16 +109,40 @@ class _CartScreenState extends ConsumerState<CartScreen> {
             size: 22,
           ),
         ),
-        actions: const [Padding(
-          padding: EdgeInsets.only(right: 15),
-          child: MyCartIcon(),
-        )],
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 15),
+            child: MyCartIcon(),
+          )
+        ],
       ),
 
-      /// Checkout button
+      // Checkout button
       bottomNavigationBar: cartData.isEmpty
           ? PurchaseBtn()
-          : BottomCheckoutBtn(totalAmount: totalAmount),
+          : Padding(
+              padding: EdgeInsets.all(MySizes.defaultSpace),
+              child: SizedBox(
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: () => checkUserAddress(context),
+                  style: ElevatedButton.styleFrom(
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(25),
+                      ),
+                    ),
+                  ),
+                  child: Text(
+                    'Checkout ₹$totalAmount',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .copyWith(color: DynamicBg.sameBrightness(context)),
+                  ),
+                ),
+              ),
+            ),
 
       /// Heading and cart items
       body: cartData.isEmpty
@@ -114,7 +187,8 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                         return Container(
                           decoration: BoxDecoration(
                               color: Colors.transparent,
-                              border: Border.all(color: ThemeUtils.dynamicTextColor(context)),
+                              border: Border.all(
+                                  color: ThemeUtils.dynamicTextColor(context)),
                               borderRadius: BorderRadius.circular(15)),
                           width: MediaQuery.of(context).size.width,
                           child: Padding(
@@ -296,7 +370,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                           children: [
                             Text('${_cartProvider.totalQuantity} items'),
                             Text(
-                              '₹${totalAmount}',
+                              '₹$totalAmount',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium!
@@ -385,16 +459,19 @@ class PurchaseBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.all(MySizes.defaultSpace),
+      padding: EdgeInsets.all(MySizes.defaultSpace),
+      child: Bounce(
+        tiltAngle: BorderSide.strokeAlignInside,
+        filterQuality: FilterQuality.high,
         child: SizedBox(
-          height: 55,
+          height: 50,
           child: ElevatedButton(
-            onPressed: () { 
-              Get.to(()=> NavigationMenu());
+            onPressed: () {
+              Get.to(() => NavigationMenu());
             },
             style: ElevatedButton.styleFrom(
               shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15))),
+                  borderRadius: BorderRadius.all(Radius.circular(25))),
             ),
             child: Text(
               'Purchase now',
@@ -403,40 +480,6 @@ class PurchaseBtn extends StatelessWidget {
                   .bodyLarge!
                   .copyWith(color: DynamicBg.sameBrightness(context)),
             ),
-          ),
-        ),
-      );
-  }
-}
-
-class BottomCheckoutBtn extends StatelessWidget {
-  const BottomCheckoutBtn({
-    super.key,
-    required this.totalAmount,
-  });
-
-  final double totalAmount;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(MySizes.defaultSpace),
-      child: SizedBox(
-        height: 55,
-        child: ElevatedButton(
-          onPressed: () { 
-          Get.to(()=> AddressScreen());
-          },
-          style: ElevatedButton.styleFrom(
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15))),
-          ),
-          child: Text(
-            'Checkout ₹$totalAmount',
-            style: Theme.of(context)
-                .textTheme
-                .bodyLarge!
-                .copyWith(color: DynamicBg.sameBrightness(context)),
           ),
         ),
       ),

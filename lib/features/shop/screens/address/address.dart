@@ -1,11 +1,15 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:kiska/common/widgets/text_forms/my_text_form_widget.dart';
 import 'package:kiska/features/shop/controllers/address_controller.dart';
 import 'package:kiska/features/shop/models/address_model.dart';
-import 'package:kiska/services/http_response.dart';
+import 'package:kiska/features/shop/screens/checkout/checkout.dart';
 import 'package:kiska/utils/themes/text_theme.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
+import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddressScreen extends StatefulWidget {
   const AddressScreen({super.key});
@@ -25,7 +29,79 @@ class _AddressScreenState extends State<AddressScreen> {
   final TextEditingController cityController = TextEditingController();
   final TextEditingController addController = TextEditingController();
 
-  Future<void> submitAddress() async {}
+  Address? _fetchedAddress; // To hold the fetched address
+
+  // Variables to manage button state and animation
+  bool isAdded = false;
+
+  Future<void> submitAddress() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userJson = prefs.getString('user');
+
+    // Submit address
+    if (userJson != null) {
+      final user = jsonDecode(userJson);
+      String userId = user['_id'];
+
+      setState(() {
+        isAdded = true;
+      });
+
+      try {
+        addressController.uploadAddress(
+          userId: userId,
+          name: nameController.text,
+          phone: phoneController.text,
+          country: countryController.text,
+          city: cityController.text,
+          address: addController.text,
+          // ignore: use_build_context_synchronously
+          context: context,
+        );
+
+        await Future.delayed(Duration(seconds: 2));
+
+        // Clear all input fields after successful submission
+        nameController.clear();
+        phoneController.clear();
+        countryController.clear();
+        cityController.clear();
+        addController.clear();
+
+        Get.to(() => CheckoutScreen());
+      } catch (e) {
+        print('Error$e');
+      } finally {
+        setState(() {
+          isAdded = false;
+        });
+      }
+    } else {
+      print('User is not logged in ');
+    }
+  }
+
+  // Fetch address
+  Future<void> fetchAddress() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userJson = prefs.getString('user');
+
+    if (userJson != null) {
+      final user = jsonDecode(userJson);
+      String userId = user['_id'];
+
+      Address? address = await addressController.fetchAddressByUserId(userId);
+      setState(() {
+        _fetchedAddress = address;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchAddress();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -134,27 +210,31 @@ class _AddressScreenState extends State<AddressScreen> {
                 ),
                 SizedBox(height: 10),
                 SizedBox(
-                    width: double.infinity,
-                    height: 55,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (_formkey.currentState!.validate()) {
-                          addressController.uploadAddress(
-                              name: nameController.text,
-                              phone: phoneController.text,
-                              country: countryController.text,
-                              city: cityController.text,
-                              address: addController.text,
-                              context: context);
-                        } else {
-                          print('Please enter all input fields');
-                        }
-                      },
-                      child: Text('Create',
-                          style: textTheme.titleLarge!.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: DynamicBg.sameBrightness(context))),
-                    )),
+                  width: double.infinity,
+                  height: 55,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (_formkey.currentState!.validate()) {
+                        setState(() {
+                          isAdded = false;
+                        });
+                        submitAddress(); // Call the function that handles address submission
+                      } else {
+                        print('Please enter all input fields');
+                      }
+                    },
+                    child: isAdded
+                        ? Lottie.network(
+                            'https://lottie.host/7b6851d4-c9dc-4a14-9f73-20932c001113/PVm0OgG12m.json',
+                            width: 50,
+                            height: 50,
+                            repeat: false)
+                        : Text('Create',
+                            style: textTheme.titleMedium!.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color: DynamicBg.sameBrightness(context))),
+                  ),
+                ),
               ],
             ),
           ),

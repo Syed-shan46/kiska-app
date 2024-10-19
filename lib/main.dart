@@ -12,13 +12,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() async {
   MyApp();
   runApp(ProviderScope(child: const MyApp()));
-  
 }
 
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
-
-  
 
   Future<void> _checkTokenAndSetUser(WidgetRef ref) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -34,7 +31,7 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ScreenUtilInit(
-      designSize: Size(360,690),
+      designSize: Size(360, 690),
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.system,
@@ -49,10 +46,9 @@ class MyApp extends ConsumerWidget {
                 );
               }
               final user = ref.watch(userProvider);
-              return user != null ? NavigationMenu() : LoginScreen();
+              return user!= null? NavigationMenu() : LoginScreen();
             }),
       ),
     );
   }
 }
-

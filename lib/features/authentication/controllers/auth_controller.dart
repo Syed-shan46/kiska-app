@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
+import 'package:kiska/features/authentication/global_varaibles.dart';
 import 'package:kiska/features/authentication/models/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:kiska/features/authentication/screens/login/login.dart';
@@ -9,7 +10,6 @@ import 'package:kiska/navigation_menu.dart';
 import 'package:kiska/providers/user_provider.dart';
 import 'package:kiska/services/http_response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:kiska/providers/user_provider.dart';
 
 final providerContainer = ProviderContainer();
 
@@ -33,8 +33,7 @@ class AuthController {
       );
 
       // Make http request
-      http.Response response = await http.post(
-          Uri.parse('http://10.0.2.2:3000/api/signup'),
+      http.Response response = await http.post(Uri.parse('$uri/api/signup'),
           body: user.toJson(),
           headers: <String, String>{
             "Content-Type": 'application/json; charset=UTF-8',
@@ -67,7 +66,7 @@ class AuthController {
         'Sign-in called with email: $email and password: $password'); // Debugging line
     try {
       http.Response response = await http.post(
-        Uri.parse('http://10.0.2.2:3000/api/signin'),
+        Uri.parse('$uri/api/signin'),
         body: jsonEncode(
           {
             'email': email,

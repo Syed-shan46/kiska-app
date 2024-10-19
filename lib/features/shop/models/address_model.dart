@@ -3,6 +3,7 @@ import 'dart:convert';
 
 class Address {
   final String id;
+  final String userId;
   final String name;
   final String phone;
   final String country;
@@ -10,6 +11,7 @@ class Address {
   final String address;
 
   Address({
+    required this.userId,
     required this.id,
     required this.name,
     required this.phone,
@@ -21,6 +23,7 @@ class Address {
   // Convert the object to a Map (for JSON encoding)
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'userId': userId,
       'id': id,
       'name': name,
       'phone': phone,
@@ -39,6 +42,7 @@ class Address {
       country: map['country'] as String,
       city: map['city'] as String,
       address: map['address'] as String,
+      userId: map['userId'] as String, // Add userId here
     );
   }
 

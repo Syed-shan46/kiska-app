@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:kiska/features/shop/models/cart_model.dart';
 import 'package:kiska/features/shop/models/product_model.dart';
 import 'package:kiska/providers/cart_provider.dart';
-import 'package:kiska/services/http_response.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -37,7 +35,7 @@ class _MyProductCardState extends ConsumerState<MyProductCard> {
   void initState() {
     super.initState();
     // Check if the product is already in the cart and set isAdded accordingly
-    final _cartProvider = ref.read(cartProvider.notifier);
+
     final cartState = ref.read(cartProvider);
 
     // Check if the product is in the cart
@@ -76,21 +74,16 @@ class _MyProductCardState extends ConsumerState<MyProductCard> {
               Stack(
                 children: [
                   Image.network(
-                    loadingBuilder: (BuildContext context, Widget child,
-                        ImageChunkEvent? loadingProgress) {
+                    loadingBuilder: (context, child, loadingProgress) {
                       if (loadingProgress == null) {
                         return child; // Image loaded successfully
                       } else {
                         // Show a progress indicator while the image is loading
-                        return SizedBox(
-                          width: double.infinity,
-                          height: 120,
-                          child: Center(
-                            child: LoadingAnimationWidget.waveDots(
-                              color: AppColors.primaryColor,
-                              size: 40,
-                            ),
-                          ),
+                        return CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                  (loadingProgress.expectedTotalBytes ?? 1)
+                              : null,
                         );
                       }
                     },
@@ -109,8 +102,7 @@ class _MyProductCardState extends ConsumerState<MyProductCard> {
                           milliseconds: 500), // Slow down the transition
                       transitionBuilder:
                           (Widget child, Animation<double> animation) {
-                        return ScaleTransition(
-                            scale: animation, child: child);
+                        return ScaleTransition(scale: animation, child: child);
                       },
                       child: IconButton(
                           key: ValueKey<bool>(isFavorited),
@@ -142,20 +134,20 @@ class _MyProductCardState extends ConsumerState<MyProductCard> {
                   ),
                 ),
               ),
-        
+
               // Product name
               Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: Text(
                   widget.productName,
-                  style:  TextStyle(
+                  style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                     color: ThemeUtils.dynamicTextColor(context),
                   ),
                 ),
               ),
-        
+
               // Cart Button
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -175,8 +167,9 @@ class _MyProductCardState extends ConsumerState<MyProductCard> {
                         SizedBox(width: 5),
                         Text(
                           '₹${widget.price}',
-                          style:  TextStyle(
-                              fontSize: 18, color: ThemeUtils.dynamicTextColor(context)),
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: ThemeUtils.dynamicTextColor(context)),
                         ),
                       ],
                     ),
@@ -187,8 +180,7 @@ class _MyProductCardState extends ConsumerState<MyProductCard> {
                     child: GestureDetector(
                       onTap: () {
                         setState(() {
-                          isAdded =
-                              !isAdded; // Toggle the button state on tap
+                          isAdded = !isAdded; // Toggle the button state on tap
                           if (isAdded) {
                             // Add to cart
                             _cartProvider.addProductToCart(
@@ -211,8 +203,7 @@ class _MyProductCardState extends ConsumerState<MyProductCard> {
                         decoration: BoxDecoration(
                           color: isAdded
                               ? AppColors.primaryColor
-                              : const Color(
-                                  0xFF2F3645), // Animate color change
+                              : const Color(0xFF2F3645), // Animate color change
                           shape: BoxShape.circle,
                         ),
                         child: SizedBox(
