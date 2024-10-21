@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:kiska/common/widgets/icons/circular_icon.dart';
-import 'package:kiska/common/widgets/image/my_circular_image.dart';
+import 'package:kiska/common/icons/circular_icon.dart';
+import 'package:kiska/common/image/my_circular_image.dart';
 import 'package:kiska/utils/constants/image_strings.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
 

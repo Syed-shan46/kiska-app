@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MyTextField extends StatelessWidget {
   const MyTextField({
@@ -27,7 +28,7 @@ class MyTextField extends StatelessWidget {
       validator: validator,
       controller: controller,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(vertical: 13,horizontal: 12),
+        contentPadding: EdgeInsets.symmetric(vertical: 11.h,horizontal: 11.h),
           prefixIcon: Icon(icon),
           suffixIcon: showSuffixIcon ? const Icon(Iconsax.eye_slash) : null,
           focusedBorder: OutlineInputBorder(

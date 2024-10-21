@@ -7,17 +7,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:kiska/common/custom_shapes/curved_edges_widget.dart';
-import 'package:kiska/common/widgets/appbar/appbar.dart';
-import 'package:kiska/common/widgets/cart/cart_icon.dart';
+import 'package:kiska/common/appbar/appbar.dart';
+import 'package:kiska/common/cart/cart_icon.dart';
+import 'package:kiska/common/text_forms/my_text_form_widget.dart';
 import 'package:kiska/features/shop/controllers/home_controller.dart';
 import 'package:kiska/features/shop/models/product_model.dart';
 import 'package:kiska/features/shop/screens/cart/cart.dart';
 import 'package:kiska/features/shop/screens/product_review/product_review.dart';
 import 'package:kiska/features/shop/screens/home/widgets/my_dot_navigation.dart';
+import 'package:kiska/navigation_menu.dart';
 import 'package:kiska/providers/cart_provider.dart';
 import 'package:kiska/services/http_response.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
 import 'package:lottie/lottie.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:readmore/readmore.dart';
 
 class ProductDetailScreen extends ConsumerStatefulWidget {
@@ -321,10 +324,10 @@ class ProductDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: const [
+      children: [
         // Rating
         Row(
-          children: [
+          children: const [
             Icon(Iconsax.star5, color: Colors.amber, size: 24),
             SizedBox(width: 5),
             Text.rich(
@@ -336,7 +339,11 @@ class ProductDetail extends StatelessWidget {
         ),
 
         // Share Button
-        Icon(Icons.share)
+        InkWell(
+            onTap: () {
+              Get.to(() => NavigationMenu());
+            },
+            child: Icon(Icons.share))
       ],
     );
   }
@@ -369,8 +376,9 @@ class ProductDetailImages extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: Colors.white.withOpacity(0.8),
                       shape: BoxShape.circle),
-                  child:
-                      const Icon(CupertinoIcons.suit_heart, color: Colors.red),
+                  child: InkWell(
+                      child: const Icon(CupertinoIcons.suit_heart,
+                          color: Colors.red)),
                 )
               ],
             ),
@@ -379,7 +387,7 @@ class ProductDetailImages extends StatelessWidget {
                 return Image.network(imagePath);
               }).toList(),
               options: CarouselOptions(
-                height: 350,
+                height: 350.h,
                 enlargeCenterPage: true,
                 autoPlay: true,
                 viewportFraction: 1,

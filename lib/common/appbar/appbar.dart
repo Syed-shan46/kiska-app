@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kiska/navigation_menu.dart';
 import 'package:kiska/utils/device/device_utility.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
 
@@ -21,19 +22,20 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: AppBar(
         backgroundColor: Colors.transparent,
         scrolledUnderElevation: 0,
         automaticallyImplyLeading: false,
         leading: showBackArrow
-            ? IconButton(
-                onPressed: () => Get.back(),
-                icon: Icon(
+            ? InkWell(
+              onTap: ()=> print('Clicked'),
+              child: Icon(
                   Icons.arrow_back_ios_new,
                   size: 20,
                   color: ThemeUtils.dynamicTextColor(context),
-                ))
+                ),
+            )
             : leadingIcon != null
                 ? IconButton(
                     onPressed: leadingOnPressed, icon: Icon(leadingIcon))

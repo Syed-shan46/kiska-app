@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:kiska/common/widgets/icons/circular_icon.dart';
+import 'package:kiska/common/icons/circular_icon.dart';
 import 'package:kiska/utils/constants/sizes.dart';
 
 

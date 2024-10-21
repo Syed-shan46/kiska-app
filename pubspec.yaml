@@ -29,6 +29,7 @@ dependencies:
   custom_navigation_bar: ^0.8.2
   flutter_screenutil: ^5.9.3
   bounce: ^1.0.2
+  animations: ^2.0.11
   
 
 dev_dependencies:

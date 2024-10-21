@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:kiska/common/texts/my_section_heading.dart';
-import 'package:kiska/common/widgets/appbar/appbar.dart';
-import 'package:kiska/common/widgets/image/my_circular_image.dart';
+import 'package:kiska/common/appbar/appbar.dart';
+import 'package:kiska/common/image/my_circular_image.dart';
 import 'package:kiska/features/shop/screens/settings/profile/widgets/profile_menu_tile.dart';
 import 'package:kiska/utils/constants/image_strings.dart';
 import 'package:kiska/utils/constants/sizes.dart';

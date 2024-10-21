@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:kiska/common/texts/my_section_heading.dart';
-import 'package:kiska/common/widgets/appbar/appbar.dart';
-import 'package:kiska/common/widgets/layouts/settings_menu_tile.dart';
-import 'package:kiska/common/widgets/layouts/user_profile_tile.dart';
+import 'package:kiska/common/appbar/appbar.dart';
+import 'package:kiska/common/layouts/settings_menu_tile.dart';
+import 'package:kiska/common/layouts/user_profile_tile.dart';
 import 'package:kiska/common/custom_shapes/primary_header_container.dart';
 import 'package:kiska/features/authentication/controllers/auth_controller.dart';
 import 'package:kiska/features/shop/screens/settings/profile/profile.dart';
@@ -90,7 +90,7 @@ class SettingsScreen extends StatelessWidget {
                 SizedBox(height: MySizes.spaceBtwItems),
                 SizedBox(
                   height: 45,
-                  width: double.infinity,
+                  width: MediaQuery.of(context).size.width * 0.4,
                   child: OutlinedButton(
                     style: ButtonStyle(
                         side: WidgetStateProperty.all(

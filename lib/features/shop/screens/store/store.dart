@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kiska/common/widgets/cart/cart_icon.dart';
+import 'package:kiska/common/cart/cart_icon.dart';
 import 'package:kiska/features/shop/screens/home/widgets/search_field.dart';
 import 'package:kiska/features/shop/screens/store/widgets/tab_bar.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';

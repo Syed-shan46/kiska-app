@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:kiska/common/widgets/image/my_circular_image.dart';
+import 'package:kiska/common/image/my_circular_image.dart';
 
 
 class UserProfileTile extends StatelessWidget {

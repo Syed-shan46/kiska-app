@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:kiska/common/widgets/text_forms/my_text_form_widget.dart';
+import 'package:kiska/common/text_forms/my_text_form_widget.dart';
 import 'package:kiska/features/authentication/controllers/auth_controller.dart';
 import 'package:kiska/features/authentication/screens/login/widgets/divider.dart';
 import 'package:kiska/features/authentication/screens/login/widgets/social_icons.dart';

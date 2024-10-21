@@ -4,7 +4,7 @@ import 'package:bounce/bounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
-import 'package:kiska/common/widgets/cart/cart_icon.dart';
+import 'package:kiska/common/cart/cart_icon.dart';
 import 'package:kiska/features/authentication/global_varaibles.dart';
 import 'package:kiska/features/shop/models/cart_model.dart';
 import 'package:kiska/features/shop/screens/address/address.dart';

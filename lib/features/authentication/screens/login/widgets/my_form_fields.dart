@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:kiska/common/widgets/text_forms/my_text_form_widget.dart';
+import 'package:kiska/common/text_forms/my_text_form_widget.dart';
 import 'package:kiska/features/authentication/controllers/auth_controller.dart';
 import 'package:kiska/features/authentication/screens/register/register.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiska/utils/constants/sizes.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
@@ -79,7 +80,7 @@ class _MyFormFieldsState extends State<MyFormFields> {
           // Sign in Button
           SizedBox(
             width: double.infinity,
-            height: 47,
+            height: 40.h,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 shape: const RoundedRectangleBorder(
@@ -121,10 +122,11 @@ class CreateAccount extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 46,
+      height: 40.h,
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
-          side: BorderSide(color: ThemeUtils.dynamicTextColor(context).withOpacity(0.8)),
+          side: BorderSide(
+              color: ThemeUtils.dynamicTextColor(context).withOpacity(0.8)),
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(25)),
           ),
