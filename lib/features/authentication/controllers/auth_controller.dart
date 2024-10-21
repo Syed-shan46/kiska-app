@@ -9,6 +9,8 @@ import 'package:kiska/features/authentication/screens/login/login.dart';
 import 'package:kiska/navigation_menu.dart';
 import 'package:kiska/providers/user_provider.dart';
 import 'package:kiska/services/http_response.dart';
+import 'package:kiska/utils/themes/app_colors.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final providerContainer = ProviderContainer();
@@ -101,7 +103,10 @@ class AuthController {
                 barrierDismissible: false,
                 builder: (BuildContext context) {
                   return Center(
-                    child: CircularProgressIndicator(),
+                    child: LoadingAnimationWidget.flickr(
+                        leftDotColor: AppColors.primaryColor,
+                        rightDotColor: Colors.white,
+                        size: 30),
                   );
                 });
             // Wait for 1 second
@@ -114,5 +119,23 @@ class AuthController {
             Get.to(() => NavigationMenu());
           });
     } catch (e) {}
+  }
+
+  Future<void> signOutUser({required context}) async {
+    try {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      // Clear the token and user from sharedPreferences
+      await preferences.remove('auth_token');
+      await preferences.remove('user');
+      providerContainer.read(userProvider.notifier).signOut();
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (context) {
+        return LoginScreen();
+      }), (route) => false);
+
+      showSnackBar(context, 'Logout Successfully');
+    } catch (e) {
+      showSnackBar(context, 'Error signin $e');
+    }
   }
 }

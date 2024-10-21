@@ -36,7 +36,6 @@ class AddressController {
           response: response,
           context: context,
           onSuccess: () {
-            print('Address Created');
           });
     } catch (e) {
       showSnackBar(context, 'Error$e');
@@ -53,13 +52,12 @@ class AddressController {
       );
 
       if (response.statusCode == 200) {
-        final json = jsonDecode(response.body);
+        jsonDecode(response.body);
         return Address.fromJson(jsonDecode(response.body));
       } else {
         throw Exception('Failed to load address');
       }
     } catch (e) {
-      print('Error fetching address: $e');
       return null;
     }
   }

@@ -188,7 +188,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                           decoration: BoxDecoration(
                               color: Colors.transparent,
                               border: Border.all(
-                                  color: ThemeUtils.dynamicTextColor(context)),
+                                  color: ThemeUtils.dynamicTextColor(context).withOpacity(0.8)),
                               borderRadius: BorderRadius.circular(15)),
                           width: MediaQuery.of(context).size.width,
                           child: Padding(

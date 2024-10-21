@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kiska/utils/themes/theme_utils.dart';
 
 import 'circular_container.dart';
 import 'curved_edges_widget.dart';
@@ -28,13 +29,13 @@ class MyPrimaryHeaderContainer extends StatelessWidget {
             children: [
               showContainer ? Positioned(top: -70,right: -70,
                 child: MyCircularContainer(width: 205,height: 205,radius: 400,
-                  backgroundColor: Colors.white.withOpacity(0.1),
+                  backgroundColor: DynamicBg.sameBrightness(context).withOpacity(0.1),
                 ),
               ) : const SizedBox(height: null,),
     
               showContainer ? Positioned(top: -70,right: -25,child: MyCircularContainer(
                   width: 205,height: 205,radius: 400,
-                  backgroundColor: Colors.white.withOpacity(0.1)),
+                  backgroundColor: DynamicBg.sameBrightness(context).withOpacity(0.1)),
               ) : const SizedBox(height: null,),
               child,
             ],

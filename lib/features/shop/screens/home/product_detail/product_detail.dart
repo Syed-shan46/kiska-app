@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:kiska/common/custom_shapes/curved_edges_widget.dart';
+import 'package:kiska/common/widgets/appbar/appbar.dart';
 import 'package:kiska/common/widgets/cart/cart_icon.dart';
 import 'package:kiska/features/shop/controllers/home_controller.dart';
 import 'package:kiska/features/shop/models/product_model.dart';
@@ -39,100 +41,86 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
     final _cartProvider = ref.read(cartProvider.notifier);
     final controller = Get.put(HomeController());
     return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            onPressed: () => Get.back(),
-            icon: Icon(
-              Icons.arrow_back_ios,
-            ),
-          ),
-          title: Text(
-            widget.product.productName,
-          ),
-          actions: [
-            Padding(
-                padding: EdgeInsets.only(right: 15),
-                child: IconButton(
-                    onPressed: () => Get.to(() => CartScreen()),
-                    icon: MyCartIcon()))
-          ],
-        ),
 
         // Bottom Navigation Bar
         bottomNavigationBar:
             BottomNavigationBtn(cartProvider: _cartProvider, widget: widget),
         body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Product Image Slider
-                ProductDetailImages(
-                    images: widget.product.images, controller: controller),
-                SizedBox(height: 24),
+          child: Column(
+            children: [
+              ProductDetailImages(
+                  images: widget.product.images, controller: controller),
+              SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Product Image Slider
 
-                // Product Details
-                ProductDetail(),
-                SizedBox(height: 12),
+                    // Product Details
+                    ProductDetail(),
+                    SizedBox(height: 12),
 
-                // Price & Sale price
-                ProductPrice(
-                  price: widget.product.productPrice,
+                    // Price & Sale price
+                    ProductPrice(
+                      price: widget.product.productPrice,
+                    ),
+                    SizedBox(height: 12),
+
+                    // Title,
+                    Text(widget.product.productName),
+                    SizedBox(height: 6),
+
+                    // Stock status
+                    StockStatus(),
+                    SizedBox(height: 6),
+
+                    // Brand
+                    BrandName(),
+                    SizedBox(height: 30),
+
+                    // Checkout Button
+                    CheckoutButton(),
+                    SizedBox(height: 30),
+
+                    // Description
+                    Text('Description',
+                        style: TextStyle(fontWeight: FontWeight.w600)),
+                    SizedBox(height: 3),
+                    ReadMoreText(
+                      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                      trimLines: 2,
+                      trimMode: TrimMode.Line,
+                    ),
+                    Divider(
+                      thickness: 0.1,
+                      height: 10,
+                    ),
+                    SizedBox(height: 10),
+
+                    // Product Reviews
+                    InkWell(
+                      onTap: () => Get.to(() => ProductReview()),
+                      highlightColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Reviews'),
+                          IconButton(
+                              onPressed: () => Get.to(() => ProductReview()),
+                              icon: Icon(
+                                Iconsax.arrow_right_3,
+                                size: 18,
+                              ))
+                        ],
+                      ),
+                    )
+                  ],
                 ),
-                SizedBox(height: 12),
-
-                // Title,
-                Text(widget.product.productName),
-                SizedBox(height: 6),
-
-                // Stock status
-                StockStatus(),
-                SizedBox(height: 6),
-
-                // Brand
-                BrandName(),
-                SizedBox(height: 30),
-
-                // Checkout Button
-                CheckoutButton(),
-                SizedBox(height: 30),
-
-                // Description
-                Text('Description',
-                    style: TextStyle(fontWeight: FontWeight.w600)),
-                SizedBox(height: 3),
-                ReadMoreText(
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                  trimLines: 2,
-                  trimMode: TrimMode.Line,
-                ),
-                Divider(
-                  thickness: 0.1,
-                  height: 10,
-                ),
-                SizedBox(height: 10),
-
-                // Product Reviews
-                InkWell(
-                  onTap: () => Get.to(() => ProductReview()),
-                  highlightColor: Colors.transparent,
-                  splashColor: Colors.transparent,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Reviews'),
-                      IconButton(
-                          onPressed: () => Get.to(() => ProductReview()),
-                          icon: Icon(
-                            Iconsax.arrow_right_3,
-                            size: 18,
-                          ))
-                    ],
-                  ),
-                )
-              ],
-            ),
+              ),
+            ],
           ),
         ));
   }
@@ -176,9 +164,9 @@ class _BottomNavigationBtnState extends State<BottomNavigationBtn> {
                 setState(() {
                   isAdded = true;
                 });
-            
+
                 await Future.delayed(Duration(seconds: 2));
-            
+
                 try {
                   widget._cartProvider.addProductToCart(
                     productName: widget.widget.product.productName,
@@ -367,29 +355,51 @@ class ProductDetailImages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        CarouselSlider(
-          items: images.map((imagePath) {
-            return Image.network(imagePath);
-          }).toList(),
-          options: CarouselOptions(
-            height: 350,
-            enlargeCenterPage: true,
-            autoPlay: true,
-            viewportFraction: 1,
-            aspectRatio: 16 / 9,
-            onPageChanged: (index, _) => controller.updatePageIndicator(index),
-          ),
+    return MyCurvedWidget(
+      child: Container(
+        color: Colors.grey.withOpacity(0.2),
+        child: Stack(
+          children: [
+            MyAppBar(
+              showBackArrow: true,
+              actions: [
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.8),
+                      shape: BoxShape.circle),
+                  child:
+                      const Icon(CupertinoIcons.suit_heart, color: Colors.red),
+                )
+              ],
+            ),
+            CarouselSlider(
+              items: images.map((imagePath) {
+                return Image.network(imagePath);
+              }).toList(),
+              options: CarouselOptions(
+                height: 350,
+                enlargeCenterPage: true,
+                autoPlay: true,
+                viewportFraction: 1,
+                aspectRatio: 16 / 9,
+                onPageChanged: (index, _) =>
+                    controller.updatePageIndicator(index),
+              ),
+            ),
+            Positioned(
+              bottom: 30,
+              left: 0,
+              right: 0,
+              child: MyDotNavigation(
+                controller: controller,
+                dotCount: images.length,
+              ),
+            )
+          ],
         ),
-        Positioned(
-            bottom: 2,
-            child: MyDotNavigation(
-              controller: controller,
-              dotCount: images.length,
-            ))
-      ],
+      ),
     );
   }
 }

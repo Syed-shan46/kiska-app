@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:kiska/common/shimmer/product_shimmer.dart';
 import 'package:kiska/features/shop/models/product_model.dart';
 import 'package:kiska/providers/cart_provider.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class MyProductCard extends ConsumerStatefulWidget {
   const MyProductCard(this.product,
@@ -24,6 +24,7 @@ class MyProductCard extends ConsumerStatefulWidget {
   final Product? product;
 
   @override
+  // ignore: library_private_types_in_public_api
   _MyProductCardState createState() => _MyProductCardState();
 }
 
@@ -74,16 +75,14 @@ class _MyProductCardState extends ConsumerState<MyProductCard> {
               Stack(
                 children: [
                   Image.network(
-                    loadingBuilder: (context, child, loadingProgress) {
+                    loadingBuilder: (BuildContext context, Widget child,
+                        ImageChunkEvent? loadingProgress) {
                       if (loadingProgress == null) {
                         return child; // Image loaded successfully
                       } else {
                         // Show a progress indicator while the image is loading
-                        return CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                                  (loadingProgress.expectedTotalBytes ?? 1)
-                              : null,
+                        return Center(
+                          child: ProductShimmer(),
                         );
                       }
                     },

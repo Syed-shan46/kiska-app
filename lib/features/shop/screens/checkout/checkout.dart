@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kiska/features/shop/controllers/address_controller.dart';
 import 'package:kiska/features/shop/models/address_model.dart';
+import 'package:kiska/utils/themes/theme_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CheckoutScreen extends ConsumerStatefulWidget {
@@ -44,43 +45,67 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Checkout'),
+        title: const Text('Checkout'),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            _fetchedAddress == null
-                ? Container(
-                    padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.red),
-                      borderRadius: BorderRadius.circular(10),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Deliver to text
+              Text(
+                'Deliver to',
+                style: TextStyle(
+                  fontSize: 15,
+                  color: ThemeUtils.dynamicTextColor(context),
+                ),
+              ),
+              const SizedBox(height: 5),
+
+              // Address container
+              _fetchedAddress == null
+                  ? Container(
+                      
+                      child: const Text(''),
+                    )
+                  : Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey.shade300),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // Address details
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Name: ${_fetchedAddress!.name}'),
+                                Text('Phone: ${_fetchedAddress!.phone}'),
+                                Text('Address: ${_fetchedAddress!.address}'),
+                              ],
+                            ),
+                          ),
+                          // Change button
+                          TextButton(
+                            onPressed: () {
+                              // Handle change address action
+                            },
+                            style: TextButton.styleFrom(
+                              backgroundColor: ThemeUtils.dynamicTextColor(context),
+                              foregroundColor: DynamicBg.sameBrightness(context),
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                            ),
+                            child: const Text('Change'),
+                          ),
+                        ],
+                      ),
                     ),
-                    child: Text('No address found.',
-                        style: TextStyle(color: Colors.red)),
-                  )
-                : Container(
-                    padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Address Details',
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold)),
-                        SizedBox(height: 10),
-                        Text('Name: ${_fetchedAddress!.name}'),
-                        Text('Phone: ${_fetchedAddress!.phone}'),
-                        Text('Country: ${_fetchedAddress!.country}'),
-                        Text('City: ${_fetchedAddress!.city}'),
-                        Text('Address: ${_fetchedAddress!.address}'),
-                      ],
-                    ),
-                  )
-          ],
+            ],
+          ),
         ),
       ),
     );

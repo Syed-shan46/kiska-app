@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kiska/common/custom_shapes/primary_header_container.dart';
 import 'package:kiska/utils/constants/sizes.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
-
+import 'package:kiska/utils/themes/theme_utils.dart';
 
 class MyAuthHeader extends StatelessWidget {
   const MyAuthHeader({
@@ -23,8 +23,8 @@ class MyAuthHeader extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Text(
               title,
-              style: const TextStyle(
-                  color: Colors.white,
+              style: TextStyle(
+                  color: DynamicBg.sameBrightness(context),
                   fontSize: 29,
                   fontWeight: FontWeight.w600),
             ),

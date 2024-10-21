@@ -6,9 +6,10 @@ import 'package:kiska/common/widgets/text_forms/my_text_form_widget.dart';
 import 'package:kiska/features/shop/controllers/address_controller.dart';
 import 'package:kiska/features/shop/models/address_model.dart';
 import 'package:kiska/features/shop/screens/checkout/checkout.dart';
+import 'package:kiska/utils/themes/app_colors.dart';
 import 'package:kiska/utils/themes/text_theme.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
-import 'package:lottie/lottie.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AddressScreen extends StatefulWidget {
@@ -29,7 +30,7 @@ class _AddressScreenState extends State<AddressScreen> {
   final TextEditingController cityController = TextEditingController();
   final TextEditingController addController = TextEditingController();
 
-  Address? _fetchedAddress; // To hold the fetched address
+// To hold the fetched address
 
   // Variables to manage button state and animation
   bool isAdded = false;
@@ -91,9 +92,7 @@ class _AddressScreenState extends State<AddressScreen> {
       String userId = user['_id'];
 
       Address? address = await addressController.fetchAddressByUserId(userId);
-      setState(() {
-        _fetchedAddress = address;
-      });
+      setState(() {});
     }
   }
 
@@ -208,10 +207,10 @@ class _AddressScreenState extends State<AddressScreen> {
                       labelText: 'Address',
                       prefixIcon: Icon(Iconsax.house)),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 15),
                 SizedBox(
                   width: double.infinity,
-                  height: 55,
+                  height: 47,
                   child: ElevatedButton(
                     onPressed: () {
                       if (_formkey.currentState!.validate()) {
@@ -224,11 +223,10 @@ class _AddressScreenState extends State<AddressScreen> {
                       }
                     },
                     child: isAdded
-                        ? Lottie.network(
-                            'https://lottie.host/7b6851d4-c9dc-4a14-9f73-20932c001113/PVm0OgG12m.json',
-                            width: 50,
-                            height: 50,
-                            repeat: false)
+                        ? LoadingAnimationWidget.flickr(
+                            leftDotColor: DynamicBg.sameBrightness(context),
+                            rightDotColor: AppColors.primaryColor,
+                            size: 25)
                         : Text('Create',
                             style: textTheme.titleMedium!.copyWith(
                                 fontWeight: FontWeight.w600,

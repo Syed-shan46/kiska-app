@@ -1,7 +1,6 @@
 // MyBannerWidget
 import 'package:flutter/material.dart';
-import 'package:kiska/utils/themes/app_colors.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:kiska/common/shimmer/banner_shimmer.dart';
 
 class MyBannerWidget extends StatefulWidget {
   const MyBannerWidget({
@@ -36,10 +35,7 @@ class _MyBannerWidgetState extends State<MyBannerWidget> {
               } else {
                 // Show a progress indicator while the image is loading
                 return Center(
-                  child: LoadingAnimationWidget.stretchedDots(
-                    color: AppColors.primaryColor,
-                    size: 40,
-                  ),
+                  child: BannerShimmer(),
                 );
               }
             },

@@ -6,12 +6,14 @@ import 'package:kiska/common/widgets/appbar/appbar.dart';
 import 'package:kiska/common/widgets/layouts/settings_menu_tile.dart';
 import 'package:kiska/common/widgets/layouts/user_profile_tile.dart';
 import 'package:kiska/common/custom_shapes/primary_header_container.dart';
+import 'package:kiska/features/authentication/controllers/auth_controller.dart';
 import 'package:kiska/features/shop/screens/settings/profile/profile.dart';
 import 'package:kiska/utils/constants/sizes.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
 
 class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
+  final AuthController authController = AuthController();
+  SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +95,9 @@ class SettingsScreen extends StatelessWidget {
                     style: ButtonStyle(
                         side: WidgetStateProperty.all(
                             BorderSide(color: Colors.red))),
-                    onPressed: () {},
+                    onPressed: () async {
+                      await authController.signOutUser(context: context);
+                    },
                     child: Text(
                       'Logout',
                       style: TextStyle(color: Colors.red),

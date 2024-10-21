@@ -6,6 +6,7 @@ import 'package:kiska/features/authentication/controllers/auth_controller.dart';
 import 'package:kiska/features/authentication/screens/register/register.dart';
 import 'package:kiska/utils/constants/sizes.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
+import 'package:kiska/utils/themes/theme_utils.dart';
 
 class MyFormFields extends StatefulWidget {
   const MyFormFields({
@@ -78,12 +79,11 @@ class _MyFormFieldsState extends State<MyFormFields> {
           // Sign in Button
           SizedBox(
             width: double.infinity,
-            height: 56,
+            height: 47,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primaryColor,
                 shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  borderRadius: BorderRadius.all(Radius.circular(25)),
                 ),
               ),
               onPressed: () async {
@@ -95,7 +95,7 @@ class _MyFormFieldsState extends State<MyFormFields> {
               child: Text(
                 'Sign in',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: DynamicBg.sameBrightness(context),
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
                 ),
@@ -121,11 +121,12 @@ class CreateAccount extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 56,
+      height: 46,
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
+          side: BorderSide(color: ThemeUtils.dynamicTextColor(context).withOpacity(0.8)),
           shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
+            borderRadius: BorderRadius.all(Radius.circular(25)),
           ),
         ),
         onPressed: () => Get.to(() => SignUpScreen()),

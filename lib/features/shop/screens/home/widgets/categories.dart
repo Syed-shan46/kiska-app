@@ -30,10 +30,12 @@ class _CategoriesState extends State<Categories> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: 50,
-            child: const Center(child: CircularProgressIndicator()),
-          ); // Show loading spinner
+              width: MediaQuery.of(context).size.width,
+              height: 50,
+              child: Center(
+                child: LoadingAnimationWidget.hexagonDots(
+                    color: AppColors.primaryColor, size: 20),
+              )); // Show loading spinner
         } else if (snapshot.hasError) {
           return Center(
               child: Text('Error: ${snapshot.error}')); // Show error message
@@ -78,9 +80,9 @@ class _CategoriesState extends State<Categories> {
                                     height: 50,
                                     child: Center(
                                       child:
-                                          LoadingAnimationWidget.stretchedDots(
+                                          LoadingAnimationWidget.dotsTriangle(
                                         color: AppColors.primaryColor,
-                                        size: 40,
+                                        size: 20,
                                       ),
                                     ),
                                   );

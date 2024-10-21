@@ -36,8 +36,8 @@ class _MyBannerSliderState extends State<MyBannerSlider> {
           return SizedBox(
             height: 200,
             child: Center(
-              child: LoadingAnimationWidget.stretchedDots(
-                  color: AppColors.primaryColor, size: 50),
+              child: LoadingAnimationWidget.hexagonDots(
+                  color: AppColors.primaryColor, size: 20),
             ),
           );
         } else if (snapshot.hasError) {

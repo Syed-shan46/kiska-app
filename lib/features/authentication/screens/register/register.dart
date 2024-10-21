@@ -5,9 +5,11 @@ import 'package:kiska/features/authentication/controllers/auth_controller.dart';
 import 'package:kiska/features/authentication/screens/login/widgets/divider.dart';
 import 'package:kiska/features/authentication/screens/login/widgets/social_icons.dart';
 import 'package:kiska/utils/constants/sizes.dart';
+import 'package:kiska/utils/themes/app_colors.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class SignUpScreen extends StatefulWidget {
-  SignUpScreen({super.key});
+  const SignUpScreen({super.key});
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -25,16 +27,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
     setState(() {
       _isLoading = true;
     });
-    await _authController
-        .signUPUsers(
-            context: context,
-            userName: userName,
-            email: email,
-            password: password)
-        .whenComplete(() {
-      setState(() {
-        _isLoading = false;
-      });
+    await _authController.signUPUsers(
+      context: context,
+      userName: userName,
+      email: email,
+      password: password,
+    );
+
+    await Future.delayed(Duration(seconds: 2));
+    setState(() {
+      _isLoading = false;
     });
   }
 
@@ -129,7 +131,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           width: 24,
                           height: 24,
                           child: Checkbox(
-                              activeColor: Colors.blue,
+                              activeColor: AppColors.primaryColor,
                               value: true,
                               checkColor: Colors.white,
                               onChanged: (value) {}),
@@ -147,9 +149,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     .textTheme
                                     .bodyMedium!
                                     .apply(
-                                      color: Colors.blue,
+                                      color: AppColors.primaryColor,
                                       decoration: TextDecoration.underline,
-                                      decorationColor: Colors.blue,
+                                      decorationColor: AppColors.primaryColor,
                                     ),
                               ),
                               TextSpan(
@@ -161,9 +163,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     .textTheme
                                     .bodyMedium!
                                     .apply(
-                                      color: Colors.blue,
+                                      color: AppColors.primaryColor,
                                       decoration: TextDecoration.underline,
-                                      decorationColor: Colors.blue,
+                                      decorationColor: AppColors.primaryColor,
                                     ),
                               ),
                             ],
@@ -176,15 +178,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               const SizedBox(height: MySizes.spaceBtwSections),
 
-              /// sign up button
+              // sign up button
               SizedBox(
                 width: double.infinity,
-                height: 56,
+                height: 50,
                 child: OutlinedButton(
                   style: OutlinedButton.styleFrom(
-                    side: const BorderSide(color: Colors.blue),
                     shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                        borderRadius: BorderRadius.all(Radius.circular(25))),
                   ),
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
@@ -192,8 +193,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     }
                   },
                   child: _isLoading
-                      ? CircularProgressIndicator(
-                          strokeWidth: 3,
+                      ? LoadingAnimationWidget.flickr(
+                          leftDotColor: AppColors.darkBackground,
+                          rightDotColor: AppColors.primaryColor,
+                          size: 25,
                         )
                       : Text('Create Account',
                           style: TextStyle(

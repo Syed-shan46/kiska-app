@@ -10,7 +10,7 @@ import 'package:kiska/utils/themes/light_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
-  MyApp();
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(ProviderScope(child: const MyApp()));
 }
 
@@ -25,6 +25,8 @@ class MyApp extends ConsumerWidget {
 
     if (token != null && userJson != null) {
       ref.read(userProvider.notifier).setUser(userJson);
+    } else {
+      ref.read(userProvider.notifier).signOut();
     }
   }
 
@@ -46,7 +48,7 @@ class MyApp extends ConsumerWidget {
                 );
               }
               final user = ref.watch(userProvider);
-              return user!= null? NavigationMenu() : LoginScreen();
+              return user != null ? NavigationMenu() : LoginScreen();
             }),
       ),
     );

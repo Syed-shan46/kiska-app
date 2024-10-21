@@ -27,6 +27,7 @@ class MyTextField extends StatelessWidget {
       validator: validator,
       controller: controller,
       decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(vertical: 13,horizontal: 12),
           prefixIcon: Icon(icon),
           suffixIcon: showSuffixIcon ? const Icon(Iconsax.eye_slash) : null,
           focusedBorder: OutlineInputBorder(
@@ -38,7 +39,7 @@ class MyTextField extends StatelessWidget {
             ),
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: ThemeUtils.dynamicTextColor(context)),
+            borderSide: BorderSide(color: ThemeUtils.dynamicTextColor(context).withOpacity(0.8)),
             borderRadius: const BorderRadius.all(
               Radius.circular(15),
             ),

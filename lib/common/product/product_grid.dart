@@ -4,6 +4,8 @@ import 'package:kiska/common/product/product_card.dart';
 import 'package:kiska/features/shop/controllers/product_controller.dart';
 import 'package:kiska/features/shop/models/product_model.dart';
 import 'package:kiska/features/shop/screens/home/product_detail/product_detail.dart';
+import 'package:kiska/utils/themes/app_colors.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class MyProductGrid extends StatefulWidget {
   const MyProductGrid({super.key});
@@ -29,8 +31,9 @@ class _MyProductGridState extends State<MyProductGrid> {
       future: _futureProducts,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(),
+          return Center(
+            child: LoadingAnimationWidget.hexagonDots(
+                color: AppColors.primaryColor, size: 30),
           );
         } else if (snapshot.hasError) {
           return Center(

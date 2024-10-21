@@ -50,6 +50,6 @@ final ThemeData darkTheme = ThemeData(
   ),
 
   elevatedButtonTheme: ElevatedButtonThemeData( 
-    style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(AppColors.lightBackground))
+    style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(AppColors.lightBackground.withOpacity(0.8)))
   )
 );

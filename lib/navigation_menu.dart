@@ -25,14 +25,13 @@ class NavigationMenu extends StatelessWidget {
                 .screens, // List of screens to switch between
           ),
           bottomNavigationBar: CustomNavigationBar(
-           
             bubbleCurve: Curves.decelerate,
             selectedColor: AppColors.primaryColor,
             strokeColor: AppColors.primaryColor,
             scaleFactor: 0.2,
             backgroundColor: Navbg.navbarBg(context),
             iconSize: 23,
-            onTap: (index){
+            onTap: (index) {
               navigationController.changeTabIndex(index);
             },
             currentIndex: navigationController.selectedIndex.value,
@@ -49,7 +48,6 @@ class NavigationMenu extends StatelessWidget {
               CustomNavigationBarItem(
                 icon: Icon(Iconsax.user),
               ),
-              
             ],
           ));
     });
@@ -65,7 +63,7 @@ class NavigationController extends GetxController {
     const HomeScreen(),
     const StoreScreen(),
     const WishListScreen(),
-    const SettingsScreen(),
+    SettingsScreen(),
   ];
 
   // Method to change the selected index
