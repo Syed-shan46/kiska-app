@@ -33,10 +33,7 @@ class AddressController {
           });
 
       manageHttpResponse(
-          response: response,
-          context: context,
-          onSuccess: () {
-          });
+          response: response, context: context, onSuccess: () {});
     } catch (e) {
       showSnackBar(context, 'Error$e');
     }
@@ -51,6 +48,8 @@ class AddressController {
         },
       );
 
+      // update address by Id
+
       if (response.statusCode == 200) {
         jsonDecode(response.body);
         return Address.fromJson(jsonDecode(response.body));
@@ -59,6 +58,26 @@ class AddressController {
       }
     } catch (e) {
       return null;
+    }
+  }
+
+  // Update address by user ID
+  Future<bool> updateAddress(String userId, Address updateAddress) async {
+    try {
+      final response = await http.put(
+        Uri.parse('$uri/api/update-address/$userId'),
+        body: jsonEncode(updateAddress.toMap()),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print("Error updating address: $e");
+      return false;
     }
   }
 }

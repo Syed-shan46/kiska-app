@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:kiska/common/cart/cart_icon.dart';
+import 'package:kiska/common/cart/cart_item_card.dart';
 import 'package:kiska/features/authentication/global_varaibles.dart';
 import 'package:kiska/features/shop/models/cart_model.dart';
 import 'package:kiska/features/shop/screens/address/address.dart';
@@ -47,6 +48,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
 
   // Check if the user has an address saved in the database
   Future<void> checkUserAddress(BuildContext context) async {
+    final cartData = ref.watch(cartProvider);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userJson = prefs.getString('user');
     if (userJson != null) {
@@ -66,9 +68,10 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                 'addressExists']; // This depends on your API response structure
           });
 
+          double totalAmount = getTotalAmount(cartData); // Get total amount
           if (addressExists) {
             // If address exists, navigate to checkout screen
-            Get.to(() => CheckoutScreen());
+            Get.to(() => CheckoutScreen(totalAmount: totalAmount));
           } else {
             // If no address exists, navigate to address screen
             Get.to(() => AddressScreen());
@@ -105,7 +108,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
           icon: Icon(
-            Icons.arrow_back_ios_new_outlined,
+            Icons.arrow_back,
             size: 22,
           ),
         ),
@@ -173,163 +176,11 @@ class _CartScreenState extends ConsumerState<CartScreen> {
 
                   /// Cart items card
                   Padding(
-                    padding: EdgeInsets.all(MySizes.defaultSpace),
-                    child: ListView.separated(
-                      shrinkWrap: true,
-                      separatorBuilder: (_, __) => const Column(
-                        children: [
-                          SizedBox(height: MySizes.spaceBtwItems),
-                        ],
-                      ),
-                      itemCount: cartData.length,
-                      itemBuilder: (context, index) {
-                        final cartItem = cartData.values.toList()[index];
-                        return Container(
-                          decoration: BoxDecoration(
-                              color: Colors.transparent,
-                              border: Border.all(
-                                  color: ThemeUtils.dynamicTextColor(context).withOpacity(0.8)),
-                              borderRadius: BorderRadius.circular(15)),
-                          width: MediaQuery.of(context).size.width,
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Row(
-                              children: [
-                                /// image
-                                Container(
-                                    width: 65,
-                                    height: 65,
-                                    decoration: BoxDecoration(
-                                        color: Colors.white.withOpacity(0.5),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: Image.network(
-                                      cartItem.image[0],
-                                      fit: BoxFit.contain,
-                                    )),
-
-                                const SizedBox(width: MySizes.spaceBtwItems),
-
-                                /// title, price, size
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          /// Categories
-                                          Row(
-                                            children: [
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                    color: Colors.white
-                                                        .withOpacity(0.5),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            4)),
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 8,
-                                                        vertical: 0),
-                                                child: Text(cartItem.category),
-                                              )
-                                            ],
-                                          ),
-
-                                          /// Price
-                                          Row(
-                                            children: [
-                                              Text(
-                                                '₹${cartItem.totalPrice}',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyLarge,
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      ),
-
-                                      const SizedBox(height: 2),
-
-                                      /// Product name
-                                      Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Text(
-                                            cartItem.productName,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .labelMedium,
-                                          )),
-
-                                      const SizedBox(height: 2),
-
-                                      /// Quantity
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              InkWell(
-                                                  onTap: () => _cartProvider
-                                                      .removeCartItem(
-                                                          cartItem.productId),
-                                                  child: Text(
-                                                    'Remove',
-                                                    style: TextStyle(
-                                                        color: Colors.red),
-                                                  ))
-                                            ],
-                                          ),
-                                          Row(
-                                            children: [
-                                              InkWell(
-                                                onTap: () {
-                                                  _cartProvider
-                                                      .DecrementCartItem(
-                                                          cartItem.productId);
-                                                },
-                                                child: const Icon(
-                                                  Icons.remove_circle_outline,
-                                                  size: 19,
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                width: 5,
-                                              ),
-                                              Text(
-                                                  cartItem.quantity.toString()),
-                                              const SizedBox(
-                                                width: 5,
-                                              ),
-                                              InkWell(
-                                                onTap: () {
-                                                  _cartProvider
-                                                      .IncrementCartItem(
-                                                          cartItem.productId);
-                                                },
-                                                child: Icon(
-                                                  Icons
-                                                      .add_circle_outline_outlined,
-                                                  size: 19,
-                                                  color: Colors.blue
-                                                      .withOpacity(0.8),
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
+                    padding: const EdgeInsets.all(MySizes.defaultSpace),
+                    child: CartItemCard(
+                      showButtons: true,
+                      cartData: cartData,
+                      cartProvider: _cartProvider,
                     ),
                   ),
 

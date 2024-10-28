@@ -1,4 +1,3 @@
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kiska/features/shop/models/cart_model.dart';
 
@@ -55,7 +54,6 @@ class CartNotifier extends StateNotifier<Map<String, Cart>> {
     if (state.containsKey(productId)) {
       final cartItem = state[productId]!;
       final newQuantity = cartItem.quantity + 1;
-      
 
       state = {
         ...state,
@@ -70,7 +68,6 @@ class CartNotifier extends StateNotifier<Map<String, Cart>> {
       if (cartItem.quantity > 1) {
         // Prevent quantity from going below 1
         final newQuantity = cartItem.quantity - 1;
-        
 
         state = {
           ...state,
@@ -98,4 +95,6 @@ class CartNotifier extends StateNotifier<Map<String, Cart>> {
   int get totalQuantity {
     return state.values.fold(0, (sum, cartItem) => sum + cartItem.quantity);
   }
+
+  Map<String, Cart> get getCartItems => state;
 }

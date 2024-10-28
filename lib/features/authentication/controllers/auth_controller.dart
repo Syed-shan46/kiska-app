@@ -138,4 +138,6 @@ class AuthController {
       showSnackBar(context, 'Error signin $e');
     }
   }
+
+  
 }

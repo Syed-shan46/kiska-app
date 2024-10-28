@@ -1,0 +1,42 @@
+onPressed: () async {
+                      var response = PhonePePaymentSdk.startTransaction(
+                        body,
+                        callbackUrl,
+                        checksum,
+                        apiEndPoint,
+                      );
+                      response.then(
+                        (val) => {
+                          setState(() async {
+                            if (val != null) {
+                              String status = val['status'].toString();
+                              String error = val['error'].toString();
+
+                              if (status == 'SUCCESS') {
+                                result = "Flow completed - status: Completed";
+                                await Future.forEach(
+                                    _cartProvider.getCartItems.entries,
+                                    (entry) {
+                                  var item = entry.value;
+                                  _orderController.createOrders(
+                                      id: '',
+                                      productName: item.productName,
+                                      quantity: item.quantity,
+                                      category: item.category,
+                                      image: item.image[0],
+                                      totalAmount: item.totalPrice,
+                                      paymentStatus: 'Success',
+                                      delivered: false,
+                                      context: context);
+                                });
+                              } else {
+                                result =
+                                    'Flow compelte- status: $status and error $error';
+                              }
+                            } else {
+                              result = "flow incomplete";
+                            }
+                          })
+                        },
+                      );
+                    },

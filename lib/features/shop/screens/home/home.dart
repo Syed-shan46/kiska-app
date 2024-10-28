@@ -26,15 +26,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       // AppBar
-      
+
       // Drawer
       drawer: const MyDrawer(),
 
       // Body
       body: SingleChildScrollView(
         child: Column(
-          children:  const [
-
+          children: const [
             MyHeader(),
             // Categories
             Categories(),
@@ -65,7 +64,6 @@ class MyHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: MyPrimaryHeaderContainer(
-      
         height: MyDeviceUtils.getAppBarHeight(),
         color: DynamicBg.sameBrightness(context),
         showContainer: false,

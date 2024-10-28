@@ -9,6 +9,4 @@ class AppColors {
   static const Color darkBackground = Color(0xFF191919); // Dark background
   static const Color lightTextColor = Color(0xFF000000); // Light text color
   static const Color darkTextColor = Color(0xFFFFFFFF); // Dark text color
-
- 
 }
