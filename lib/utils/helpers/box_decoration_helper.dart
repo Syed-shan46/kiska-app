@@ -18,7 +18,7 @@ BoxDecoration getDynamicBoxDecoration(BuildContext context) {
             ),
           ],
     border: isDarkMode
-        ? Border.all(color: Colors.white.withOpacity(0.7), width: 2) // Border for dark mode
+        ? Border.all(color: Colors.white.withOpacity(0.3), width: 1) // Border for dark mode
         : null, // No border in light mode
     borderRadius: BorderRadius.circular(12), // Optional rounded corners
   );

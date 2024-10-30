@@ -176,8 +176,9 @@ class _CartScreenState extends ConsumerState<CartScreen> {
 
                   /// Cart items card
                   Padding(
-                    padding: const EdgeInsets.all(MySizes.defaultSpace),
+                    padding: const EdgeInsets.all(MySizes.spaceBtwItems),
                     child: CartItemCard(
+                      showQuantity: false,
                       showButtons: true,
                       cartData: cartData,
                       cartProvider: _cartProvider,

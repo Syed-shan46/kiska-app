@@ -7,6 +7,7 @@ import 'package:kiska/common/layouts/settings_menu_tile.dart';
 import 'package:kiska/common/layouts/user_profile_tile.dart';
 import 'package:kiska/common/custom_shapes/primary_header_container.dart';
 import 'package:kiska/features/authentication/controllers/auth_controller.dart';
+import 'package:kiska/features/shop/screens/orders/order_screen.dart';
 import 'package:kiska/features/shop/screens/settings/profile/profile.dart';
 import 'package:kiska/utils/constants/sizes.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
@@ -24,7 +25,6 @@ class SettingsScreen extends StatelessWidget {
         children: [
           MyPrimaryHeaderContainer(
             color: AppColors.primaryColor,
-            height: 150.h,
             child: Column(
               children: [
                 MyAppBar(
@@ -66,10 +66,15 @@ class SettingsScreen extends StatelessWidget {
                     icon: Iconsax.shopping_bag,
                     title: 'My Cart',
                     subTitle: 'Add, Remove products and move to checkout'),
-                MySettingsMenuTile(
-                    icon: Iconsax.bag_tick,
-                    title: 'My Orders',
-                    subTitle: 'In-progresss and Completed Orders'),
+                InkWell(
+                  onTap: () {
+                   Get.to(()=> OrderScreen());
+                  },
+                  child: MySettingsMenuTile(
+                      icon: Iconsax.bag_tick,
+                      title: 'My Orders',
+                      subTitle: 'In-progresss and Completed Orders'),
+                ),
                 MySettingsMenuTile(
                     icon: Iconsax.bank,
                     title: 'Bank Account',

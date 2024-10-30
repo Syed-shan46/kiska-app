@@ -4,10 +4,11 @@ import 'package:kiska/providers/cart_provider.dart';
 import 'package:kiska/utils/constants/sizes.dart';
 import 'package:kiska/utils/helpers/box_decoration_helper.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
-import 'package:kiska/utils/themes/theme_utils.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CartItemCard extends StatelessWidget {
   CartItemCard({
+    required this.showQuantity,
     required this.showButtons,
     super.key,
     required this.cartData,
@@ -18,6 +19,7 @@ class CartItemCard extends StatelessWidget {
   final CartNotifier _cartProvider;
 
   final bool showButtons;
+  final bool showQuantity;
 
   @override
   Widget build(BuildContext context) {
@@ -35,16 +37,17 @@ class CartItemCard extends StatelessWidget {
         return Container(
           decoration: getDynamicBoxDecoration(context),
           width: MediaQuery.of(context).size.width,
+          height: 75.h,
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Row(
               children: [
                 /// image
                 Container(
-                    width: 65,
-                    height: 65,
+                    width: 65.h,
+                    height: 65.h,
                     decoration: BoxDecoration(
-                        color: AppColors.primaryColor.withOpacity(0.1),
+                        color: Colors.grey.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(10)),
                     child: Image.network(
                       cartItem.image[0],
@@ -66,7 +69,8 @@ class CartItemCard extends StatelessWidget {
                               Container(
                                 decoration: BoxDecoration(
                                     color: isDarkMode
-                                        ? AppColors.primaryColor.withOpacity(0.8)
+                                        ? AppColors.primaryColor
+                                            .withOpacity(0.8)
                                         : AppColors.primaryColor
                                             .withOpacity(0.1),
                                     borderRadius: BorderRadius.circular(4)),
@@ -117,9 +121,11 @@ class CartItemCard extends StatelessWidget {
                                         ))
                                   ],
                                 )
-                              : Text(
-                                  'Quantity:',
-                                ),
+                              : showQuantity
+                                  ? Text(
+                                      'Quantity:',
+                                    )
+                                  : Text('Processing'),
                           Row(
                             children: [
                               showButtons

@@ -10,7 +10,9 @@ import 'package:kiska/features/shop/screens/home/widgets/banner_slider.dart';
 import 'package:kiska/features/shop/screens/home/widgets/categories.dart';
 import 'package:kiska/utils/constants/sizes.dart';
 import 'package:kiska/utils/device/device_utility.dart';
+import 'package:kiska/utils/themes/app_colors.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -24,6 +26,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       // AppBar
 
@@ -33,10 +37,18 @@ class _HomeScreenState extends State<HomeScreen> {
       // Body
       body: SingleChildScrollView(
         child: Column(
-          children: const [
-            MyHeader(),
-            // Categories
-            Categories(),
+          children: [
+            MyPrimaryHeaderContainer(
+              showContainer: false,
+              color: AppColors.primaryColor,
+              child: Column(
+                children: const [
+                  MyHeader(),
+                  SizedBox(height: MySizes.spaceBtwItems),
+                  Categories(),
+                ],
+              ),
+            ),
 
             // Banner
             MyBannerSlider(),
@@ -63,44 +75,44 @@ class MyHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: MyPrimaryHeaderContainer(
-        height: MyDeviceUtils.getAppBarHeight(),
-        color: DynamicBg.sameBrightness(context),
-        showContainer: false,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Padding(
+      child: Row(
+        children: [
+          SizedBox(height: MySizes.spaceBtwItems),
+          // Left side with welcome title
+          Expanded(
+            child: Padding(
               padding: const EdgeInsets.only(left: MySizes.defaultSpace / 1.5),
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: Stack(
-                  children: [
-                    // Left side welcome title
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 10),
-                        Text('Syed-shan\n ',
-                            style: Theme.of(context).textTheme.bodyLarge!),
-                      ],
-                    ),
-
-                    // Cart icon
-                    Positioned(
-                      right: 20,
-                      top: 10,
-                      child: GestureDetector(
-                          onTap: () => Get.to(() => const CartScreen()),
-                          child: MyCartIcon(
-                              color: ThemeUtils.dynamicTextColor(context))),
-                    )
-                  ],
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min, // Adjusts height to fit content
+                children: [
+                  Text(
+                    'Good Day for shopping',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall!
+                        .copyWith(color: Colors.white.withOpacity(0.9)),
+                  ),
+                  Text(
+                    'Syed-shan',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .copyWith(color: Colors.white.withOpacity(0.8)),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+          // Cart icon on the right side
+          GestureDetector(
+            onTap: () => Get.to(() => const CartScreen()),
+            child: Padding(
+              padding: const EdgeInsets.only(right: 20.0), // Consistent padding
+              child: MyCartIcon(color: Colors.white.withOpacity(0.9)),
+            ),
+          ),
+        ],
       ),
     );
   }

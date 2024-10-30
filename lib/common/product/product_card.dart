@@ -5,6 +5,7 @@ import 'package:kiska/common/shimmer/product_shimmer.dart';
 import 'package:kiska/features/shop/models/product_model.dart';
 import 'package:kiska/providers/cart_provider.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
 
 class MyProductCard extends ConsumerStatefulWidget {
@@ -167,7 +168,7 @@ class _MyProductCardState extends ConsumerState<MyProductCard> {
                         Text(
                           '₹${widget.price}',
                           style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 15.sp,
                               color: ThemeUtils.dynamicTextColor(context)),
                         ),
                       ],
@@ -206,8 +207,8 @@ class _MyProductCardState extends ConsumerState<MyProductCard> {
                           shape: BoxShape.circle,
                         ),
                         child: SizedBox(
-                          height: 38,
-                          width: 38,
+                          height: 30.h,
+                          width: 30.h,
                           child: AnimatedSwitcher(
                             duration: Duration(
                                 milliseconds: 300), // Smooth icon transition

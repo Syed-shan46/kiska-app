@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:kiska/features/authentication/global_varaibles.dart';
 import 'package:kiska/features/shop/models/order_model.dart';
 import 'package:http/http.dart' as http;
@@ -52,7 +54,28 @@ class OrderController {
             showSnackBar(context, 'Your have placed an order');
           });
     } catch (e) {
-      throw Exception('Error: $e');
+      showSnackBar(context, e.toString());
+    }
+  }
+
+  Future<List<Order>> loadOrders({required String userId}) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$uri/api/orders/$userId'),
+        headers: <String, String>{
+          "Content-Type": "application/json; charset=UTF-8",
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = jsonDecode(response.body);
+        return data.map((order) => Order.fromJson(order)).toList();
+      } else {
+        throw Exception('Failed to load orders: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error loading orders: $e'); // Logs detailed error
+      throw Exception('Error loading orders: $e');
     }
   }
 }

@@ -18,31 +18,31 @@ class _MyBannerWidgetState extends State<MyBannerWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 150,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+      height: 150, // Consider making this responsive
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+      ),
       child: Padding(
-        padding: const EdgeInsets.all(9),
+        padding: const EdgeInsets.only(left: 9, right: 9, bottom: 9),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(15),
           child: Image.network(
-            widget.imageUrl, // Change to Image.network to load from URL
+            widget.imageUrl,
             fit: BoxFit.cover,
-            width: MediaQuery.of(context).size.width, // Full width
+            width: MediaQuery.of(context).size.width,
             loadingBuilder: (BuildContext context, Widget child,
                 ImageChunkEvent? loadingProgress) {
               if (loadingProgress == null) {
                 return child; // Image loaded successfully
               } else {
-                // Show a progress indicator while the image is loading
-                return Center(
-                  child: BannerShimmer(),
-                );
+                // Show a shimmer while loading
+                return Center(child: BannerShimmer());
               }
             },
             errorBuilder: (context, error, stackTrace) {
               return const Center(
-                  child:
-                      Text('Error loading image')); // Handle image load errors
+                child: Text('Error loading image'), // Handle image load errors
+              );
             },
           ),
         ),

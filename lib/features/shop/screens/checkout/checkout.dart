@@ -29,8 +29,7 @@ class CheckoutScreen extends ConsumerStatefulWidget {
   });
 
   @override
-  // ignore: library_private_types_in_public_api
-  _CheckoutScreenState createState() => _CheckoutScreenState();
+  ConsumerState<CheckoutScreen> createState() => _CheckoutScreenState();
 }
 
 class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
@@ -231,6 +230,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
               aboveTitle(context, 'Your Items'),
               SizedBox(height: MySizes.spaceBtwItems / 2),
               CartItemCard(
+                showQuantity: true,
                 showButtons: false,
                 cartData: cartData,
                 cartProvider: _cartProvider,
@@ -304,8 +304,6 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                   ),
                 ),
               ),
-
-             
             ],
           ),
         ),
