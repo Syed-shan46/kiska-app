@@ -13,7 +13,7 @@ class MyWelcomeText extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Welcome Back!',
+          'Welcome to Kiska!',
           style: Theme.of(context)
               .textTheme
               .headlineMedium!

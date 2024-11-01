@@ -11,7 +11,6 @@ import 'package:kiska/features/shop/screens/orders/order_screen.dart';
 import 'package:kiska/features/shop/screens/settings/profile/profile.dart';
 import 'package:kiska/utils/constants/sizes.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SettingsScreen extends StatelessWidget {
   final AuthController authController = AuthController();
@@ -24,6 +23,7 @@ class SettingsScreen extends StatelessWidget {
       child: Column(
         children: [
           MyPrimaryHeaderContainer(
+            height: 180,
             color: AppColors.primaryColor,
             child: Column(
               children: [

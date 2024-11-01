@@ -18,7 +18,7 @@ class _MyBannerWidgetState extends State<MyBannerWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 150, // Consider making this responsive
+      
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
       ),

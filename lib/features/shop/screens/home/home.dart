@@ -8,11 +8,9 @@ import 'package:kiska/common/appbar/drawer.dart';
 import 'package:kiska/common/heading.dart';
 import 'package:kiska/features/shop/screens/home/widgets/banner_slider.dart';
 import 'package:kiska/features/shop/screens/home/widgets/categories.dart';
+import 'package:kiska/features/shop/screens/home/widgets/search_field.dart';
 import 'package:kiska/utils/constants/sizes.dart';
-import 'package:kiska/utils/device/device_utility.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
-import 'package:kiska/utils/themes/theme_utils.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -37,13 +35,15 @@ class _HomeScreenState extends State<HomeScreen> {
       // Body
       body: SingleChildScrollView(
         child: Column(
-          children: [
+          children: const [
             MyPrimaryHeaderContainer(
               showContainer: false,
               color: AppColors.primaryColor,
               child: Column(
-                children: const [
+                children:  [
                   MyHeader(),
+                  SizedBox(height: MySizes.spaceBtwItems /2),
+                  SearchField(),
                   SizedBox(height: MySizes.spaceBtwItems),
                   Categories(),
                 ],
@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
             MyHeading(headingLeft: "Trending", headingRight: 'See all'),
 
             Padding(
-              padding: EdgeInsets.all(6.0),
+              padding: EdgeInsets.symmetric(horizontal: 6),
               child: MyProductGrid(),
             ),
           ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kiska/utils/themes/app_colors.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
 
 import 'circular_container.dart';
@@ -11,23 +12,26 @@ class MyPrimaryHeaderContainer extends StatelessWidget {
     super.key,
     required this.child,
     this.showContainer = true,
+    this.height = 230,
     required this.color,
   });
 
   final Widget child;
   final bool showContainer;
   final Color color;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     return MyCurvedWidget(
       child: Container(
         
         width: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.symmetric(vertical: screenHeight * 0.02),
-        decoration: BoxDecoration(color: color),
+        height: height!.h,
+        decoration: BoxDecoration(color: isDarkMode? Colors.black.withOpacity(0.6): AppColors.primaryColor),
        
         child: Stack(
           children: [

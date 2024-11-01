@@ -33,7 +33,7 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ScreenUtilInit(
-      designSize: Size(360, 690),
+      
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.system,

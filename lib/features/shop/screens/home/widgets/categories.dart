@@ -35,6 +35,7 @@ class _CategoriesState extends ConsumerState<Categories> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final categories = ref.watch(categoryProvider);
     return SizedBox(
       height: 70.h,
@@ -52,7 +53,7 @@ class _CategoriesState extends ConsumerState<Categories> {
                   height:40.h,
                   margin: const EdgeInsets.symmetric(horizontal: 8.0),
                   decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 235, 235, 235),
+                    color: isDarkMode? AppColors.darkBackground :  Colors.white.withOpacity(0.9),
                     borderRadius: BorderRadius.circular(50),
                   ),
                   child: Padding(

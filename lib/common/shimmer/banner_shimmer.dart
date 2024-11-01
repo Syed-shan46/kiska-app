@@ -8,12 +8,12 @@ class BannerShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 140.h,
+      height: 130.h,
       child: Column(
         children: [
           ShimmerWidget(
               shimmerWidth: double.infinity.h,
-              shimmerHeight: 140.h,
+              shimmerHeight: 130.h,
               shimmerRadius: 12),
         ],
       ),

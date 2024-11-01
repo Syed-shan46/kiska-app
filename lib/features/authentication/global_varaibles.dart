@@ -1,4 +1,4 @@
-String uri = "http://192.168.31.58:3000";
+String uri = "http://192.168.31.229:3000";
 
 String loc = 'http://192.168.31.58:3000';
 String ios = 'http://192.168.31.108:3000';

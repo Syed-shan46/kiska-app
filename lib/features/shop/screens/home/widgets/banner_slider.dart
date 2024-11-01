@@ -8,6 +8,7 @@ import 'package:kiska/features/shop/screens/home/widgets/banner_widget.dart';
 import 'package:kiska/features/shop/screens/home/widgets/my_dot_navigation.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MyBannerSlider extends StatefulWidget {
   const MyBannerSlider({super.key});
@@ -54,16 +55,14 @@ class _MyBannerSliderState extends State<MyBannerSlider> {
             // Carousel Slider
             CarouselSlider(
               options: CarouselOptions(
+                height: 140.h,
                 viewportFraction: 1,
                 onPageChanged: (index, _) =>
                     controller.updatePageIndicator(index),
                 autoPlay: true,
               ),
               items: banners.map((banner) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  child: MyBannerWidget(imageUrl: banner.image),
-                ); // Use your widget here
+                return MyBannerWidget(imageUrl: banner.image); // Use your widget here
               }).toList(),
             ),
             Positioned(
