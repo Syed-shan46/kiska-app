@@ -77,7 +77,6 @@ class MyHeader extends StatelessWidget {
     return SafeArea(
       child: Row(
         children: [
-          SizedBox(height: MySizes.spaceBtwItems),
           // Left side with welcome title
           Expanded(
             child: Padding(
