@@ -1,12 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:kiska/common/text_forms/my_text_form_widget.dart';
 import 'package:kiska/features/shop/controllers/address_controller.dart';
 import 'package:kiska/features/shop/models/address_model.dart';
-import 'package:kiska/features/shop/screens/checkout/checkout.dart';
 import 'package:kiska/utils/themes/text_theme.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,7 +20,7 @@ class _EditAddressState extends ConsumerState<EditAddress> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
   final AddressController addressController = AddressController();
-  Address? _fetchedAddress; // To hold the fetched address
+  Address? fetchedAddress; // To hold the fetched address
 
   late TextEditingController nameController;
   late TextEditingController phoneController;
@@ -63,7 +61,7 @@ class _EditAddressState extends ConsumerState<EditAddress> {
 
       Address? address = await addressController.fetchAddressByUserId(userId);
       setState(() {
-        _fetchedAddress = address;
+        fetchedAddress = address;
         // Set controllers with fetched address data
         nameController.text = address?.name ?? '';
         phoneController.text = address?.phone ?? '';

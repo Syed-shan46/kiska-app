@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:kiska/navigation_menu.dart';
+
 import 'package:kiska/utils/device/device_utility.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
 

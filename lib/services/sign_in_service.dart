@@ -38,12 +38,13 @@ class SignInService {
         Get.to(() =>
             NavigationMenu()); // Return user data or any required response
       } else {
-        // Handle error
+        // Handle errorˇ
         throw Exception('Failed to sign in:  ${response.body}');
       }
     } catch (error) {
       throw Exception('Sign-in failed: $error');
       print(error);
     }
+    return null;
   }
 }

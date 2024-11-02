@@ -10,6 +10,7 @@ import 'package:kiska/features/shop/controllers/address_controller.dart';
 import 'package:kiska/features/shop/controllers/order_controller.dart';
 import 'package:kiska/features/shop/models/address_model.dart';
 import 'package:kiska/features/shop/screens/address/edit_address.dart';
+import 'package:kiska/features/shop/screens/orders/success_screen.dart';
 import 'package:kiska/providers/cart_provider.dart';
 import 'package:kiska/utils/constants/sizes.dart';
 import 'package:kiska/utils/helpers/box_decoration_helper.dart';

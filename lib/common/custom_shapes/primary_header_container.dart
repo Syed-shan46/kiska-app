@@ -24,14 +24,12 @@ class MyPrimaryHeaderContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
     return MyCurvedWidget(
       child: Container(
         
         width: MediaQuery.of(context).size.width,
         height: height!.h,
-        decoration: BoxDecoration(color: isDarkMode? Colors.black.withOpacity(0.6): AppColors.primaryColor),
+        decoration: BoxDecoration(color: isDarkMode? Colors.grey.withOpacity(0.1): AppColors.primaryColor),
        
         child: Stack(
           children: [

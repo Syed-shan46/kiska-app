@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:get/get.dart';
 import 'package:kiska/features/authentication/global_varaibles.dart';
 import 'package:kiska/features/shop/models/order_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:kiska/features/shop/screens/orders/success_screen.dart';
 import 'package:kiska/services/http_response.dart';
 
 class OrderController {
@@ -53,6 +55,8 @@ class OrderController {
           onSuccess: () {
             showSnackBar(context, 'Your have placed an order');
           });
+
+          Get.to(()=> SuccessScreen());
     } catch (e) {
       showSnackBar(context, e.toString());
     }
