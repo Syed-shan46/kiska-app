@@ -11,6 +11,7 @@ import 'package:kiska/features/shop/screens/home/widgets/categories.dart';
 import 'package:kiska/features/shop/screens/home/widgets/search_field.dart';
 import 'package:kiska/utils/constants/sizes.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -24,7 +25,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       // AppBar
 
@@ -34,14 +34,14 @@ class _HomeScreenState extends State<HomeScreen> {
       // Body
       body: SingleChildScrollView(
         child: Column(
-          children: const [
+          children:  [
             MyPrimaryHeaderContainer(
               showContainer: false,
               color: AppColors.primaryColor,
               child: Column(
-                children:  [
+                children:  const [
                   MyHeader(),
-                  SizedBox(height: MySizes.spaceBtwItems /2),
+                  SizedBox(height: MySizes.spaceBtwItems / 2),
                   SearchField(),
                   SizedBox(height: MySizes.spaceBtwItems),
                   Categories(),

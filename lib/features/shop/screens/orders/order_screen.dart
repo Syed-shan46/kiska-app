@@ -66,136 +66,175 @@ class _OrderScreenState extends ConsumerState<OrderScreen> {
                       final Order order = orders[index];
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Container(
-                          height: 75.h,
-                          decoration: BoxDecoration(
-                            color: DynamicBg.sameBrightness(
-                                context), // Base color for the box
-                            boxShadow: isDarkMode
-                                ? [] // No shadow in dark mode
-                                : [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(
-                                          0.1), // Shadow color for light mode
-                                      blurRadius: 50,
-                                      offset: Offset(0, 10),
-                                    ),
-                                  ],
-                            border: isDarkMode
-                                ? Border.all(
-                                    color: Colors.white.withOpacity(0.7),
-                                    width: 1) // Border for dark mode
-                                : null, // No border in light mode
-                            borderRadius: BorderRadius.circular(
-                                12), // Optional rounded corners
-                          ),
-                          width: MediaQuery.of(context).size.width,
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Row(
-                              children: [
-                                /// image
-                                Container(
-                                    width: 65,
-                                    height: 65,
-                                    decoration: BoxDecoration(
-                                        color: AppColors.primaryColor
-                                            .withOpacity(0.1),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: Image.network(order.image)),
+                        child: Column(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                color: DynamicBg.sameBrightness(
+                                    context), // Base color for the box
+                                boxShadow: isDarkMode
+                                    ? [] // No shadow in dark mode
+                                    : [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(
+                                              0.1), // Shadow color for light mode
+                                          blurRadius: 50,
+                                          offset: Offset(0, 10),
+                                        ),
+                                      ],
+                                border: isDarkMode
+                                    ? Border.all(
+                                        color: Colors.white.withOpacity(0.7),
+                                        width: 1) // Border for dark mode
+                                    : null, // No border in light mode
+                                borderRadius: BorderRadius.circular(
+                                    12), // Optional rounded corners
+                              ),
+                              width: MediaQuery.of(context).size.width,
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        // image
+                                        Container(
+                                            width: 65,
+                                            height: 65,
+                                            decoration: BoxDecoration(
+                                                color: AppColors.primaryColor
+                                                    .withOpacity(0.1),
+                                                borderRadius:
+                                                    BorderRadius.circular(10)),
+                                            child: Image.network(order.image)),
 
-                                const SizedBox(width: MySizes.spaceBtwItems),
+                                        const SizedBox(
+                                            width: MySizes.spaceBtwItems),
 
-                                /// title, price, size
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          /// Category
-                                          Row(
+                                        /// title, price, size
+                                        Expanded(
+                                          child: Column(
                                             children: [
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                    color: isDarkMode
-                                                        ? AppColors.primaryColor
-                                                            .withOpacity(0.8)
-                                                        : AppColors.primaryColor
-                                                            .withOpacity(0.1),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            4)),
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 8,
-                                                        vertical: 0),
-                                                child: Text(order.category),
-                                              )
-                                            ],
-                                          ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  /// Category
+                                                  Row(
+                                                    children: [
+                                                      Container(
+                                                        decoration: BoxDecoration(
+                                                            color: isDarkMode
+                                                                ? AppColors
+                                                                    .primaryColor
+                                                                    .withOpacity(
+                                                                        0.8)
+                                                                : AppColors
+                                                                    .primaryColor
+                                                                    .withOpacity(
+                                                                        0.1),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        4)),
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                horizontal: 8,
+                                                                vertical: 0),
+                                                        child: Text(
+                                                            order.category),
+                                                      )
+                                                    ],
+                                                  ),
 
-                                          /// Price
-                                          Row(
-                                            children: [
-                                              Text(
-                                                '₹${order.totalAmount}',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyLarge,
+                                                  /// Price
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                        '₹${order.totalAmount}',
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyLarge,
+                                                      ),
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+
+                                              const SizedBox(height: 2),
+
+                                              /// Product name
+                                              Align(
+                                                  alignment: Alignment.topLeft,
+                                                  child: Text(
+                                                    order.productName,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .labelMedium,
+                                                  )),
+
+                                              const SizedBox(height: 2),
+
+                                              /// Quantity
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Row(
+                                                    children: const [
+                                                      InkWell(
+                                                          child: Text(
+                                                        'Processing',
+                                                        style: TextStyle(
+                                                            color: Colors.red),
+                                                      ))
+                                                    ],
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Text(order.quantity
+                                                          .toString())
+                                                    ],
+                                                  )
+                                                ],
                                               ),
                                             ],
-                                          )
-                                        ],
-                                      ),
-
-                                      const SizedBox(height: 2),
-
-                                      /// Product name
-                                      Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Text(
-                                            order.productName,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .labelMedium,
-                                          )),
-
-                                      const SizedBox(height: 2),
-
-                                      /// Quantity
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: const [
-                                          Row(
-                                            children: [
-                                              InkWell(
-                                                  child: Text(
-                                                'Processing',
-                                                style: TextStyle(
-                                                    color: Colors.red),
-                                              ))
-                                            ],
                                           ),
-                                          Row(
-                                            children: [
-                                              InkWell(
-                                                child:
-                                                    Icon(Iconsax.arrow_right),
-                                              )
-                                            ],
-                                          )
-                                        ],
-                                      )
-                                    ],
-                                  ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: MySizes.spaceBtwItems / 2),
+                                    Text(
+                                      'Delivery address',
+                                      style:
+                                          Theme.of(context).textTheme.bodyLarge,
+                                    ),
+                                    SizedBox(height: 3),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text('${order.country} ${order.city}'),
+                                        SizedBox(height: 3),
+                                        Text(
+                                          'To: ${order.name}',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                  fontWeight: FontWeight.bold),
+                                        ),
+                                        Text('${order.phone} ${order.address}')
+                                      ],
+                                    )
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
-                          ),
+                          ],
                         ),
                       );
                     },

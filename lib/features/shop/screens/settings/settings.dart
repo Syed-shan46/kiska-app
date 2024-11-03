@@ -23,7 +23,6 @@ class SettingsScreen extends StatelessWidget {
       child: Column(
         children: [
           MyPrimaryHeaderContainer(
-            height: 180,
             color: AppColors.primaryColor,
             child: Column(
               children: [

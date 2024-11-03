@@ -15,6 +15,8 @@ class OrderController {
     required final String country,
     required final String city,
     required final String address,
+    required final String state,
+    required final String pin,
     required final String productName,
     required final int quantity,
     required final String category,
@@ -31,6 +33,8 @@ class OrderController {
         country: country,
         city: city,
         address: address,
+        pin: pin,
+        state: state,
         name: name,
         productName: productName,
         quantity: quantity,
@@ -56,7 +60,7 @@ class OrderController {
             showSnackBar(context, 'Your have placed an order');
           });
 
-          Get.to(()=> SuccessScreen());
+      Get.to(() => SuccessScreen());
     } catch (e) {
       showSnackBar(context, e.toString());
     }

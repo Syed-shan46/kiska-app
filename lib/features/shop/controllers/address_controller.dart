@@ -13,6 +13,8 @@ class AddressController {
     required String city,
     required String address,
     required String userId,
+    required String pin,
+    required String state,
     required context,
   }) async {
     try {
@@ -23,6 +25,8 @@ class AddressController {
           phone: phone,
           country: country,
           city: city,
+          state: state,
+          pin: pin,
           address: address);
 
       http.Response response = await http.post(

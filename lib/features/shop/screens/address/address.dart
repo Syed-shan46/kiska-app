@@ -29,6 +29,8 @@ class _AddressScreenState extends State<AddressScreen> {
   final TextEditingController countryController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
   final TextEditingController addController = TextEditingController();
+  final TextEditingController stateController = TextEditingController();
+  final TextEditingController pinController = TextEditingController();
 
 // To hold the fetched address
 
@@ -56,7 +58,8 @@ class _AddressScreenState extends State<AddressScreen> {
           country: countryController.text,
           city: cityController.text,
           address: addController.text,
-          // ignore: use_build_context_synchronously
+          pin: pinController.text,
+          state: stateController.text,
           context: context,
         );
 
@@ -68,6 +71,8 @@ class _AddressScreenState extends State<AddressScreen> {
         countryController.clear();
         cityController.clear();
         addController.clear();
+        pinController.clear();
+        stateController.clear();
 
         Get.to(() => CheckoutScreen());
       } catch (e) {
@@ -114,6 +119,7 @@ class _AddressScreenState extends State<AddressScreen> {
             key: _formkey,
             child: Column(
               children: [
+                // Name
                 MyTextField(
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -126,6 +132,7 @@ class _AddressScreenState extends State<AddressScreen> {
                   icon: Iconsax.user,
                 ),
                 SizedBox(height: 10),
+                // Phone
                 MyTextField(
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -138,6 +145,7 @@ class _AddressScreenState extends State<AddressScreen> {
                   icon: Icons.phone,
                 ),
                 SizedBox(height: 10),
+                // Country and state
                 Row(
                   children: [
                     Expanded(
@@ -153,7 +161,27 @@ class _AddressScreenState extends State<AddressScreen> {
                       icon: Iconsax.building,
                     )),
                     SizedBox(width: 10),
+                    // State
                     Expanded(
+                        child: MyTextField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your State';
+                        }
+                        return null;
+                      },
+                      controller: stateController,
+                      labelText: 'State',
+                      icon: Iconsax.building,
+                    )),
+                   
+                  ],
+                ),
+                SizedBox(height: 10),
+                // City and pin
+                Row(
+                  children: [
+                     Expanded(
                         child: MyTextField(
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -163,6 +191,21 @@ class _AddressScreenState extends State<AddressScreen> {
                       },
                       controller: cityController,
                       labelText: 'City',
+                      icon: Iconsax.location_slash,
+                    )),
+                    SizedBox(width: 10),
+
+                    // Pin code
+                    Expanded(
+                        child: MyTextField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your Pin';
+                        }
+                        return null;
+                      },
+                      controller: pinController,
+                      labelText: 'Pin Code',
                       icon: Iconsax.location_slash,
                     )),
                   ],

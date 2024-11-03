@@ -9,8 +9,8 @@ import 'package:kiska/common/cart/cart_item_card.dart';
 import 'package:kiska/features/shop/controllers/address_controller.dart';
 import 'package:kiska/features/shop/controllers/order_controller.dart';
 import 'package:kiska/features/shop/models/address_model.dart';
+import 'package:kiska/features/shop/models/cart_model.dart';
 import 'package:kiska/features/shop/screens/address/edit_address.dart';
-import 'package:kiska/features/shop/screens/orders/success_screen.dart';
 import 'package:kiska/providers/cart_provider.dart';
 import 'package:kiska/utils/constants/sizes.dart';
 import 'package:kiska/utils/helpers/box_decoration_helper.dart';
@@ -34,7 +34,6 @@ class CheckoutScreen extends ConsumerStatefulWidget {
 }
 
 class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
-  // Variables
   String environment = "SANDBOX";
   String appId = "";
   String merchantId = "PGTESTPAYUAT86";
@@ -48,9 +47,24 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
   String apiEndPoint = '/pg/v1/pay';
   Object? result = "";
 
-  // Get checksum
-  getCheckSum() {
-    final amountInPaise = (widget.totalAmount! * 100).toInt();
+  Address? _fetchedAddress;
+  bool isSelected = false; // Track selection state
+
+  // Get total amount
+  double getTotalAmount(Map<String, Cart> cartData) {
+    double total = 0.0;
+    cartData.forEach((key, cartItem) {
+      total += cartItem.productPrice * cartItem.quantity;
+    });
+    return total;
+  }
+
+  // Generate checksum
+  String getCheckSum() {
+    final cartData = ref.watch(cartProvider);
+    final totalAmount = getTotalAmount(cartData);
+    final amountInPaise = (totalAmount * 100).toInt();
+
     final requestData = {
       "merchantId": merchantId,
       "merchantTransactionId": "transaction_123",
@@ -73,10 +87,6 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
     return base64Body;
   }
 
-  // Address Fetching
-  final AddressController addressController = AddressController();
-  Address? _fetchedAddress; // To hold the fetched address
-
   // Fetch address
   Future<void> fetchAddress() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -86,7 +96,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
       final user = jsonDecode(userJson);
       String userId = user['_id'];
 
-      _fetchedAddress = await addressController.fetchAddressByUserId(userId);
+      _fetchedAddress = await AddressController().fetchAddressByUserId(userId);
       setState(() {}); // Trigger rebuild after fetching the address
     }
   }
@@ -116,7 +126,6 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
     final _cartProvider = ref.read(cartProvider.notifier);
     final user = jsonDecode(userJson!);
     String userId = user['_id'];
-    // Fetch or specify the address ID
 
     final OrderController _orderController = OrderController();
 
@@ -141,6 +150,8 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                   phone: _fetchedAddress!.phone,
                   country: _fetchedAddress!.country,
                   city: _fetchedAddress!.city,
+                  state: _fetchedAddress!.state,
+                  pin: _fetchedAddress!.pin,
                   address: _fetchedAddress!.address,
                   id: userId,
                   productName: item.productName,
@@ -165,16 +176,20 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
     );
   }
 
-  // Init Method
   @override
   void initState() {
     super.initState();
-    fetchAddress();
-    phonePeInit();
-    body = getCheckSum().toString();
+    // Initializations not dependent on inherited widgets.
   }
 
-  bool isSelected = false; // Track selection state
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Moved provider-dependent code here.
+    fetchAddress();
+    phonePeInit();
+    body = getCheckSum();
+  }
 
   @override
   Widget build(BuildContext context) {

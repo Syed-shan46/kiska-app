@@ -5,8 +5,10 @@ import 'package:iconsax/iconsax.dart';
 import 'package:kiska/common/text_forms/my_text_form_widget.dart';
 import 'package:kiska/features/shop/controllers/address_controller.dart';
 import 'package:kiska/features/shop/models/address_model.dart';
+import 'package:kiska/utils/themes/app_colors.dart';
 import 'package:kiska/utils/themes/text_theme.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EditAddress extends ConsumerStatefulWidget {
@@ -17,6 +19,8 @@ class EditAddress extends ConsumerStatefulWidget {
 }
 
 class _EditAddressState extends ConsumerState<EditAddress> {
+  bool isAdded = false;
+
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
   final AddressController addressController = AddressController();
@@ -27,6 +31,8 @@ class _EditAddressState extends ConsumerState<EditAddress> {
   late TextEditingController countryController;
   late TextEditingController cityController;
   late TextEditingController addController;
+  late TextEditingController stateController;
+  late TextEditingController pinController;
 
   @override
   void initState() {
@@ -37,6 +43,8 @@ class _EditAddressState extends ConsumerState<EditAddress> {
     countryController = TextEditingController();
     addController = TextEditingController();
     cityController = TextEditingController();
+    stateController = TextEditingController();
+    pinController = TextEditingController();
     fetchAddress();
   }
 
@@ -47,6 +55,8 @@ class _EditAddressState extends ConsumerState<EditAddress> {
     countryController.dispose();
     cityController.dispose();
     addController.dispose();
+    stateController.dispose();
+    pinController.dispose();
     super.dispose();
   }
 
@@ -68,6 +78,8 @@ class _EditAddressState extends ConsumerState<EditAddress> {
         countryController.text = address?.country ?? '';
         cityController.text = address?.city ?? '';
         addController.text = address?.address ?? '';
+        stateController.text = address?.state ?? '';
+        pinController.text = address?.pin ?? '';
       });
     }
   }
@@ -80,32 +92,46 @@ class _EditAddressState extends ConsumerState<EditAddress> {
       final user = jsonDecode(userJson);
       String userId = user['_id'];
 
+      setState(() {
+        isAdded = true;
+      });
+
       // Create an updated Address object
-      Address updateAddress = Address(
-        userId: userId,
-        id: '',
-        name: nameController.text,
-        phone: phoneController.text,
-        country: countryController.text,
-        city: cityController.text,
-        address: addController.text,
-      );
-
-      await Future.delayed(Duration(seconds: 2));
-
-      // Clear all input fields after successful submission
-
-      // Update address and show feedback
-      bool success =
-          await addressController.updateAddress(userId, updateAddress);
-      if (success) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Address updated successfully!")),
+      try {
+        Address updateAddress = Address(
+          userId: userId,
+          id: '',
+          name: nameController.text,
+          phone: phoneController.text,
+          country: countryController.text,
+          city: cityController.text,
+          state: stateController.text,
+          pin: pinController.text,
+          address: addController.text,
         );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Failed to update address.")),
-        );
+
+        await Future.delayed(Duration(seconds: 2));
+
+        // Clear all input fields after successful submission
+
+        // Update address and show feedback
+        bool success =
+            await addressController.updateAddress(userId, updateAddress);
+        if (success) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Address updated successfully!")),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Failed to update address.")),
+          );
+        }
+      } catch (e) {
+        print('Error $e');
+      } finally {
+        setState(() {
+          isAdded = false;
+        });
       }
     }
   }
@@ -168,11 +194,42 @@ class _EditAddressState extends ConsumerState<EditAddress> {
                       controller: cityController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter your address';
+                          return 'Please enter your City';
                         }
                         return null;
                       },
                       labelText: 'City',
+                      icon: Iconsax.location_slash,
+                    )),
+                  ],
+                ),
+                // state and pin
+                SizedBox(height: 10),
+                Row(
+                  children: [
+                    Expanded(
+                        child: MyTextField(
+                      controller: stateController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your state';
+                        }
+                        return null;
+                      },
+                      labelText: 'State',
+                      icon: Iconsax.building,
+                    )),
+                    SizedBox(width: 10),
+                    Expanded(
+                        child: MyTextField(
+                      controller: pinController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your PinCode';
+                        }
+                        return null;
+                      },
+                      labelText: 'Pin Code',
                       icon: Iconsax.location_slash,
                     )),
                   ],
@@ -224,10 +281,15 @@ class _EditAddressState extends ConsumerState<EditAddress> {
                     onPressed: () {
                       updateAddress();
                     },
-                    child: Text('Save changes',
-                        style: textTheme.titleMedium!.copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: DynamicBg.sameBrightness(context))),
+                    child: isAdded
+                        ? LoadingAnimationWidget.flickr(
+                            leftDotColor: DynamicBg.sameBrightness(context),
+                            rightDotColor: AppColors.primaryColor,
+                            size: 25)
+                        : Text('Save changes',
+                            style: textTheme.titleMedium!.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color: DynamicBg.sameBrightness(context))),
                   ),
                 ),
               ],

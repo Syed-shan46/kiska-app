@@ -9,6 +9,8 @@ class Address {
   final String country;
   final String city;
   final String address;
+  final String pin;
+  final String state;
 
   Address({
     required this.userId,
@@ -18,6 +20,8 @@ class Address {
     required this.country,
     required this.city,
     required this.address,
+    required this.pin,
+    required this.state,
   });
 
   // Convert the object to a Map (for JSON encoding)
@@ -29,6 +33,8 @@ class Address {
       'phone': phone,
       'country': country,
       'city': city,
+      'state': state,
+      'pin': pin,
       'address': address,
     };
   }
@@ -42,6 +48,8 @@ class Address {
       country: map['country'] as String,
       city: map['city'] as String,
       address: map['address'] as String,
+      pin: map['pin'] as String,
+      state: map['state'] as String,
       userId: map['userId'] as String, // Add userId here
     );
   }

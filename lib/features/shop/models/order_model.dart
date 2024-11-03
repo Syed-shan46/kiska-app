@@ -8,6 +8,8 @@ class Order {
   final String country;
   final String city;
   final String address;
+  final String state;
+  final String pin;
   final String productName;
   final int quantity;
   final String category;
@@ -21,6 +23,8 @@ class Order {
     required this.phone,
     required this.country,
     required this.city,
+    required this.pin,
+    required this.state,
     required this.address,
     required this.productName,
     required this.quantity,
@@ -38,6 +42,8 @@ class Order {
       'phone': phone,
       'country': country,
       'city': city,
+      'state': state,
+      'pin': pin,
       'address': address,
       'productName': productName,
       'quantity': quantity,
@@ -56,6 +62,8 @@ class Order {
       id: map['userId'] as String? ?? '', // Default to empty string if null
       name: map['name'] as String? ?? '',
       phone: map['phone'] as String? ?? '',
+      state: map['state'] as String? ?? '',
+      pin: map['pin'] as String? ?? '',
       country: map['country'] as String? ?? '',
       city: map['city'] as String? ?? '',
       address: map['address'] as String? ?? '',
