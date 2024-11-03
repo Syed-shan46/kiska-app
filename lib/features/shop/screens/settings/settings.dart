@@ -7,6 +7,7 @@ import 'package:kiska/common/layouts/settings_menu_tile.dart';
 import 'package:kiska/common/layouts/user_profile_tile.dart';
 import 'package:kiska/common/custom_shapes/primary_header_container.dart';
 import 'package:kiska/features/authentication/controllers/auth_controller.dart';
+import 'package:kiska/features/shop/screens/address/edit_address.dart';
 import 'package:kiska/features/shop/screens/cart/cart.dart';
 import 'package:kiska/features/shop/screens/orders/order_screen.dart';
 import 'package:kiska/features/shop/screens/settings/profile/profile.dart';
@@ -24,46 +25,38 @@ class SettingsScreen extends StatelessWidget {
       child: Column(
         children: [
           MyPrimaryHeaderContainer(
+            showContainer: false,
             color: AppColors.primaryColor,
-            child: Column(
-              children: [
-                MyAppBar(
-                  title: Text(
-                    'Account',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineSmall!
-                        .apply(color: Colors.white),
+            child: SafeArea(
+              child: Column(
+                children: [
+                  UserProfileTile(
+                    onPressed: () => Get.to(() => ProfileScreen()),
                   ),
-                ),
-                UserProfileTile(
-                  onPressed: () => Get.to(() => ProfileScreen()),
-                ),
-                const SizedBox(
-                  height: MySizes.spaceBtwItems,
-                )
-              ],
+                  const SizedBox(
+                    height: MySizes.spaceBtwItems,
+                  )
+                ],
+              ),
             ),
           ),
           Padding(
             padding: EdgeInsets.all(MySizes.spaceBtwItems),
             child: Column(
               children: [
-                // Account settings
-                MySectionHeading(
-                  title: 'Account Settings',
-                  textColor: Colors.red,
-                  showActionbutton: false,
-                ),
-                SizedBox(height: MySizes.spaceBtwItems),
-
                 // Menu tiles
-                MySettingsMenuTile(
-                    icon: Iconsax.shopping_cart,
-                    title: 'My Address',
-                    subTitle: 'Shopping delivery address'),
                 InkWell(
-                  onTap:() => Get.to(()=> CartScreen()),
+                  onTap: () => Get.to(() => EditAddress()),
+                  child: MySettingsMenuTile(
+                      icon: Iconsax.shopping_cart,
+                      title: 'My Address',
+                      subTitle: 'Shopping delivery address'),
+                ),
+                InkWell(
+                  splashColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onTap: () => Get.to(() => CartScreen()),
                   child: MySettingsMenuTile(
                       icon: Iconsax.shopping_bag,
                       title: 'My Cart',
@@ -71,7 +64,7 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                   Get.to(()=> OrderScreen());
+                    Get.to(() => OrderScreen());
                   },
                   child: MySettingsMenuTile(
                       icon: Iconsax.bag_tick,

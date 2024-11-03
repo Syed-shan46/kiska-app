@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kiska/utils/constants/sizes.dart';
-import 'package:kiska/utils/helpers/box_decoration_helper.dart';
-import 'package:kiska/utils/themes/app_colors.dart';
 
 class OrderCard extends StatefulWidget {
   const OrderCard({super.key});

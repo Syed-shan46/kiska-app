@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
+import 'package:kiska/common/product/store_product_column.dart';
 import 'package:kiska/features/shop/controllers/category_controller.dart';
+import 'package:kiska/features/shop/screens/store/store.dart';
 import 'package:kiska/features/shop/screens/sub_category/sub_categories.dart';
 import 'package:kiska/providers/category_provider.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
@@ -17,12 +19,6 @@ class Categories extends ConsumerStatefulWidget {
 }
 
 class _CategoriesState extends ConsumerState<Categories> {
-  @override
-  void initState() {
-    super.initState();
-    _fetchCategories();
-  }
-
   Future<void> _fetchCategories() async {
     final CategoryController categoryController = CategoryController();
     try {
@@ -31,6 +27,12 @@ class _CategoriesState extends ConsumerState<Categories> {
     } catch (e) {
       print('$e');
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchCategories();
   }
 
   @override
@@ -47,13 +49,17 @@ class _CategoriesState extends ConsumerState<Categories> {
           return Column(
             children: [
               InkWell(
-                onTap: () => Get.to(() => SubCategoriesScreen()),
+                onTap: () => Get.to(() => StoreScreen(
+                      selectedCategoryIndex: index,
+                    )),
                 child: Container(
                   width: 40.h,
-                  height:40.h,
+                  height: 40.h,
                   margin: const EdgeInsets.symmetric(horizontal: 8.0),
                   decoration: BoxDecoration(
-                    color: isDarkMode? AppColors.darkBackground :  Colors.white.withOpacity(0.9),
+                    color: isDarkMode
+                        ? AppColors.darkBackground
+                        : Colors.white.withOpacity(0.9),
                     borderRadius: BorderRadius.circular(50),
                   ),
                   child: Padding(
@@ -91,8 +97,8 @@ class _CategoriesState extends ConsumerState<Categories> {
               SizedBox(height: 5),
               Text(
                 category.name,
-                style: textTheme.bodySmall!.copyWith(color: Colors.white.withOpacity(0.9)),
-                
+                style: textTheme.bodySmall!
+                    .copyWith(color: Colors.white.withOpacity(0.9)),
               ), // Show category name
             ],
           );
