@@ -97,20 +97,8 @@ class _CartScreenState extends ConsumerState<CartScreen> {
     return Scaffold(
       /// Appbar
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         title: Text(
           'Cart',
-          style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-              ),
-        ),
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: Icon(
-            Icons.arrow_back,
-            size: 22,
-          ),
         ),
         actions: const [
           Padding(

@@ -5,6 +5,7 @@ import 'package:kiska/utils/constants/sizes.dart';
 import 'package:kiska/utils/helpers/box_decoration_helper.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kiska/utils/themes/theme_utils.dart';
 
 class CartItemCard extends StatelessWidget {
   CartItemCard({
@@ -47,7 +48,7 @@ class CartItemCard extends StatelessWidget {
                     width: 65.h,
                     height: 65.h,
                     decoration: BoxDecoration(
-                        color: Colors.grey.withOpacity(0.1),
+                        color: ThemeUtils.dynamicTextColor(context).withOpacity(0.1),
                         borderRadius: BorderRadius.circular(10)),
                     child: Image.network(
                       cartItem.image[0],

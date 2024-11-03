@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:kiska/features/shop/controllers/order_controller.dart';
 import 'package:kiska/features/shop/models/order_model.dart';
 import 'package:kiska/providers/order_provider.dart';
@@ -9,7 +8,6 @@ import 'package:kiska/providers/user_provider.dart';
 import 'package:kiska/utils/constants/sizes.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OrderScreen extends ConsumerStatefulWidget {
   const OrderScreen({super.key});
@@ -69,8 +67,9 @@ class _OrderScreenState extends ConsumerState<OrderScreen> {
                         child: Column(
                           children: [
                             Container(
+                            
                               decoration: BoxDecoration(
-                                color: DynamicBg.sameBrightness(
+                                color:isDarkMode? Colors.grey.withOpacity(0.1) : DynamicBg.sameBrightness(
                                     context), // Base color for the box
                                 boxShadow: isDarkMode
                                     ? [] // No shadow in dark mode
@@ -82,17 +81,13 @@ class _OrderScreenState extends ConsumerState<OrderScreen> {
                                           offset: Offset(0, 10),
                                         ),
                                       ],
-                                border: isDarkMode
-                                    ? Border.all(
-                                        color: Colors.white.withOpacity(0.7),
-                                        width: 1) // Border for dark mode
-                                    : null, // No border in light mode
+                                // No border in light mode
                                 borderRadius: BorderRadius.circular(
                                     12), // Optional rounded corners
                               ),
                               width: MediaQuery.of(context).size.width,
                               child: Padding(
-                                padding: const EdgeInsets.all(10.0),
+                                padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 20),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -215,7 +210,8 @@ class _OrderScreenState extends ConsumerState<OrderScreen> {
                                     ),
                                     SizedBox(height: 3),
                                     Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text('${order.country} ${order.city}'),
                                         SizedBox(height: 3),

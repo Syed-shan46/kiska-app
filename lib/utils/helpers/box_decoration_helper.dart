@@ -7,19 +7,20 @@ BoxDecoration getDynamicBoxDecoration(BuildContext context) {
   final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
   return BoxDecoration(
-    color: DynamicBg.sameBrightness(context), // Base color for the box
+    color: isDarkMode
+        ? Colors.grey.withOpacity(0.1)
+        : DynamicBg.sameBrightness(context), // Base color for the box
     boxShadow: isDarkMode
         ? [] // No shadow in dark mode
         : [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1), // Shadow color for light mode
+              color:
+                  Colors.black.withOpacity(0.1), // Shadow color for light mode
               blurRadius: 50,
               offset: Offset(0, 10),
             ),
           ],
-    border: isDarkMode
-        ? Border.all(color: Colors.white.withOpacity(0.3), width: 1) // Border for dark mode
-        : null, // No border in light mode
+
     borderRadius: BorderRadius.circular(12), // Optional rounded corners
   );
 }

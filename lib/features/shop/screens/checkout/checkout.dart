@@ -265,14 +265,9 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                 child: Container(
                   padding: EdgeInsets.all(5),
                   width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                        color: ThemeUtils.dynamicTextColor(context)
-                            .withOpacity(0.8)),
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
-                  ),
+                  decoration: BoxDecoration(),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       // Image on the left side
                       Center(
@@ -311,12 +306,9 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                     onPressed: () {
                       startPgTransaction();
                     },
-                    child: Text(
-                      'Start Payment',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: DynamicBg.sameBrightness(context)),
-                    ),
+                    child: Text('Start Payment',
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            color: DynamicBg.sameBrightness(context))),
                   ),
                 ),
               ),

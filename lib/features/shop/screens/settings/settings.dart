@@ -7,6 +7,7 @@ import 'package:kiska/common/layouts/settings_menu_tile.dart';
 import 'package:kiska/common/layouts/user_profile_tile.dart';
 import 'package:kiska/common/custom_shapes/primary_header_container.dart';
 import 'package:kiska/features/authentication/controllers/auth_controller.dart';
+import 'package:kiska/features/shop/screens/cart/cart.dart';
 import 'package:kiska/features/shop/screens/orders/order_screen.dart';
 import 'package:kiska/features/shop/screens/settings/profile/profile.dart';
 import 'package:kiska/utils/constants/sizes.dart';
@@ -61,10 +62,13 @@ class SettingsScreen extends StatelessWidget {
                     icon: Iconsax.shopping_cart,
                     title: 'My Address',
                     subTitle: 'Shopping delivery address'),
-                MySettingsMenuTile(
-                    icon: Iconsax.shopping_bag,
-                    title: 'My Cart',
-                    subTitle: 'Add, Remove products and move to checkout'),
+                InkWell(
+                  onTap:() => Get.to(()=> CartScreen()),
+                  child: MySettingsMenuTile(
+                      icon: Iconsax.shopping_bag,
+                      title: 'My Cart',
+                      subTitle: 'Add, Remove products and move to checkout'),
+                ),
                 InkWell(
                   onTap: () {
                    Get.to(()=> OrderScreen());
