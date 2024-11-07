@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:kiska/features/authentication/global_varaibles.dart';
 import 'package:kiska/features/shop/models/product_model.dart';
 import 'package:http/http.dart' as http;
@@ -10,7 +9,7 @@ class ProductController {
       http.Response response = await http.get(
         Uri.parse("$uri/api/products"),
         headers: <String, String>{
-          "Content-Type": "application/json; charset=UTF-8",
+          "Content-Type": "application/json; charset=UTF- 8",
         },
       );
 

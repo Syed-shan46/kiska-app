@@ -48,7 +48,8 @@ class CartItemCard extends StatelessWidget {
                     width: 65.h,
                     height: 65.h,
                     decoration: BoxDecoration(
-                        color: ThemeUtils.dynamicTextColor(context).withOpacity(0.1),
+                        color: ThemeUtils.dynamicTextColor(context)
+                            .withOpacity(0.1),
                         borderRadius: BorderRadius.circular(10)),
                     child: Image.network(
                       cartItem.image[0],

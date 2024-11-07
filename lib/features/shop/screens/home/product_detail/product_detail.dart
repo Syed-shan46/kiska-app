@@ -349,7 +349,6 @@ class ProductDetail extends StatelessWidget {
   }
 }
 
-// Product Slider
 class ProductDetailImages extends StatelessWidget {
   const ProductDetailImages({
     super.key,
@@ -367,24 +366,14 @@ class ProductDetailImages extends StatelessWidget {
         color: Colors.grey.withOpacity(0.2),
         child: Stack(
           children: [
-            MyAppBar(
-              showBackArrow: true,
-              actions: [
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.8),
-                      shape: BoxShape.circle),
-                  child: InkWell(
-                      child: const Icon(CupertinoIcons.suit_heart,
-                          color: Colors.red)),
-                )
-              ],
-            ),
+            // Carousel Slider positioned at the base of the stack
             CarouselSlider(
               items: images.map((imagePath) {
-                return Image.network(imagePath);
+                return Image.network(
+                  imagePath,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                );
               }).toList(),
               options: CarouselOptions(
                 height: 350.h,
@@ -396,6 +385,30 @@ class ProductDetailImages extends StatelessWidget {
                     controller.updatePageIndicator(index),
               ),
             ),
+
+            // Positioning the AppBar above the CarouselSlider
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: MyAppBar(
+                showBackArrow: true,
+                actions: [
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.8),
+                        shape: BoxShape.circle),
+                    child: InkWell(
+                        child: const Icon(CupertinoIcons.suit_heart,
+                            color: Colors.red)),
+                  )
+                ],
+              ),
+            ),
+
+            // Dot navigation at the bottom of the image
             Positioned(
               bottom: 30,
               left: 0,
@@ -404,7 +417,7 @@ class ProductDetailImages extends StatelessWidget {
                 controller: controller,
                 dotCount: images.length,
               ),
-            )
+            ),
           ],
         ),
       ),

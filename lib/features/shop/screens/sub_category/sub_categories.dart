@@ -3,7 +3,6 @@ import 'package:kiska/common/product/product_card_horizontal.dart';
 import 'package:kiska/common/texts/my_section_heading.dart';
 import 'package:kiska/utils/constants/sizes.dart';
 
-
 class SubCategoriesScreen extends StatelessWidget {
   const SubCategoriesScreen({super.key});
 
@@ -11,8 +10,9 @@ class SubCategoriesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        
-        title:  Text('Categories',),
+        title: Text(
+          'Categories',
+        ),
       ),
       body: const SingleChildScrollView(
         child: Padding(
