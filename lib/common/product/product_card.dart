@@ -159,6 +159,7 @@ class _MyProductCardState extends ConsumerState<MyProductCard> {
                         Text(
                           '₹9999',
                           style: TextStyle(
+                            fontSize: 10.sp,
                             color: Colors.red,
                             decoration: TextDecoration.lineThrough,
                             decorationColor: Colors.black,

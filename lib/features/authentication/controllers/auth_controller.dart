@@ -7,6 +7,7 @@ import 'package:kiska/features/authentication/models/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:kiska/features/authentication/screens/login/login.dart';
 import 'package:kiska/navigation_menu.dart';
+import 'package:kiska/providers/order_provider.dart';
 import 'package:kiska/providers/user_provider.dart';
 import 'package:kiska/services/http_response.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
@@ -127,6 +128,10 @@ class AuthController {
       // Clear the token and user from sharedPreferences
       await preferences.remove('auth_token');
       await preferences.remove('user');
+      // Reset the orders in your provider state as well
+      providerContainer
+          .read(orderProvider.notifier)
+          .resetOrders(); // Reset orders or set to empty list
       providerContainer.read(userProvider.notifier).signOut();
       Navigator.pushAndRemoveUntil(context,
           MaterialPageRoute(builder: (context) {
@@ -138,6 +143,4 @@ class AuthController {
       showSnackBar(context, 'Error signin $e');
     }
   }
-
-  
 }
