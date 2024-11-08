@@ -51,7 +51,7 @@ class Order {
       'image': image,
       'totalAmount': totalAmount,
       'paymentStatus': paymentStatus,
-      'delivered': delivered,
+      'delivered': delivered, 
     };
   }
 

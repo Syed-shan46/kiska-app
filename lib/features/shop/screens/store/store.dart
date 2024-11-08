@@ -46,7 +46,6 @@ class _StoreScreenState extends ConsumerState<StoreScreen> {
       length: categories.length,
       child: Scaffold(
         appBar: AppBar(
-          automaticallyImplyLeading: false,
           backgroundColor: DynamicBg.sameBrightness(context),
           actions: const [
             Padding(

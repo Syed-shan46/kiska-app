@@ -26,7 +26,7 @@ class DynamicBg {
 class Navbg {
   static Color navbarBg(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark
-        ? AppColors.darkBackground
+        ? const Color.fromARGB(255, 29, 29, 29)
         : Colors.white;
   }
 }

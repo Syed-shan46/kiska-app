@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:kiska/common/texts/my_section_heading.dart';
-import 'package:kiska/common/appbar/appbar.dart';
 import 'package:kiska/common/layouts/settings_menu_tile.dart';
 import 'package:kiska/common/layouts/user_profile_tile.dart';
 import 'package:kiska/common/custom_shapes/primary_header_container.dart';
@@ -11,12 +10,20 @@ import 'package:kiska/features/shop/screens/address/edit_address.dart';
 import 'package:kiska/features/shop/screens/cart/cart.dart';
 import 'package:kiska/features/shop/screens/orders/order_screen.dart';
 import 'package:kiska/features/shop/screens/settings/profile/profile.dart';
+import 'package:kiska/providers/user_provider.dart';
 import 'package:kiska/utils/constants/sizes.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
 
-class SettingsScreen extends StatelessWidget {
-  final AuthController authController = AuthController();
+class SettingsScreen extends ConsumerStatefulWidget {
+
   SettingsScreen({super.key});
+
+  @override
+  ConsumerState<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends ConsumerState<SettingsScreen> {
+  final AuthController authController = AuthController();
 
   @override
   Widget build(BuildContext context) {

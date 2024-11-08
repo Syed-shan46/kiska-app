@@ -8,6 +8,7 @@ import 'package:kiska/providers/user_provider.dart';
 import 'package:kiska/utils/constants/sizes.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
+import 'package:lottie/lottie.dart';
 
 class OrderScreen extends ConsumerStatefulWidget {
   const OrderScreen({super.key});
@@ -49,12 +50,23 @@ class _OrderScreenState extends ConsumerState<OrderScreen> {
     return Scaffold(
       appBar: AppBar(title: Text('Orders')),
       body: orders.isEmpty
-          ? Center(
-              child: Text('No orders found'),
-            )
+          ? Column(
+            children: [
+              Lottie.network(
+                    'https://lottie.host/e5c80fca-fe94-4bed-9424-e0d70204d1aa/lhGyjYqBYY.json',
+                    width: 350,
+                    height: 350,
+                    fit: BoxFit.fill,
+                  ),
+              Center(
+                  child: Text('No orders found'),
+                ),
+            ],
+          )
           : Column(
               children: [
                 SizedBox(height: MySizes.spaceBtwItems),
+                
                 Expanded(
                   child: ListView.separated(
                     separatorBuilder: (context, index) => SizedBox(

@@ -53,6 +53,9 @@ class OrderController {
         },
       );
 
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
       manageHttpResponse(
           response: response,
           context: context,

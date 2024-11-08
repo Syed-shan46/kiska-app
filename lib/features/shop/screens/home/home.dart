@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:kiska/common/custom_shapes/primary_header_container.dart';
 import 'package:kiska/common/product/product_grid.dart';
@@ -9,9 +10,9 @@ import 'package:kiska/common/heading.dart';
 import 'package:kiska/features/shop/screens/home/widgets/banner_slider.dart';
 import 'package:kiska/features/shop/screens/home/widgets/categories.dart';
 import 'package:kiska/features/shop/screens/home/widgets/search_field.dart';
+import 'package:kiska/providers/user_provider.dart';
 import 'package:kiska/utils/constants/sizes.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -34,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
       // Body
       body: SingleChildScrollView(
         child: Column(
-          children:  [
+          children: const [
             MyPrimaryHeaderContainer(
               showContainer: false,
               color: AppColors.primaryColor,
@@ -66,13 +67,20 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class MyHeader extends StatelessWidget {
+class MyHeader extends ConsumerStatefulWidget {
   const MyHeader({
     super.key,
   });
 
   @override
+  ConsumerState<MyHeader> createState() => _MyHeaderState();
+}
+
+class _MyHeaderState extends ConsumerState<MyHeader> {
+  @override
   Widget build(BuildContext context) {
+    final user = ref.watch(userProvider);
+     String userName = user?.userName ?? 'Hey User';    
     return SafeArea(
       child: Row(
         children: [
@@ -91,8 +99,7 @@ class MyHeader extends StatelessWidget {
                         .bodySmall!
                         .copyWith(color: Colors.white.withOpacity(0.9)),
                   ),
-                  Text(
-                    'Syed-shan',
+                  Text(userName,
                     style: Theme.of(context)
                         .textTheme
                         .bodyLarge!
