@@ -4,6 +4,8 @@ import 'package:iconsax/iconsax.dart';
 import 'package:kiska/common/shimmer/product_shimmer.dart';
 import 'package:kiska/features/shop/models/product_model.dart';
 import 'package:kiska/providers/cart_provider.dart';
+import 'package:kiska/providers/favorite_provider.dart';
+import 'package:kiska/services/http_response.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
@@ -39,6 +41,7 @@ class _MyProductCardState extends ConsumerState<MyProductCard> {
     // Check if the product is already in the cart and set isAdded accordingly
 
     final cartState = ref.read(cartProvider);
+    final favState = ref.read(favoriteProvider);
 
     // Check if the product is in the cart
     if (cartState.containsKey(widget.product?.id)) {
@@ -46,11 +49,19 @@ class _MyProductCardState extends ConsumerState<MyProductCard> {
         isAdded = true;
       });
     }
+
+    if (favState.containsKey(widget.product?.id)) {
+      setState(() {
+        isFavorited = true;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final _cartProvider = ref.read(cartProvider.notifier);
+    final favoriteProviderData = ref.read(favoriteProvider.notifier);
+    final faveState = ref.watch(favoriteProvider);
     final cartState = ref.watch(cartProvider); // Watch for cart state changes
     // Ensure the cart state reflects properly when the cart is updated
     if (cartState.containsKey(widget.product?.id)) {
@@ -62,6 +73,17 @@ class _MyProductCardState extends ConsumerState<MyProductCard> {
         isAdded = false;
       });
     }
+
+    if (faveState.containsKey(widget.product?.id)) {
+      setState(() {
+        isFavorited = true;
+      });
+    } else {
+      setState(() {
+        isFavorited = false;
+      });
+    }
+
     return GestureDetector(
       onTap: widget.onTap,
       //box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
@@ -105,19 +127,33 @@ class _MyProductCardState extends ConsumerState<MyProductCard> {
                         return ScaleTransition(scale: animation, child: child);
                       },
                       child: IconButton(
-                          key: ValueKey<bool>(isFavorited),
-                          highlightColor: Colors.transparent,
-                          onPressed: () {
-                            setState(() {
-                              isFavorited = !isFavorited;
-                            });
-                          },
-                          icon: Icon(
-                            isFavorited ? Iconsax.heart5 : Iconsax.heart,
-                            color: isFavorited
-                                ? Colors.red
-                                : ThemeUtils.dynamicTextColor(context),
-                          )),
+                        key: ValueKey<bool>(isFavorited),
+                        highlightColor: Colors.transparent,
+                        onPressed: () {
+                          setState(() {
+                            isFavorited = !isFavorited;
+                          });
+                          if (isFavorited) {
+                            favoriteProviderData.addProductToFavorite(
+                              productName: widget.product!.productName,
+                              productPrice: widget.product!.productPrice,
+                              quantity: widget.product!.quantity,
+                              category: widget.product!.category,
+                              image: widget.product!.images,
+                              productId: widget.product!.id,
+                            );
+                          } else {
+                            favoriteProviderData
+                                .removeFavItem(widget.product!.id);
+                          }
+                        },
+                        icon: Icon(
+                          isFavorited ? Iconsax.heart5 : Iconsax.heart,
+                          color: isFavorited
+                              ? Colors.red
+                              : ThemeUtils.dynamicTextColor(context),
+                        ),
+                      ),
                     ),
                   ),
                 ],

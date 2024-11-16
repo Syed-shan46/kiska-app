@@ -8,9 +8,8 @@ class UserProvider extends StateNotifier<User?> {
           userName: '',
           email: '',
           password: '',
-          token: '',
+          token: ''
         ));
-
   User? get user => state;
 
   void setUser(String userJson) {
