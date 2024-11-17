@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:kiska/common/texts/my_section_heading.dart';
-import 'package:kiska/common/appbar/appbar.dart';
 import 'package:kiska/common/image/my_circular_image.dart';
 import 'package:kiska/features/shop/screens/settings/profile/widgets/profile_menu_tile.dart';
 import 'package:kiska/utils/constants/image_strings.dart';
@@ -16,7 +15,9 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      appBar: const MyAppBar(showBackArrow: true,title: Text('Profile'),),
+      appBar:  AppBar( 
+        title: Text('Profile'),
+      ),
       body: SingleChildScrollView(
         child: Padding(padding:const  EdgeInsets.all(MySizes.defaultSpace),child: Column(
           children: [
@@ -53,8 +54,7 @@ class ProfileScreen extends StatelessWidget {
             ProfileMenuTile(title: 'User Id', value: '785665', onPressed: (){},icon: Iconsax.copy,),
             ProfileMenuTile(title: 'E-mail', value: 'Flutterfire093@gmail.com', onPressed: (){}),
             ProfileMenuTile(title: 'Phone Number', value: '9747304599', onPressed: (){}),
-            ProfileMenuTile(title: 'Gender', value: 'Male', onPressed: (){}),
-            ProfileMenuTile(title: 'Date of Birth', value: '26 feb, 2001', onPressed: (){}),
+           
             const SizedBox(height: MySizes.spaceBtwItems),
             const Divider(),
 

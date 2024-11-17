@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:kiska/features/authentication/onboarding/onboarding.dart';
 import 'package:kiska/features/authentication/screens/login/login.dart';
 import 'package:kiska/navigation_menu.dart';
 import 'package:kiska/providers/user_provider.dart';
@@ -47,8 +48,8 @@ class MyApp extends ConsumerWidget {
                   child: CircularProgressIndicator(),
                 );
               }
-              final user = ref.watch(userProvider);
-              return user != null ? NavigationMenu() : LoginScreen();
+              
+              return OnboardingScreen();
             }),
       ),
     );

@@ -61,86 +61,102 @@ class AuthController {
     }
   }
 
-  Future<void> signInUsers(
-      {required context,
-      required String email,
-      required String password}) async {
-    print(
-        'Sign-in called with email: $email and password: $password'); // Debugging line
-    try {
-      http.Response response = await http.post(
-        Uri.parse('$uri/api/signin'),
-        body: jsonEncode(
-          {
-            'email': email,
-            'password': password,
-          },
-        ),
-        headers: <String, String>{
-          'Content-type': 'application/json; charset=UTF-8'
+  Future<void> signInUsers({
+  required BuildContext context,
+  required WidgetRef ref,
+  required String email,
+  required String password,
+}) async {
+  try {
+    http.Response response = await http.post(
+      Uri.parse('$uri/api/signin'),
+      body: jsonEncode({
+        'email': email,
+        'password': password,
+      }),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    // Debugging lines
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
+    if (response.statusCode == 200) {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+
+      String token = jsonDecode(response.body)['token'];
+      await preferences.setString('auth_token', token);
+
+      // Extract user data from response
+      final userJson = jsonEncode(jsonDecode(response.body)['user']);
+
+      // Update the user state using ref
+      ref.read(userProvider.notifier).setUser(userJson);
+
+      // Save user data in SharedPreferences
+      await preferences.setString('user', userJson);
+
+      // Show loading indicator
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return Center(
+            child: LoadingAnimationWidget.flickr(
+              leftDotColor: AppColors.primaryColor,
+              rightDotColor: Colors.white,
+              size: 30,
+            ),
+          );
         },
       );
-      // Add these print statements to inspect the API response
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
-      manageHttpResponse(
-          response: response,
-          context: context,
-          onSuccess: () async {
-            SharedPreferences preferences =
-                await SharedPreferences.getInstance();
 
-            String token = jsonDecode(response.body)['token'];
-            await preferences.setString('auth_token', token);
+      // Wait for 1 second
+      await Future.delayed(Duration(seconds: 1));
+      // Close loading indicator
+      Navigator.pop(context);
 
-            final userJson = jsonEncode(jsonDecode(response.body)['user']);
+      // Display success message
+      showSnackBar(context, 'You are Logged In');
+      await Future.delayed(Duration(seconds: 1));
 
-            providerContainer.read(userProvider.notifier).setUser(userJson);
-
-            await preferences.setString('user', userJson);
-
-            showDialog(
-                context: context,
-                barrierDismissible: false,
-                builder: (BuildContext context) {
-                  return Center(
-                    child: LoadingAnimationWidget.flickr(
-                        leftDotColor: AppColors.primaryColor,
-                        rightDotColor: Colors.white,
-                        size: 30),
-                  );
-                });
-            // Wait for 1 second
-            await Future.delayed(Duration(seconds: 1));
-            // Close the CircularProgressIndicator dialog
-            Navigator.pop(context);
-            await Future.delayed(Duration(seconds: 1));
-            showSnackBar(context, 'You are Logged In');
-            await Future.delayed(Duration(seconds: 2));
-            Get.to(() => NavigationMenu());
-          });
-    } catch (e) {}
-  }
-
-  Future<void> signOutUser({required context}) async {
-    try {
-      SharedPreferences preferences = await SharedPreferences.getInstance();
-      // Clear the token and user from sharedPreferences
-      await preferences.remove('auth_token');
-      await preferences.remove('user');
-      // Reset the orders in your provider state as well
-      providerContainer
-          .read(orderProvider.notifier)
-          .resetOrders(); // Reset orders or set to empty list
-      providerContainer.read(userProvider.notifier).signOut();
-      Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (context) {
-        return LoginScreen();
-      }), (route) => false);
-
-      showSnackBar(context, 'Logout Successfully');
-    } catch (e) {
-      showSnackBar(context, 'Error signin $e');
+      // Navigate to Navigation Menu
+      Get.offAll(() => NavigationMenu());
+    } else {
+      showSnackBar(context, 'Login Failed: ${response.body}');
     }
+  } catch (e) {
+    showSnackBar(context, 'Error signing in: $e');
   }
+}
+
+  
+Future<void> signOutUser({
+  required BuildContext context,
+  required WidgetRef ref,
+}) async {
+  try {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    // Clear the token and user data from SharedPreferences
+    await preferences.remove('auth_token');
+    await preferences.remove('user');
+
+    // Reset the user and order states
+    ref.read(userProvider.notifier).signOut();
+    ref.read(orderProvider.notifier).resetOrders();
+
+    // Navigate to LoginScreen and clear navigation stack
+    Get.offAll(() => LoginScreen());
+
+    // Show success message
+    showSnackBar(context, 'Logout Successfully');
+  } catch (e) {
+    // Show error message in case of any issues
+    showSnackBar(context, 'Error signing out: $e');
+  }
+}
+
 }

@@ -105,7 +105,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                         side: WidgetStateProperty.all(
                             BorderSide(color: Colors.red))),
                     onPressed: () async {
-                      await authController.signOutUser(context: context);
+                      await authController.signOutUser(context: context,ref: ref);
                     },
                     child: Text(
                       'Logout',

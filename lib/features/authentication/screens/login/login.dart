@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:kiska/features/authentication/screens/login/widgets/divider.dart';
 import 'package:kiska/features/authentication/screens/login/widgets/social_icons.dart';
+import 'package:kiska/navigation_menu.dart';
 import 'package:kiska/utils/constants/sizes.dart';
 
 import 'widgets/my_form_fields.dart';
@@ -42,6 +44,9 @@ class _LoginScreenState extends State<LoginScreen> {
           
                     // Social Icons
                     MySocialIcons(),
+                    TextButton(onPressed: (){
+                      Get.to(()=> NavigationMenu());
+                    }, child: Text('Without login'))
                   ],
                 ),
               )

@@ -33,6 +33,7 @@ dependencies:
   phonepe_payment_sdk: ^2.0.3
   crypto: ^3.0.6
   flutter_touch_ripple: ^2.2.2
+  smooth_page_indicator: ^1.2.0+3
   
 
 dev_dependencies:
@@ -53,6 +54,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/icons/ 
+    - assets/images/onboarding_images/
     - assets/images/banners/
     - assets/images/products/
     - assets/images/user/

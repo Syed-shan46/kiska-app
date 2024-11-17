@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:kiska/features/shop/screens/cart/cart.dart';
 import 'package:kiska/providers/cart_provider.dart';
 class MyCartIcon extends ConsumerStatefulWidget {
   const MyCartIcon({
@@ -35,9 +37,12 @@ class _MyCartIconState extends ConsumerState<MyCartIcon> {
         cartData.length.toString(),
         style: TextStyle(fontSize: 12, color: Colors.white),
       ),
-      child: Icon(
-        Iconsax.shopping_bag,
-        color: widget.color,
+      child: InkWell(
+        onTap: () => Get.to(()=> CartScreen()),
+        child: Icon(
+          Iconsax.shopping_bag,
+          color: widget.color,
+        ),
       ),
     );
   }

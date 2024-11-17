@@ -7,11 +7,13 @@ import 'package:get/get.dart';
 import 'package:kiska/common/cart/cart_icon.dart';
 import 'package:kiska/common/cart/cart_item_card.dart';
 import 'package:kiska/features/authentication/global_varaibles.dart';
+import 'package:kiska/features/authentication/screens/login/login.dart';
 import 'package:kiska/features/shop/models/cart_model.dart';
 import 'package:kiska/features/shop/screens/address/address.dart';
 import 'package:kiska/features/shop/screens/checkout/checkout.dart';
 import 'package:kiska/navigation_menu.dart';
 import 'package:kiska/providers/cart_provider.dart';
+import 'package:kiska/providers/user_provider.dart';
 import 'package:kiska/utils/constants/sizes.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
@@ -92,6 +94,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
     final cartData = ref.watch(cartProvider);
     final _cartProvider = ref.watch(cartProvider.notifier);
     final totalAmount = getTotalAmount(cartData);
+    final user = ref.watch(userProvider);
     getEachTotal(cartData);
 
     return Scaffold(
@@ -116,7 +119,15 @@ class _CartScreenState extends ConsumerState<CartScreen> {
               child: SizedBox(
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: () => checkUserAddress(context),
+                  onPressed: () {
+                    if (user != null) {
+                      checkUserAddress(
+                          context); // User is logged in, check addfress
+                    } else {
+                      Get.to(() =>
+                          LoginScreen()); // User is not logged in, navigate to login screen
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(

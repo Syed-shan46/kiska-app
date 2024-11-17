@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:kiska/common/text_forms/my_text_form_widget.dart';
@@ -9,16 +10,16 @@ import 'package:kiska/utils/constants/sizes.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
 
-class MyFormFields extends StatefulWidget {
+class MyFormFields extends ConsumerStatefulWidget {
   const MyFormFields({
     super.key,
   });
 
   @override
-  State<MyFormFields> createState() => _MyFormFieldsState();
+  ConsumerState<MyFormFields> createState() => _MyFormFieldsState();
 }
 
-class _MyFormFieldsState extends State<MyFormFields> {
+class _MyFormFieldsState extends ConsumerState<MyFormFields> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final AuthController _authController = AuthController();
 
@@ -27,7 +28,7 @@ class _MyFormFieldsState extends State<MyFormFields> {
 
   loginUser() async {
     await _authController
-        .signInUsers(context: context, email: email, password: password)
+        .signInUsers(context: context, email: email, password: password,ref: ref)
         .whenComplete(() {});
   }
 
