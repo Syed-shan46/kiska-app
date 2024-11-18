@@ -1,45 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:kiska/features/shop/screens/store/store.dart';
+import 'package:kiska/features/shop/screens/search/search.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
 
 class SearchField extends StatelessWidget {
-  const SearchField({
-    super.key,
-  });
+  const SearchField({super.key, required this.needBorder});
+
+  final bool needBorder;
 
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-
     return Padding(
       padding: const EdgeInsets.only(left: 9, right: 9, top: 8),
-      child: GestureDetector(
-        onTap: () => Get.to(() => const StoreScreen(
-           
-            )),
-        child: TextField(
-          decoration: InputDecoration(
-            fillColor: isDarkMode
-                ? AppColors.darkBackground
-                : Colors.white.withOpacity(0.9),
-            enabledBorder: const OutlineInputBorder(
+      child: InkWell(
+          onTap: () {
+            Get.to(() => SearchScreen());
+          },
+          child: Container(
+            padding: EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              border: needBorder
+                  ? Border.all(
+                      color:
+                          ThemeUtils.dynamicTextColor(context).withOpacity(0.8))
+                  : null,
+              color: isDarkMode
+                  ? AppColors.darkBackground
+                  : Colors.white.withOpacity(0.9),
               borderRadius: BorderRadius.all(Radius.circular(10)),
-              borderSide: BorderSide.none,
             ),
-            contentPadding: const EdgeInsets.symmetric(vertical: 10),
-            hintText: 'What are you looking for?',
-            hintStyle: TextStyle(
-                color: ThemeUtils.dynamicTextColor(context).withOpacity(0.8)),
-            prefixIcon: Icon(
-              Iconsax.search_normal,
-              color: Colors.grey[800],
+            width: MediaQuery.of(context).size.width,
+            child: Text(
+              'What are you looking for?',
+              style: TextStyle(color: ThemeUtils.dynamicTextColor(context)),
             ),
-          ),
-        ),
-      ),
+          )),
     );
   }
 }

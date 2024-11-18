@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:kiska/common/text_forms/my_text_form_widget.dart';
 import 'package:kiska/features/shop/controllers/address_controller.dart';
-import 'package:kiska/features/shop/models/address_model.dart';
 import 'package:kiska/features/shop/screens/checkout/checkout.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
 import 'package:kiska/utils/themes/text_theme.dart';
@@ -95,7 +94,7 @@ class _AddressScreenState extends State<AddressScreen> {
     if (userJson != null) {
       final user = jsonDecode(userJson);
       String userId = user['_id'];
-      Address? address = await addressController.fetchAddressByUserId(userId);
+     // Address? address = await addressController.fetchAddressByUserId(userId);
       setState(() {});
     }
   }

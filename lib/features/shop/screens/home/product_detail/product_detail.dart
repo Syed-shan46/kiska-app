@@ -196,7 +196,17 @@ class _BottomNavigationBtnState extends State<BottomNavigationBtn> {
           ),
           SizedBox(width: 20),
           ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                widget._cartProvider.addProductToCart(
+                  productName: widget.widget.product.productName,
+                  productPrice: widget.widget.product.productPrice,
+                  category: widget.widget.product.category,
+                  image: widget.widget.product.images,
+                  quantity: widget.widget.product.quantity,
+                  productId: widget.widget.product.id,
+                );
+                Get.to(()=> CartScreen());
+              },
               style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(

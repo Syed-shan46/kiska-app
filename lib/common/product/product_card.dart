@@ -5,14 +5,14 @@ import 'package:kiska/common/shimmer/product_shimmer.dart';
 import 'package:kiska/features/shop/models/product_model.dart';
 import 'package:kiska/providers/cart_provider.dart';
 import 'package:kiska/providers/favorite_provider.dart';
-import 'package:kiska/services/http_response.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
 
 class MyProductCard extends ConsumerStatefulWidget {
   const MyProductCard(this.product,
-      {super.key,
+      {
+        super.key,
       required this.imageUrl,
       required this.productName,
       required this.price,
@@ -59,7 +59,7 @@ class _MyProductCardState extends ConsumerState<MyProductCard> {
 
   @override
   Widget build(BuildContext context) {
-    final _cartProvider = ref.read(cartProvider.notifier);
+    final cartProvide = ref.read(cartProvider.notifier);
     final favoriteProviderData = ref.read(favoriteProvider.notifier);
     final faveState = ref.watch(favoriteProvider);
     final cartState = ref.watch(cartProvider); // Watch for cart state changes
@@ -220,7 +220,7 @@ class _MyProductCardState extends ConsumerState<MyProductCard> {
                           isAdded = !isAdded; // Toggle the button state on tap
                           if (isAdded) {
                             // Add to cart
-                            _cartProvider.addProductToCart(
+                            cartProvide.addProductToCart(
                               productName: widget.product!.productName,
                               productPrice: widget.product!.productPrice,
                               quantity: widget.product!.quantity,
@@ -230,7 +230,7 @@ class _MyProductCardState extends ConsumerState<MyProductCard> {
                             );
                           } else {
                             // Remove from cart
-                            _cartProvider.removeCartItem(widget.product!.id);
+                            cartProvide.removeCartItem(widget.product!.id);
                           }
                         });
                       },

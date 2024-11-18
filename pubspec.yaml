@@ -33,7 +33,10 @@ dependencies:
   phonepe_payment_sdk: ^2.0.3
   crypto: ^3.0.6
   flutter_touch_ripple: ^2.2.2
+  flutter_native_splash: ^2.4.3
+
   smooth_page_indicator: ^1.2.0+3
+  flutter_launcher_icons: ^0.14.1
   
 
 dev_dependencies:
@@ -43,11 +46,21 @@ dev_dependencies:
 
 
 flutter_native_splash:  # Background color of the splash screen
-    image: assets/icons/kiska.png  # Path to your splash image
-    android: true  # Include Android splash screen
-    ios: true  # Include iOS splash screen
-    web: false  # If you want to include web support, set to true
-    fullscreen: true  # To make the splash screen take the entire screen
+  color: "#008080"
+  image: assets/images/logos/kiska.png
+
+  android_12:
+    image: assets/images/logos/kiska.png
+    color: "#008080"
+  
+
+flutter_icons:
+  android: true       # Enable Android app icon generation
+  ios: true           # Enable iOS app icon generation
+  image_path: assets/images/logos/kiska.png
+  adaptive_icon_background: "#ffffff"  # Background color for Android adaptive icon
+  adaptive_icon_foreground: assets/images/logos/kiska.png  # Foreground image
+    
 
 
 flutter:

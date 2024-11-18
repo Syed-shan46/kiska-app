@@ -3,8 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kiska/features/authentication/onboarding/onboarding.dart';
-import 'package:kiska/features/authentication/screens/login/login.dart';
-import 'package:kiska/navigation_menu.dart';
 import 'package:kiska/providers/user_provider.dart';
 import 'package:kiska/utils/themes/dark_theme.dart';
 import 'package:kiska/utils/themes/light_theme.dart';
@@ -34,23 +32,12 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ScreenUtilInit(
-      
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.system,
         theme: lightTheme,
         darkTheme: darkTheme,
-        home: FutureBuilder(
-            future: _checkTokenAndSetUser(ref),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              
-              return OnboardingScreen();
-            }),
+        home: OnboardingScreen(),
       ),
     );
   }

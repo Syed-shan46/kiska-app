@@ -10,13 +10,12 @@ import 'package:kiska/features/shop/screens/address/edit_address.dart';
 import 'package:kiska/features/shop/screens/cart/cart.dart';
 import 'package:kiska/features/shop/screens/orders/order_screen.dart';
 import 'package:kiska/features/shop/screens/settings/profile/profile.dart';
-import 'package:kiska/providers/user_provider.dart';
 import 'package:kiska/utils/constants/sizes.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
 
 class SettingsScreen extends ConsumerStatefulWidget {
 
-  SettingsScreen({super.key});
+  const SettingsScreen({super.key});
 
   @override
   ConsumerState<SettingsScreen> createState() => _SettingsScreenState();
@@ -76,7 +75,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   child: MySettingsMenuTile(
                       icon: Iconsax.bag_tick,
                       title: 'My Orders',
-                      subTitle: 'In-progresss and Completed Orders'),
+                      subTitle: 'In-progress and Completed Orders'),
                 ),
                 MySettingsMenuTile(
                     icon: Iconsax.bank,

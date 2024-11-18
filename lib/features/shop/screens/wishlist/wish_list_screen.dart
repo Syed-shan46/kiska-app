@@ -80,7 +80,7 @@ class _WishListScreenState extends ConsumerState<WishListScreen> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(
                                   MySizes.productImageRadius),
-                              color: AppColors.primaryColor.withOpacity(0.1),
+                              color: Colors.grey.withOpacity(0.1),
                             ),
                             child: Stack(
                               children: [
@@ -103,7 +103,7 @@ class _WishListScreenState extends ConsumerState<WishListScreen> {
                                     wishData.productName,
                                     style: TextStyle(
                                       fontSize: screenWidth * 0.04,
-                                      color: Colors.black.withOpacity(0.9),
+                                     
                                     ),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
@@ -113,7 +113,7 @@ class _WishListScreenState extends ConsumerState<WishListScreen> {
                                     wishData.category,
                                     style: TextStyle(
                                       fontSize: screenWidth * 0.035,
-                                      color: Colors.black.withOpacity(0.9),
+                                     
                                     ),
                                   ),
                                   const SizedBox(height: 4.0),
@@ -126,8 +126,7 @@ class _WishListScreenState extends ConsumerState<WishListScreen> {
                                           '₹ ${wishData.productPrice.toString()}',
                                           style: TextStyle(
                                             fontSize: screenWidth * 0.035,
-                                            color:
-                                                Colors.black.withOpacity(0.9),
+                                            
                                           ),
                                         ),
                                       ),

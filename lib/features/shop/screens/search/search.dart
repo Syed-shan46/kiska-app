@@ -16,14 +16,11 @@ class _SearchScreenState extends State<SearchScreen> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 90,
-        automaticallyImplyLeading: false,
+       
         title: SafeArea(
           child: Row(
             children: [
-              IconButton(
-                icon: Icon(Icons.arrow_back_ios),
-                onPressed: () => Get.back(),
-              ),
+             
               Flexible(
                 child: TextField(
                   autofocus: true,

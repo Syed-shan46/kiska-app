@@ -25,10 +25,7 @@ class MyPrimaryHeaderContainer extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.symmetric(vertical: MySizes.spaceBtwItems),
         width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-            color: isDarkMode
-                ? const Color.fromARGB(255, 33, 33, 33)
-                : AppColors.primaryColor),
+        decoration: BoxDecoration(color: AppColors.primaryColor),
         child: Stack(
           children: [
             showContainer

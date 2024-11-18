@@ -43,7 +43,6 @@ class SignInService {
       }
     } catch (error) {
       throw Exception('Sign-in failed: $error');
-      print(error);
     }
     return null;
   }

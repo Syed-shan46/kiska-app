@@ -10,7 +10,7 @@ class ThemeUtils {
 
   static Color sameBrightness(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark
-        ? const Color.fromARGB(71, 0, 0, 0)
+        ? AppColors.darkBackground
         : Colors.white;
   }
 }

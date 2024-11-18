@@ -40,10 +40,10 @@ class _HomeScreenState extends State<HomeScreen> {
               showContainer: false,
               color: AppColors.primaryColor,
               child: Column(
-                children:  const [
+                children: [
                   MyHeader(),
                   SizedBox(height: MySizes.spaceBtwItems / 2),
-                  SearchField(),
+                  SearchField(needBorder: false),
                   SizedBox(height: MySizes.spaceBtwItems),
                   Categories(),
                 ],
@@ -80,7 +80,7 @@ class _MyHeaderState extends ConsumerState<MyHeader> {
   @override
   Widget build(BuildContext context) {
     final user = ref.watch(userProvider);
-     String userName = user?.userName ?? 'Hey User';    
+    String userName = user?.userName ?? 'Hey User';
     return SafeArea(
       child: Row(
         children: [
@@ -99,7 +99,8 @@ class _MyHeaderState extends ConsumerState<MyHeader> {
                         .bodySmall!
                         .copyWith(color: Colors.white.withOpacity(0.9)),
                   ),
-                  Text(userName,
+                  Text(
+                    userName,
                     style: Theme.of(context)
                         .textTheme
                         .bodyLarge!

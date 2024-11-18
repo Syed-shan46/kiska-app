@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:kiska/utils/device/device_utility.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
@@ -28,7 +29,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         automaticallyImplyLeading: false,
         leading: showBackArrow
             ? InkWell(
-              onTap: ()=> print('Clicked'),
+              onTap: (){
+                Get.back();
+              },
               child: Icon(
                   Icons.arrow_back_ios_new,
                   size: 20,
