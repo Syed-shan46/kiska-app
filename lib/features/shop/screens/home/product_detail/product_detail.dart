@@ -17,6 +17,7 @@ import 'package:kiska/features/shop/screens/product_review/product_review.dart';
 import 'package:kiska/features/shop/screens/home/widgets/my_dot_navigation.dart';
 import 'package:kiska/navigation_menu.dart';
 import 'package:kiska/providers/cart_provider.dart';
+import 'package:kiska/providers/favorite_provider.dart';
 import 'package:kiska/services/http_response.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
 import 'package:lottie/lottie.dart';
@@ -52,7 +53,10 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
           child: Column(
             children: [
               ProductDetailImages(
-                  images: widget.product.images, controller: controller),
+                images: widget.product.images,
+                controller: controller,
+                product: widget.product,
+              ),
               SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -205,7 +209,7 @@ class _BottomNavigationBtnState extends State<BottomNavigationBtn> {
                   quantity: widget.widget.product.quantity,
                   productId: widget.widget.product.id,
                 );
-                Get.to(()=> CartScreen());
+                Get.to(() => CartScreen());
               },
               style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
@@ -359,18 +363,54 @@ class ProductDetail extends StatelessWidget {
   }
 }
 
-class ProductDetailImages extends StatelessWidget {
+class ProductDetailImages extends ConsumerStatefulWidget {
   const ProductDetailImages({
     super.key,
     required this.images,
     required this.controller,
+    required this.product,
   });
 
   final List<String> images;
+  final Product? product;
   final HomeController controller;
 
   @override
+  ConsumerState<ProductDetailImages> createState() =>
+      _ProductDetailImagesState();
+}
+
+class _ProductDetailImagesState extends ConsumerState<ProductDetailImages> {
+  bool isFavorited = false;
+  @override
+  void initState() {
+    super.initState();
+    // Check if the product is already in the cart and set isAdded accordingly
+
+    final favState = ref.read(favoriteProvider);
+
+    if (favState.containsKey(widget.product?.id)) {
+      setState(() {
+        isFavorited = true;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final favoriteProviderData = ref.read(favoriteProvider.notifier);
+    final faveState = ref.watch(favoriteProvider);
+
+    if (faveState.containsKey(widget.product?.id)) {
+      setState(() {
+        isFavorited = true;
+      });
+    } else {
+      setState(() {
+        isFavorited = false;
+      });
+    }
+
     return MyCurvedWidget(
       child: Container(
         color: Colors.grey.withOpacity(0.2),
@@ -378,7 +418,7 @@ class ProductDetailImages extends StatelessWidget {
           children: [
             // Carousel Slider positioned at the base of the stack
             CarouselSlider(
-              items: images.map((imagePath) {
+              items: widget.images.map((imagePath) {
                 return Image.network(
                   imagePath,
                   fit: BoxFit.cover,
@@ -392,7 +432,7 @@ class ProductDetailImages extends StatelessWidget {
                 viewportFraction: 1,
                 aspectRatio: 16 / 9,
                 onPageChanged: (index, _) =>
-                    controller.updatePageIndicator(index),
+                    widget.controller.updatePageIndicator(index),
               ),
             ),
 
@@ -408,11 +448,35 @@ class ProductDetailImages extends StatelessWidget {
                     width: 40,
                     height: 40,
                     decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.8),
+                        color: Colors.white.withOpacity(0.2),
                         shape: BoxShape.circle),
                     child: InkWell(
-                        child: const Icon(CupertinoIcons.suit_heart,
-                            color: Colors.red)),
+                      highlightColor: Colors.transparent,
+                      onTap: () {
+                        setState(() {
+                          isFavorited = !isFavorited;
+                        });
+                        if (isFavorited) {
+                          favoriteProviderData.addProductToFavorite(
+                            productName: widget.product!.productName,
+                            productPrice: widget.product!.productPrice,
+                            quantity: widget.product!.quantity,
+                            category: widget.product!.category,
+                            image: widget.product!.images,
+                            productId: widget.product!.id,
+                          );
+                        } else {
+                          favoriteProviderData
+                              .removeFavItem(widget.product!.id);
+                        }
+                      },
+                      child: Icon(
+                        isFavorited ? Iconsax.heart5 : Iconsax.heart,
+                        color: isFavorited
+                            ? Colors.red
+                            : ThemeUtils.dynamicTextColor(context),
+                      ),
+                    ),
                   )
                 ],
               ),
@@ -424,8 +488,8 @@ class ProductDetailImages extends StatelessWidget {
               left: 0,
               right: 0,
               child: MyDotNavigation(
-                controller: controller,
-                dotCount: images.length,
+                controller: widget.controller,
+                dotCount: widget.images.length,
               ),
             ),
           ],

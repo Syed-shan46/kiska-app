@@ -43,7 +43,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   MyHeader(),
                   SizedBox(height: MySizes.spaceBtwItems / 2),
-                  SearchField(needBorder: false),
+                  SearchField(
+                    needBorder: false
+                  ),
                   SizedBox(height: MySizes.spaceBtwItems),
                   Categories(),
                 ],

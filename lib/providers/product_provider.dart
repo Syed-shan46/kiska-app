@@ -7,6 +7,18 @@ class ProductProvider extends StateNotifier<List<Product>> {
   void setProducts(List<Product> products) {
     state = products;
   }
+
+  // Method to filter products based on the search query
+  List<Product> searchProducts(String query) {
+    if (query.isEmpty) {
+      return state; // If no query, return all products
+    }
+
+    return state
+        .where((product) =>
+            product.productName.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+  }
 }
 
 final productProvider =

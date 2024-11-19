@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:kiska/features/shop/screens/search/search.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
@@ -32,9 +33,14 @@ class SearchField extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
             width: MediaQuery.of(context).size.width,
-            child: Text(
-              'What are you looking for?',
-              style: TextStyle(color: ThemeUtils.dynamicTextColor(context)),
+            child: Row(
+              children: [
+                Icon(Iconsax.search_favorite),
+                Text(
+                  ' What are you looking for?',
+                  style: TextStyle(color: ThemeUtils.dynamicTextColor(context)),
+                ),
+              ],
             ),
           )),
     );
