@@ -27,7 +27,7 @@ class ProductColumn extends ConsumerWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
-                child: LoadingAnimationWidget.fourRotatingDots(
+                child: LoadingAnimationWidget.dotsTriangle(
                     color: AppColors.primaryColor, size: 25));
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));

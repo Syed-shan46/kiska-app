@@ -116,7 +116,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                         children: [
                           Text('Reviews'),
                           IconButton(
-                              onPressed: () => Get.to(() => ProductReview()),
+                              onPressed: () {},
                               icon: Icon(
                                 Iconsax.arrow_right_3,
                                 size: 18,
@@ -346,7 +346,9 @@ class ProductDetail extends StatelessWidget {
             SizedBox(width: 5),
             Text.rich(
               TextSpan(
-                children: [TextSpan(text: '5.0'), TextSpan(text: ' (199)')],
+                children: [
+                  TextSpan(text: '5.0'),
+                ],
               ),
             ),
           ],
