@@ -4,10 +4,10 @@ import 'package:kiska/common/cart/cart_icon.dart';
 import 'package:kiska/common/product/store_product_column.dart';
 import 'package:kiska/features/shop/controllers/category_controller.dart';
 import 'package:kiska/features/shop/screens/home/widgets/search_field.dart';
-import 'package:kiska/features/shop/screens/store/widgets/store_search.dart';
 import 'package:kiska/providers/category_provider.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class StoreScreen extends ConsumerStatefulWidget {
   final int? selectedCategoryIndex;
@@ -56,8 +56,9 @@ class _StoreScreenState extends ConsumerState<StoreScreen> {
           ],
         ),
         body: categories.isEmpty
-            ? const Center(
-                child: CircularProgressIndicator(),
+            ? Center(
+                child: LoadingAnimationWidget.fourRotatingDots(
+                    color: AppColors.primaryColor, size: 25),
               )
             : NestedScrollView(
                 headerSliverBuilder: (_, innerBoxScrolled) {

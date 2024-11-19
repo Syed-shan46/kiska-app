@@ -5,6 +5,8 @@ import 'package:kiska/common/product/product_card.dart';
 import 'package:kiska/features/shop/controllers/product_controller.dart';
 import 'package:kiska/features/shop/models/product_model.dart';
 import 'package:kiska/features/shop/screens/home/product_detail/product_detail.dart';
+import 'package:kiska/utils/themes/app_colors.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class ProductColumn extends ConsumerWidget {
   final String categoryId;
@@ -24,7 +26,9 @@ class ProductColumn extends ConsumerWidget {
         future: productController.loadProductsByCategory(categoryId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(
+                child: LoadingAnimationWidget.fourRotatingDots(
+                    color: AppColors.primaryColor, size: 25));
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {

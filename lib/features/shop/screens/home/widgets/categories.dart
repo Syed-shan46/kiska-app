@@ -49,7 +49,9 @@ class _CategoriesState extends ConsumerState<Categories> {
           return Column(
             children: [
               InkWell(
-                onTap: (){},
+                onTap: () {
+                  Get.to(() => StoreScreen(selectedCategoryIndex: index));
+                },
                 child: Container(
                   width: 40.h,
                   height: 40.h,
