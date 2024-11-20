@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kiska/features/shop/controllers/search_controller.dart';
 import 'package:kiska/features/shop/screens/home/product_detail/product_detail.dart';
 import 'package:kiska/utils/device/device_utility.dart';
-import 'package:kiska/utils/themes/app_colors.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 final searchQueryProvider = StateProvider<String>((ref) => '');
 
@@ -18,9 +15,9 @@ class SearchScreen extends ConsumerWidget {
     final searchResults = ref.watch(searchResultsProvider);
 
     return Scaffold(
+      appBar: AppBar(title: Text('Search Products'),),
       body: Column(
         children: [
-          SizedBox(height: MyDeviceUtils.getAppBarHeight()),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: TextField(
@@ -33,11 +30,7 @@ class SearchScreen extends ConsumerWidget {
                     ),
                   ),
                   fillColor: Colors.transparent,
-                  prefixIcon: IconButton(
-                      onPressed: () {
-                        Get.back();
-                      },
-                      icon: Icon(Icons.arrow_back))),
+                  ),
               autofocus: true,
               onChanged: (query) {
                 // Update the search query when text changes
@@ -45,6 +38,7 @@ class SearchScreen extends ConsumerWidget {
               },
             ),
           ),
+          SizedBox(height: 20),
           if (searchQuery.isEmpty)
             const Text("")
           else
@@ -74,7 +68,7 @@ class SearchScreen extends ConsumerWidget {
               },
               loading: () => Center(child: Text('')),
               error: (error, stackTrace) => Center(
-                child: Text('Error loading products: $error'),
+                child: Text(''),
               ),
             ),
         ],

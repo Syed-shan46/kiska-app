@@ -6,7 +6,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:kiska/common/cart/cart_icon.dart';
 import 'package:kiska/common/cart/cart_item_card.dart';
+import 'package:kiska/common/texts/constants.dart';
 import 'package:kiska/features/authentication/global_varaibles.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiska/features/authentication/screens/login/login.dart';
 import 'package:kiska/features/shop/models/cart_model.dart';
 import 'package:kiska/features/shop/screens/address/address.dart';
@@ -87,6 +89,8 @@ class _CartScreenState extends ConsumerState<CartScreen> {
         print('Error checking address: $e');
       }
     }
+
+    // Bottom Sheet
   }
 
   @override
@@ -124,8 +128,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                       checkUserAddress(
                           context); // User is logged in, check addfress
                     } else {
-                      Get.to(() =>
-                          LoginScreen()); // User is not logged in, navigate to login screen
+                      showVerificationSheet(context);
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -298,6 +301,58 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                 ],
               ),
             ),
+    );
+  }
+
+  Future<dynamic> showVerificationSheet(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          width: MediaQuery.of(context).size.width,
+          height: 220.h,
+          decoration: BoxDecoration(
+            // image: DecorationImage(
+            //   colorFilter: ColorFilter.mode(ThemeUtils.sameBrightness(context), BlendMode.dstATop),
+            //   image: AssetImage('assets/images/products/bg-3.png'),
+            //   fit: BoxFit.contain,
+            // ),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(8.h),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: 10.h),
+                Text(
+                  'Verify Your Phone Number',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                ),
+                SizedBox(
+                  height: 95.h,
+                  child: Column(
+                    children: (List.generate(
+                      verificationReasons.length,
+                      (index) {
+                        return ListTile(
+                          leading: Icon(Icons.check_circle_outline,color: AppColors.primaryColor),
+                          title: Text(
+                            verificationReasons[index],
+                            style: TextStyle(
+                                fontSize: 11, fontWeight: FontWeight.normal),
+                          ),
+                        );
+                      },
+                    )),
+                  ),
+                ),
+                SizedBox(height: MySizes.spaceBtwItems),
+                ElevatedButton(onPressed: (){}, child: Text('Verify Phone Number',style: TextStyle(color: ThemeUtils.sameBrightness(context),)))
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

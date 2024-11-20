@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:kiska/features/shop/screens/store/store.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
 
 class MyHeading extends StatelessWidget {
@@ -27,14 +29,17 @@ class MyHeading extends StatelessWidget {
                 .textTheme
                 .bodyLarge!
                 .copyWith(fontWeight: FontWeight.w600),
+               
           ),
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Get.to(()=> StoreScreen());
+              },
               icon: SvgPicture.asset(
                 'assets/icons/more-7.svg',
                 height: 23,
                 color: AppColors.primaryColor,
-              )),
+              ),),
         ],
       ),
     );

@@ -4,6 +4,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:kiska/features/shop/screens/search/search.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
 import 'package:kiska/utils/themes/theme_utils.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SearchField extends StatelessWidget {
   const SearchField({super.key, required this.needBorder});
@@ -11,8 +12,7 @@ class SearchField extends StatelessWidget {
   final bool needBorder;
 
   @override
-  Widget build(BuildContext context) {
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+  Widget build(BuildContext context) { final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: const EdgeInsets.only(left: 9, right: 9, top: 8),
       child: InkWell(
@@ -20,6 +20,7 @@ class SearchField extends StatelessWidget {
             Get.to(() => SearchScreen());
           },
           child: Container(
+            height: 41.h,
             padding: EdgeInsets.all(16),
             decoration: BoxDecoration(
               border: needBorder
