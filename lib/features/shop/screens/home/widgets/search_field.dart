@@ -20,8 +20,8 @@ class SearchField extends StatelessWidget {
             Get.to(() => SearchScreen());
           },
           child: Container(
-            height: 41.h,
-            padding: EdgeInsets.all(16),
+            
+            padding: EdgeInsets.symmetric(vertical: 12,horizontal: 10),
             decoration: BoxDecoration(
               border: needBorder
                   ? Border.all(

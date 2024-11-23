@@ -193,12 +193,11 @@ class _OrderScreenState extends ConsumerState<OrderScreen> {
                                                         .spaceBetween,
                                                 children: [
                                                   Row(
-                                                    children: const [
+                                                    children:  [
                                                       InkWell(
-                                                          child: Text(
-                                                        'Processing',
+                                                          child: Text(order.orderStatus,
                                                         style: TextStyle(
-                                                            color: Colors.red),
+                                                            color: order.orderStatus == 'Processing'? Colors.red: Colors.blue),
                                                       ))
                                                     ],
                                                   ),

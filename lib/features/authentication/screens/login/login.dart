@@ -46,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     MySocialIcons(),
                     TextButton(onPressed: (){
                       Get.to(()=> NavigationMenu());
-                    }, child: Text('Without login'))
+                    }, child: Text('Explore Now'))
                   ],
                 ),
               )

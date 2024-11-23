@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:kiska/common/text_forms/my_text_form_widget.dart';
 import 'package:kiska/features/shop/controllers/address_controller.dart';
@@ -118,9 +119,7 @@ class _EditAddressState extends ConsumerState<EditAddress> {
         bool success =
             await addressController.updateAddress(userId, updateAddress);
         if (success) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Address updated successfully!")),
-          );
+          Get.snackbar('Address', "Address Updated Successfully");
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text("Failed to update address.")),

@@ -23,6 +23,7 @@ class OrderController {
     required final String image,
     required final int totalAmount,
     required final String paymentStatus,
+    required final String orderStatus,
     required final bool delivered,
     required context,
   }) async {
@@ -42,6 +43,7 @@ class OrderController {
         image: image,
         totalAmount: totalAmount,
         paymentStatus: paymentStatus,
+        orderStatus: orderStatus,
         delivered: delivered,
       );
 

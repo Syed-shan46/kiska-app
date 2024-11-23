@@ -51,7 +51,7 @@ class AuthController {
         response: response,
         context: context,
         onSuccess: () async {
-          showSnackBar(context, 'Account Created Successfully');
+          Get.snackbar('Account', 'Account Created Successfully',icon: Icon(Icons.person));
           await Future.delayed(Duration(seconds: 3));
           Get.to(() => LoginScreen());
         },
@@ -119,13 +119,13 @@ class AuthController {
       Navigator.pop(context);
 
       // Display success message
-      showSnackBar(context, 'You are Logged In');
+      Get.snackbar('Login successFully', 'Your are Logged in',icon: Icon(Icons.person));
       await Future.delayed(Duration(seconds: 1));
 
       // Navigate to Navigation Menu
       Get.offAll(() => NavigationMenu());
     } else {
-      showSnackBar(context, 'Login Failed: ${response.body}');
+      Get.snackbar('Login Failed',jsonDecode(response.body)['msg'],);
     }
   } catch (e) {
     showSnackBar(context, 'Error signing in: $e');
@@ -152,7 +152,7 @@ Future<void> signOutUser({
     Get.offAll(() => LoginScreen());
 
     // Show success message
-    showSnackBar(context, 'Logout Successfully');
+    Get.snackbar('Logout', 'Logout Successfully',icon: Icon(Icons.logout));
   } catch (e) {
     // Show error message in case of any issues
     showSnackBar(context, 'Error signing out: $e');

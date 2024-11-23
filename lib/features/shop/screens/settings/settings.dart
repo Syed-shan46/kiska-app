@@ -6,15 +6,18 @@ import 'package:kiska/common/layouts/settings_menu_tile.dart';
 import 'package:kiska/common/layouts/user_profile_tile.dart';
 import 'package:kiska/common/custom_shapes/primary_header_container.dart';
 import 'package:kiska/features/authentication/controllers/auth_controller.dart';
+import 'package:kiska/features/authentication/screens/login/login.dart';
 import 'package:kiska/features/shop/screens/address/edit_address.dart';
 import 'package:kiska/features/shop/screens/cart/cart.dart';
 import 'package:kiska/features/shop/screens/orders/order_screen.dart';
 import 'package:kiska/features/shop/screens/settings/profile/profile.dart';
+import 'package:kiska/providers/user_provider.dart';
 import 'package:kiska/utils/constants/sizes.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kiska/utils/themes/theme_utils.dart';
 
 class SettingsScreen extends ConsumerStatefulWidget {
-
   const SettingsScreen({super.key});
 
   @override
@@ -26,6 +29,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final user = ref.watch(userProvider);
+
     return Scaffold(
         body: SingleChildScrollView(
       child: Column(
@@ -37,7 +42,15 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               child: Column(
                 children: [
                   UserProfileTile(
-                    onPressed: () => Get.to(() => ProfileScreen()),
+                    onPressed: () {
+                      if (user == null) {
+                        Get.snackbar(' Login', "Please login to continue 😊",
+                            backgroundColor:
+                                AppColors.lightBackground.withOpacity(0.6));
+                      } else {
+                        Get.to(() => ProfileScreen());
+                      }
+                    },
                   ),
                   const SizedBox(
                     height: MySizes.spaceBtwItems,
@@ -100,15 +113,92 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   height: 45,
                   width: MediaQuery.of(context).size.width * 0.4,
                   child: OutlinedButton(
-                    style: ButtonStyle(
-                        side: WidgetStateProperty.all(
-                            BorderSide(color: Colors.red))),
-                    onPressed: () async {
-                      await authController.signOutUser(context: context,ref: ref);
+                    onPressed: () {
+                      if (user == null) {
+                        // Redirect to Login
+                        Get.to(() => LoginScreen());
+                      } else {
+                        // Logout logic
+
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 120.h,
+                              decoration: BoxDecoration(
+                                  // image: DecorationImage(
+                                  //   colorFilter: ColorFilter.mode(ThemeUtils.sameBrightness(context), BlendMode.dstATop),
+                                  //   image: AssetImage('assets/images/products/bg-3.png'),
+                                  //   fit: BoxFit.contain,
+                                  // ),
+                                  ),
+                              child: Padding(
+                                padding: EdgeInsets.all(9.h),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SizedBox(height: 10.h),
+                                    Text(
+                                      'Are You Sure Want to Logout',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    SizedBox(height: MySizes.spaceBtwItems),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text(
+                                            'No',
+                                            style: TextStyle(
+                                              color: ThemeUtils.sameBrightness(
+                                                  context),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(width: 20),
+                                        ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor:
+                                                  Colors.red.withOpacity(0.8)),
+                                          onPressed: () async {
+                                            await authController.signOutUser(
+                                              context: context,
+                                              ref: ref,
+                                            );
+                                          },
+                                          child: Text('Yes',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              )),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      }
                     },
+                    style: ButtonStyle(
+                        side: WidgetStateProperty.all(BorderSide(
+                            color: user == null
+                                ? AppColors.primaryColor
+                                : Colors.red))),
                     child: Text(
-                      'Logout',
-                      style: TextStyle(color: Colors.red),
+                      user == null ? 'Login' : 'Logout',
+                      style: TextStyle(
+                          color: user == null
+                              ? AppColors.primaryColor
+                              : Colors.red),
                     ),
                   ),
                 ),

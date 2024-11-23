@@ -20,8 +20,8 @@ class _UserProfileTileState extends ConsumerState<UserProfileTile> {
   @override
   Widget build(BuildContext context) {
      final user = ref.watch(userProvider);
-     String userName = user?.userName ?? 'Hey User';
-     String email = user?.email ?? 'Your@gmail.com';
+     String userName = user?.userName ?? 'Hello!';
+     String email = user?.email ?? 'NotLoggedIn@gmail.com';
     return ListTile(
         leading: const MyCircularImage(
             image: 'assets/images/user/user.png',

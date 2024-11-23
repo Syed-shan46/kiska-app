@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:kiska/common/shimmer/product_shimmer.dart';
 import 'package:kiska/features/shop/models/product_model.dart';
@@ -11,8 +12,7 @@ import 'package:kiska/utils/themes/theme_utils.dart';
 
 class MyProductCard extends ConsumerStatefulWidget {
   const MyProductCard(this.product,
-      {
-        super.key,
+      {super.key,
       required this.imageUrl,
       required this.productName,
       required this.price,
@@ -134,6 +134,13 @@ class _MyProductCardState extends ConsumerState<MyProductCard> {
                             isFavorited = !isFavorited;
                           });
                           if (isFavorited) {
+                            Get.snackbar('Favorites', 'Added to favorites',
+                                icon: Icon(
+                                  Iconsax.heart5,
+                                  color: Colors.red,
+                                ),
+                                backgroundColor:
+                                    AppColors.lightBackground.withOpacity(0.6));
                             favoriteProviderData.addProductToFavorite(
                               productName: widget.product!.productName,
                               productPrice: widget.product!.productPrice,
@@ -143,6 +150,13 @@ class _MyProductCardState extends ConsumerState<MyProductCard> {
                               productId: widget.product!.id,
                             );
                           } else {
+                            Get.snackbar('Favorites', "Removed from favorites",
+                                icon: Icon(
+                                  Iconsax.heart_remove,
+                                  color: Colors.red,
+                                ),
+                                backgroundColor:
+                                    AppColors.lightBackground.withOpacity(0.6));
                             favoriteProviderData
                                 .removeFavItem(widget.product!.id);
                           }

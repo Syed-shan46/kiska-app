@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kiska/utils/themes/app_colors.dart';
+import 'package:kiska/utils/themes/theme_utils.dart';
 
 class MySettingsMenuTile extends StatelessWidget {
   const MySettingsMenuTile({super.key, required this.icon, required this.title, required this.subTitle, this.trailing, this.onTap});
@@ -13,8 +14,8 @@ class MySettingsMenuTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: Icon(icon, size: 28,color:AppColors.primaryColor.withOpacity(0.8),),
-      title: Text(title, style: Theme.of(context).textTheme.titleMedium,),
-      subtitle: Text(subTitle, style: Theme.of(context).textTheme.labelMedium,),
+      title: Text(title, style: Theme.of(context).textTheme.titleMedium!.copyWith(color: ThemeUtils.dynamicTextColor(context).withOpacity(0.8)),),
+      subtitle: Text(subTitle, style: Theme.of(context).textTheme.labelMedium!.copyWith(color: ThemeUtils.dynamicTextColor(context).withOpacity(0.6)),),
       trailing: trailing,
       onTap: onTap,
     );

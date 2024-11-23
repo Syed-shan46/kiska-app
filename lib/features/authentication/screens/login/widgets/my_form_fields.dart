@@ -145,10 +145,15 @@ class CreateAccount extends StatelessWidget {
   }
 }
 
-class RememberMePassword extends StatelessWidget {
-  const RememberMePassword({
-    super.key,
-  });
+class RememberMePassword extends StatefulWidget {
+  const RememberMePassword({super.key});
+
+  @override
+  _RememberMePasswordState createState() => _RememberMePasswordState();
+}
+
+class _RememberMePasswordState extends State<RememberMePassword> {
+  bool _rememberMe = false; // Initial state
 
   @override
   Widget build(BuildContext context) {
@@ -159,21 +164,29 @@ class RememberMePassword extends StatelessWidget {
         Row(
           children: [
             Checkbox(
-                value: true,
-                onChanged: (value) {},
-                activeColor: AppColors.primaryColor,
-                checkColor: Colors.white),
-            const Text('Remember me?')
+              value: _rememberMe,
+              onChanged: (value) {
+                setState(() {
+                  _rememberMe = value!; // Toggle the value
+                });
+              },
+              activeColor: AppColors.primaryColor,
+              checkColor: Colors.white,
+            ),
+            const Text('Remember me?'),
           ],
         ),
 
         /// Forgot password
         TextButton(
-            onPressed: () {},
-            child: Text(
-              'Forgot Password',
-              style: TextStyle(fontWeight: FontWeight.w400),
-            )),
+          onPressed: () {
+            // Handle forgot password
+          },
+          child: const Text(
+            'Forgot Password',
+            style: TextStyle(fontWeight: FontWeight.w400),
+          ),
+        ),
       ],
     );
   }

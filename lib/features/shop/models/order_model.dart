@@ -16,6 +16,7 @@ class Order {
   final String image;
   final int totalAmount;
   final String paymentStatus;
+  final String orderStatus;
   final bool delivered;
   Order({
     required this.id,
@@ -33,6 +34,7 @@ class Order {
     required this.totalAmount,
     required this.paymentStatus,
     required this.delivered,
+    required this.orderStatus,
   });
 
   Map<String, dynamic> toMap() {
@@ -52,6 +54,7 @@ class Order {
       'totalAmount': totalAmount,
       'paymentStatus': paymentStatus,
       'delivered': delivered, 
+      'orderStatus': orderStatus,
     };
   }
 
@@ -77,6 +80,7 @@ class Order {
           ? map['totalAmount'] as int
           : int.tryParse(map['totalAmount'] as String) ?? 0,
       paymentStatus: map['paymentStatus'] as String? ?? 'Pending',
+      orderStatus: map['orderStatus'] as String,
       delivered: map['delivered'] as bool? ?? false,
     );
   }

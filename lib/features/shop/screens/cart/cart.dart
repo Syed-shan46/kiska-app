@@ -319,7 +319,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
             // ),
           ),
           child: Padding(
-            padding: EdgeInsets.all(8.h),
+            padding: EdgeInsets.all(9.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -329,7 +329,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                 ),
                 SizedBox(
-                  height: 95.h,
+                  height: 100.h,
                   child: Column(
                     children: (List.generate(
                       verificationReasons.length,
@@ -347,7 +347,9 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                   ),
                 ),
                 SizedBox(height: MySizes.spaceBtwItems),
-                ElevatedButton(onPressed: (){}, child: Text('Verify Phone Number',style: TextStyle(color: ThemeUtils.sameBrightness(context),)))
+                ElevatedButton(onPressed: (){
+                  Get.to(()=> LoginScreen());
+                }, child: Text('Verify Account',style: TextStyle(color: ThemeUtils.sameBrightness(context),)))
               ],
             ),
           ),

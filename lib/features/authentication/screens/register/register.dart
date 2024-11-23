@@ -22,6 +22,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   late String email;
   late String password;
   bool _isLoading = false;
+  bool isChecked = false;
+  
 
   registerUser() async {
     setState(() {
@@ -47,6 +49,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
@@ -131,10 +134,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           width: 24,
                           height: 24,
                           child: Checkbox(
-                              activeColor: AppColors.primaryColor,
-                              value: true,
-                              checkColor: Colors.white,
-                              onChanged: (value) {}),
+                            activeColor: AppColors.primaryColor,
+                            value: isChecked,
+                            checkColor: Colors.white,
+                            onChanged: (value) {
+                              setState(() {
+                                isChecked = value!; // Toggle the value
+                              });
+                            },
+                          ),
                         ),
                         const SizedBox(width: MySizes.spaceBtwItems),
                         Text.rich(

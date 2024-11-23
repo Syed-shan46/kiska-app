@@ -46,7 +46,6 @@ class _WishListScreenState extends ConsumerState<WishListScreen> {
                     height: 350,
                     fit: BoxFit.fill,
                   ),
-                  const SizedBox(height: 20),
                   const Text('Your wishlist is Empty'),
                  
                 ],

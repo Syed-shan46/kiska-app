@@ -25,4 +25,5 @@ class MyImages {
 
   // User
   static const String user = "assets/images/user/user.png";
+  static const String user2 = "assets/images/user/user-1.png";
 }

@@ -160,6 +160,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                   image: item.image[0],
                   totalAmount: item.totalPrice,
                   paymentStatus: 'Success',
+                  orderStatus: 'Processing',
                   delivered: false,
                   context: context,
                 );
