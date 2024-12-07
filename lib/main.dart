@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:kiska/features/authentication/onboarding/onboarding.dart';
+import 'package:kiska/navigation_menu.dart';
 import 'package:kiska/providers/user_provider.dart';
 import 'package:kiska/utils/themes/dark_theme.dart';
 import 'package:kiska/utils/themes/light_theme.dart';
@@ -37,7 +38,17 @@ class MyApp extends ConsumerWidget {
         themeMode: ThemeMode.system,
         theme: lightTheme,
         darkTheme: darkTheme,
-        home: OnboardingScreen(),
+        home: FutureBuilder(
+            future: _checkTokenAndSetUser(ref),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              final user = ref.watch(userProvider);
+              return user != null ? NavigationMenu() : NavigationMenu();
+            }),
       ),
     );
   }
